@@ -1,13 +1,13 @@
 # Console Prompts
 
-In addition to the console abstraction layer, zend-console provides numerous
+In addition to the console abstraction layer, laminas-console provides numerous
 convenience classes for interacting with the user in a console environment. This
-chapter describes available `Zend\Console\Prompt` classes and their usage.
+chapter describes available `Laminas\Console\Prompt` classes and their usage.
 
 All prompts can be instantiated directly, and expose a `show()` method.
 
 ```php
-use Zend\Console\Prompt;
+use Laminas\Console\Prompt;
 
 $confirm = new Prompt\Confirm('Are you sure you want to continue?');
 $result = $confirm->show();
@@ -19,7 +19,7 @@ if ($result) {
 You can also use prompts statically, via the static `prompt()` method:
 
 ```php
-use Zend\Console\Prompt;
+use Laminas\Console\Prompt;
 
 $result = Prompt\Confirm::prompt('Are you sure you want to continue?');
 if ($result) {
@@ -29,7 +29,7 @@ if ($result) {
 
 Both of above examples will display something like this:
 
-![Basic prompt](images/zend.console.prompt.png)
+![Basic prompt](images/laminas.console.prompt.png)
 
 ## Confirm
 
@@ -48,7 +48,7 @@ Argument | Description
 Example usage:
 
 ```php
-use Zend\Console\Prompt\Confirm;
+use Laminas\Console\Prompt\Confirm;
 
 if ( Confirm::prompt('Is this the correct answer? [y/n]', 'y', 'n')) {
     $console->write("You chose YES");
@@ -57,7 +57,7 @@ if ( Confirm::prompt('Is this the correct answer? [y/n]', 'y', 'n')) {
 }
 ```
 
-![Confirm Prompt](images/zend.console.prompt2.png)
+![Confirm Prompt](images/laminas.console.prompt2.png)
 
 ## Line
 
@@ -80,7 +80,7 @@ Argument | Description
 Example usage:
 
 ```php
-use Zend\Console\Prompt\Line;
+use Laminas\Console\Prompt\Line;
 
 $name = Line::prompt(
     'What is your name?',
@@ -91,7 +91,7 @@ $name = Line::prompt(
 $console->write("Good day to you $name!");
 ```
 
-![Line Prompt](images/zend.console.prompt3.png)
+![Line Prompt](images/laminas.console.prompt3.png)
 
 ## Char
 
@@ -119,7 +119,7 @@ Argument | Description
 Example usage:
 
 ```php
-use Zend\Console\Prompt\Char;
+use Laminas\Console\Prompt\Char;
 
 $answer = Char::prompt(
     'What is the correct answer? [a,b,c,d,e]',
@@ -136,7 +136,7 @@ if ($answer == 'b') {
 }
 ```
 
-![Char Prompt](images/zend.console.prompt4.png)
+![Char Prompt](images/laminas.console.prompt4.png)
 
 ## Select
 
@@ -179,7 +179,7 @@ $answer = Select::prompt(
 $console->write("You told me that you like " . $options[$answer]);
 ```
 
-![Select Prompt](images/zend.console.prompt5.png)
+![Select Prompt](images/laminas.console.prompt5.png)
 
 ## Password
 
@@ -201,11 +201,11 @@ Argument | Description
 Example usage:
 
 ```php
-use Zend\Console\Prompt\Password;
+use Laminas\Console\Prompt\Password;
 
 $password = Password::prompt('Enter the secret', true);
 
 $console->write("Sh!, the password is $password");
 ```
 
-![Password Prompt](images/zend.console.prompt6.png)
+![Password Prompt](images/laminas.console.prompt6.png)

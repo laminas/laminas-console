@@ -1,6 +1,6 @@
 > ### Deprecated!
 >
-> Both the zend-console and the [zend-mvc-console](https://docs.zendframework.com/zend-mvc-console/)
+> Both the laminas-console and the [laminas-mvc-console](https://docs.laminas.dev/laminas-mvc-console/)
 > components will likely not be maintained long-term, as there are more complete
 > implementations available elsewhere. We strongly urge developers to start
 > migrating their console tooling to use other libraries, such as
@@ -9,5 +9,5 @@
 ## Installation
 
 ```bash
-$ composer require zendframework/zend-console
+$ composer require laminas/laminas-console
 ```

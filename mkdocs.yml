@@ -16,8 +16,8 @@ nav:
         - 'Declaring Rules': getopt/rules.md
         - 'Fetching Options and Arguments': getopt/fetching.md
         - Configuration: getopt/configuration.md
-site_name: zend-console
+site_name: laminas-console
 site_description: 'Build console applications using getopt syntax or routing, complete with prompts'
-repo_url: 'https://github.com/zendframework/zend-console'
+repo_url: 'https://github.com/laminas/laminas-console'
 extra:
     show_special_homepage: true

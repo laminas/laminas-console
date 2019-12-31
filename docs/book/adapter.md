@@ -1,6 +1,6 @@
 # Console Adapters
 
-zend-console's console abstraction layer works around various bugs and limitations
+laminas-console's console abstraction layer works around various bugs and limitations
 in operating systems, including:
 
 - display of colorized text.
@@ -8,7 +8,7 @@ in operating systems, including:
 - discovery of console charset.
 - basic line drawing capabilities.
 
-Console adapters implement `Zend\Console\Adapter\AdapterInterface`, and you
+Console adapters implement `Laminas\Console\Adapter\AdapterInterface`, and you
 should typehint against that interface for purposes of working with console
 capabilities. Adapters are included for:
 
@@ -21,17 +21,17 @@ capabilities. Adapters are included for:
 While you may know your current environment, you will want to write your code in
 such a way that the console adapter is specific to whatever environment it is
 run within. As such, you likely should never instantiate an adapter directly.
-zend-console, and the zend-mvc integration, provide tools for retrieving an
+laminas-console, and the laminas-mvc integration, provide tools for retrieving an
 appropriate adapter for the current environment in a generic way.
 
 ### Standalone
 
-zend-console provides a factory for creating and returning the console adapter
+laminas-console provides a factory for creating and returning the console adapter
 specific to your environment:
 
 ```php
-use Zend\Console\Console;
-use Zend\Console\Exception\ExceptionInterface as ConsoleException;
+use Laminas\Console\Console;
+use Laminas\Console\Exception\ExceptionInterface as ConsoleException;
 
 try {
     $console = Console::getInstance();
@@ -41,7 +41,7 @@ try {
 }
 ```
 
-This returns a `Zend\Console\Adapter\AdapterInterface` implementation suitable
+This returns a `Laminas\Console\Adapter\AdapterInterface` implementation suitable
 for your current environment.
 
 > #### Exceptions
@@ -49,10 +49,10 @@ for your current environment.
 > For practical and security reasons, `Console::getInstance()` will always throw
 > an exception if you attempt to get console instance in a non-console
 > environment (i.e. when running on a HTTP server). You can override this
-> behavior by manually instantiating one of the `Zend\Console\Adapter\*`
+> behavior by manually instantiating one of the `Laminas\Console\Adapter\*`
 > classes; you should do this only as a last resort, however!
 
-### zend-mvc
+### laminas-mvc
 
 If you are using MVC controllers you can obtain Console adapter instance using
 the `ServiceManager`.
@@ -60,9 +60,9 @@ the `ServiceManager`.
 ```php
 namespace Application;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\Exception\RuntimeException;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Console\Adapter\AdapterInterface as Console;
+use Laminas\Console\Exception\RuntimeException;
 
 class ConsoleController extends AbstractActionController
 {
@@ -83,8 +83,8 @@ instead:
 ```php
 namespace Application;
 
-use Zend\Mvc\Controller\AbstractConsoleController;
-use Zend\Console\Exception\RuntimeException;
+use Laminas\Mvc\Controller\AbstractConsoleController;
+use Laminas\Console\Exception\RuntimeException;
 
 class ConsoleController extends AbstractConsoleController
 {
@@ -104,7 +104,7 @@ class ConsoleController extends AbstractConsoleController
 
 ## Using the console adapter
 
-`Zend\Console\Adapter\AdapterInterface` describes a rich set of capabilities.
+`Laminas\Console\Adapter\AdapterInterface` describes a rich set of capabilities.
 Below is a sampling.
 
 ### Window size and title
@@ -133,13 +133,13 @@ Method | Description
 Method | Description
 ------ | -----------
 `$console->isUtf8()` | (boolean) Is the console UTF-8 compatible (can it display unicode strings)?
-`$console->getCharset()` | (`Zend\Console\Charset\CharsetInterface`) This method will return an instance of one of the `Zend\Console\Charset\*` classes representing the readable charset present for line-drawing. It is automatically detected by the adapter.
+`$console->getCharset()` | (`Laminas\Console\Charset\CharsetInterface`) This method will return an instance of one of the `Laminas\Console\Charset\*` classes representing the readable charset present for line-drawing. It is automatically detected by the adapter.
 
 ### Writing to the console
 
 Method | Description
 ------ | -----------
-`$console->write(string $text, $color = null, $bgColor = null)` | Write `$text` to the console, optionally using foreground `$color` and background `$bgColor`.  Color values must be one of the `Zend\Console\ColorInterface` constants.
+`$console->write(string $text, $color = null, $bgColor = null)` | Write `$text` to the console, optionally using foreground `$color` and background `$bgColor`.  Color values must be one of the `Laminas\Console\ColorInterface` constants.
 `$console->writeLine(string $text, $color = null, $bgColor = null)` | Write a single line of `$text` to the console. This method will output an environment-specific newline character at the end of the text, moving the console cursor to next line.
 `$console->writeAt(string $text, int $x, int $y, $color = null, $bgColor = null)` | Write `$text` at the specified `$x` and `$y` coordinates of console window. The top left corner of the screen has coordinates of `$x = 1; $y = 1`. To retrieve the far-right and bottom coordinates, use the `getWidth()` and `getHeight()` methods.
 

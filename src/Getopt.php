@@ -1,14 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console;
+namespace Laminas\Console;
 
 /**
  * Getopt is a class to parse options for command-line
@@ -38,7 +36,7 @@ namespace Zend\Console;
  * - Automatic generation of a helpful usage message.
  * - Signal end of options with '--'; subsequent arguments are treated
  *   as non-option arguments, even if they begin with '-'.
- * - Raise exception Zend_Console_Getopt_Exception in several cases
+ * - Raise exception Laminas_Console_Getopt_Exception in several cases
  *   when invalid flags or parameters are given.  Usage message is
  *   returned in the exception object.
  *
@@ -68,8 +66,8 @@ namespace Zend\Console;
  * Example:  'abc:' means options '-a', '-b', and '-c'
  * are legal, and the latter requires a string parameter.
  *
- * @category   Zend
- * @package    Zend_Console_Getopt
+ * @category   Laminas
+ * @package    Laminas_Console_Getopt
  * @version    Release: @package_version@
  * @since      Class available since Release 0.6.0
  *
@@ -90,13 +88,16 @@ class Getopt
     /**
      * The options for a given application can be in multiple formats.
      * modeGnu is for traditional 'ab:c:' style getopt format.
-     * modeZend is for a more structured format.
+     * modeLaminas is for a more structured format.
      */
-    const MODE_ZEND                         = 'zend';
+    /** @deprecated Use MODE_LAMINAS instead */
+    const MODE_ZEND    = 'laminas';
+    const MODE_LAMINAS = 'laminas';
+
     const MODE_GNU                          = 'gnu';
 
     /**
-     * Constant tokens for various symbols used in the mode_zend
+     * Constant tokens for various symbols used in the mode_laminas
      * rule format.
      */
     const PARAM_REQUIRED                    = '=';
@@ -108,7 +109,7 @@ class Getopt
 
     /**
      * These are constants for optional behavior of this class.
-     * ruleMode is either 'zend' or 'gnu' or a user-defined mode.
+     * ruleMode is either 'laminas' or 'gnu' or a user-defined mode.
      * dashDash is true if '--' signifies the end of command-line options.
      * ignoreCase is true if '--opt' and '--OPT' are implicitly synonyms.
      * parseAll is true if all options on the command line should be parsed, regardless of
@@ -126,7 +127,7 @@ class Getopt
 
     /**
      * Defaults for getopt configuration are:
-     * ruleMode is 'zend' format,
+     * ruleMode is 'laminas' format,
      * dashDash (--) token is enabled,
      * ignoreCase is not enabled,
      * parseAll is enabled,
@@ -136,7 +137,7 @@ class Getopt
      * freeform flags are disable.
      */
     protected $getoptConfig = array(
-        self::CONFIG_RULEMODE                => self::MODE_ZEND,
+        self::CONFIG_RULEMODE                => self::MODE_LAMINAS,
         self::CONFIG_DASHDASH                => true,
         self::CONFIG_IGNORECASE              => false,
         self::CONFIG_PARSEALL                => true,
@@ -201,7 +202,7 @@ class Getopt
      * The constructor takes one to three parameters.
      *
      * The first parameter is $rules, which may be a string for
-     * gnu-style format, or a structured array for Zend-style format.
+     * gnu-style format, or a structured array for Laminas-style format.
      *
      * The second parameter is $argv, and it is optional.  If not
      * specified, $argv is inferred from the global argv.
@@ -219,7 +220,7 @@ class Getopt
         if (!isset($_SERVER['argv'])) {
             $errorDescription = (ini_get('register_argc_argv') == false)
                 ? "argv is not available, because ini option 'register_argc_argv' is set Off"
-                : '$_SERVER["argv"] is not set, but Zend_Console_Getopt cannot work without this information.';
+                : '$_SERVER["argv"] is not set, but Laminas_Console_Getopt cannot work without this information.';
             throw new Exception\InvalidArgumentException($errorDescription);
         }
 
@@ -313,8 +314,8 @@ class Getopt
      * These are appended to those defined when the constructor was called.
      *
      * @param  array $argv
-     * @throws \Zend\Console\Exception\InvalidArgumentException When not given an array as parameter
-     * @return \Zend\Console\Getopt Provides a fluent interface
+     * @throws \Laminas\Console\Exception\InvalidArgumentException When not given an array as parameter
+     * @return \Laminas\Console\Getopt Provides a fluent interface
      */
     public function addArguments($argv)
     {
@@ -331,8 +332,8 @@ class Getopt
      * These replace any currently defined.
      *
      * @param  array $argv
-     * @throws \Zend\Console\Exception\InvalidArgumentException When not given an array as parameter
-     * @return \Zend\Console\Getopt Provides a fluent interface
+     * @throws \Laminas\Console\Exception\InvalidArgumentException When not given an array as parameter
+     * @return \Laminas\Console\Getopt Provides a fluent interface
      */
     public function setArguments($argv)
     {
@@ -347,10 +348,10 @@ class Getopt
     /**
      * Define multiple configuration options from an associative array.
      * These are not program options, but properties to configure
-     * the behavior of Zend_Console_Getopt.
+     * the behavior of Laminas_Console_Getopt.
      *
      * @param  array $getoptConfig
-     * @return \Zend\Console\Getopt Provides a fluent interface
+     * @return \Laminas\Console\Getopt Provides a fluent interface
      */
     public function setOptions($getoptConfig)
     {
@@ -365,11 +366,11 @@ class Getopt
     /**
      * Define one configuration option as a key/value pair.
      * These are not program options, but properties to configure
-     * the behavior of Zend_Console_Getopt.
+     * the behavior of Laminas_Console_Getopt.
      *
      * @param  string $configKey
      * @param  string $configValue
-     * @return \Zend\Console\Getopt Provides a fluent interface
+     * @return \Laminas\Console\Getopt Provides a fluent interface
      */
     public function setOption($configKey, $configValue)
     {
@@ -384,15 +385,15 @@ class Getopt
      * These are appended to the rules defined when the constructor was called.
      *
      * @param  array $rules
-     * @return \Zend\Console\Getopt Provides a fluent interface
+     * @return \Laminas\Console\Getopt Provides a fluent interface
      */
     public function addRules($rules)
     {
         $ruleMode = $this->getoptConfig['ruleMode'];
         switch ($this->getoptConfig['ruleMode']) {
-            case self::MODE_ZEND:
+            case self::MODE_LAMINAS:
                 if (is_array($rules)) {
-                    $this->_addRulesModeZend($rules);
+                    $this->_addRulesModeLaminas($rules);
                     break;
                 }
                 // intentional fallthrough
@@ -467,7 +468,7 @@ class Getopt
             );
         }
 
-        $json = \Zend\Json\Json::encode($j);
+        $json = \Laminas\Json\Json::encode($j);
         return $json;
     }
 
@@ -610,8 +611,8 @@ class Getopt
      * mapping option name (short or long) to an alias.
      *
      * @param  array $aliasMap
-     * @throws \Zend\Console\Exception\ExceptionInterface
-     * @return \Zend\Console\Getopt Provides a fluent interface
+     * @throws \Laminas\Console\Exception\ExceptionInterface
+     * @return \Laminas\Console\Getopt Provides a fluent interface
      */
     public function setAliases($aliasMap)
     {
@@ -641,7 +642,7 @@ class Getopt
      * mapping option name (short or long) to the help string.
      *
      * @param  array $helpMap
-     * @return \Zend\Console\Getopt Provides a fluent interface
+     * @return \Laminas\Console\Getopt Provides a fluent interface
      */
     public function setHelp($helpMap)
     {
@@ -662,7 +663,7 @@ class Getopt
      * Also find option parameters, and remaining arguments after
      * all options have been parsed.
      *
-     * @return \Zend\Console\Getopt|null Provides a fluent interface
+     * @return \Laminas\Console\Getopt|null Provides a fluent interface
      */
     public function parse()
     {
@@ -740,7 +741,7 @@ class Getopt
      *
      * @param  string $flag
      * @param  mixed  $argv
-     * @throws \Zend\Console\Exception\ExceptionInterface
+     * @throws \Laminas\Console\Exception\ExceptionInterface
      * @return void
      */
     protected function _parseSingleOption($flag, &$argv)
@@ -881,7 +882,7 @@ class Getopt
      *
      * @param  string $flag
      * @param  string $param
-     * @throws \Zend\Console\Exception\ExceptionInterface
+     * @throws \Laminas\Console\Exception\ExceptionInterface
      * @return bool
      */
     protected function _checkParameterType($flag, $param)
@@ -947,13 +948,13 @@ class Getopt
     }
 
     /**
-     * Define legal options using the Zend-style format.
+     * Define legal options using the Laminas-style format.
      *
      * @param  array $rules
-     * @throws \Zend\Console\Exception\ExceptionInterface
+     * @throws \Laminas\Console\Exception\ExceptionInterface
      * @return void
      */
-    protected function _addRulesModeZend($rules)
+    protected function _addRulesModeLaminas($rules)
     {
         foreach ($rules as $ruleCode => $helpMessage) {
             // this may have to translate the long parm type if there

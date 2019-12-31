@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console\Adapter;
+namespace Laminas\Console\Adapter;
 
-use Zend\Console\Charset;
-use Zend\Console\Exception;
-use Zend\Console\ColorInterface as Color;
+use Laminas\Console\Charset;
+use Laminas\Console\ColorInterface as Color;
+use Laminas\Console\Exception;
 
 /**
  * @todo Add GNU readline support
- * @category   Zend
- * @package    Zend_Console
+ * @category   Laminas
+ * @package    Laminas_Console
  * @subpackage Adapter
  * @link http://en.wikipedia.org/wiki/ANSI_escape_code
  */
@@ -222,7 +220,7 @@ class Posix extends AbstractAdapter
         if ($color !== null) {
             if (!isset(static::$ansiColorMap['fg'][$color])) {
                 throw new Exception\BadMethodCallException(sprintf(
-                    'Unknown color "%s". Please use one of the Zend\Console\ColorInterface constants',
+                    'Unknown color "%s". Please use one of the Laminas\Console\ColorInterface constants',
                     $color
                 ));
             }
@@ -232,7 +230,7 @@ class Posix extends AbstractAdapter
         if ($bgColor !== null) {
             if (!isset(static::$ansiColorMap['bg'][$bgColor])) {
                 throw new Exception\BadMethodCallException(sprintf(
-                    'Unknown color "%s". Please use one of the Zend\Console\ColorInterface constants',
+                    'Unknown color "%s". Please use one of the Laminas\Console\ColorInterface constants',
                     $bgColor
                 ));
             }
@@ -257,7 +255,7 @@ class Posix extends AbstractAdapter
         if ($color !== null) {
             if (!isset(static::$ansiColorMap['fg'][$color])) {
                 throw new Exception\BadMethodCallException(sprintf(
-                    'Unknown color "%s". Please use one of the Zend\Console\ColorInterface constants',
+                    'Unknown color "%s". Please use one of the Laminas\Console\ColorInterface constants',
                     $color
                 ));
             }
@@ -279,7 +277,7 @@ class Posix extends AbstractAdapter
         if ($bgColor !== null) {
             if (!isset(static::$ansiColorMap['bg'][$bgColor])) {
                 throw new Exception\BadMethodCallException(sprintf(
-                    'Unknown color "%s". Please use one of the Zend\Console\ColorInterface constants',
+                    'Unknown color "%s". Please use one of the Laminas\Console\ColorInterface constants',
                     $bgColor
                 ));
             }

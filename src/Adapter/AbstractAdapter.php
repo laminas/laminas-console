@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console\Adapter;
+namespace Laminas\Console\Adapter;
 
-use Zend\Console\Charset;
-use Zend\Console\Exception;
-use Zend\Stdlib\StringUtils;
+use Laminas\Console\Charset;
+use Laminas\Console\Exception;
+use Laminas\Stdlib\StringUtils;
 
 /**
  * Common console adapter codebase

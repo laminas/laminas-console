@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console\Prompt;
+namespace LaminasTest\Console\Prompt;
 
-use Zend\Console\Prompt\Checkbox;
-use ZendTest\Console\TestAssets\ConsoleAdapter;
+use Laminas\Console\Prompt\Checkbox;
+use LaminasTest\Console\TestAssets\ConsoleAdapter;
 
 /**
- * @group      Zend_Console
- * @covers \Zend\Console\Prompt\Checkbox
+ * @group      Laminas_Console
+ * @covers \Laminas\Console\Prompt\Checkbox
  */
 class CheckboxTest extends \PHPUnit_Framework_TestCase
 {

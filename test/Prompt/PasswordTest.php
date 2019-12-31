@@ -1,32 +1,31 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console\Prompt;
+namespace LaminasTest\Console\Prompt;
 
-use Zend\Console\Prompt\Password;
+use Laminas\Console\Prompt\Password;
 
 /**
- * Tests for {@see \Zend\Console\Prompt\Password}
+ * Tests for {@see \Laminas\Console\Prompt\Password}
  *
- * @covers \Zend\Console\Prompt\Password
+ * @covers \Laminas\Console\Prompt\Password
  */
 class PasswordTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zend\Console\Adapter\AbstractAdapter|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\Console\Adapter\AbstractAdapter|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $adapter;
 
     public function setUp()
     {
         $this->adapter = $this->getMock(
-            'Zend\Console\Adapter\AbstractAdapter',
+            'Laminas\Console\Adapter\AbstractAdapter',
             array('write', 'writeLine', 'readChar')
         );
     }

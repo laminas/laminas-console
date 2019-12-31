@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console\Adapter;
+namespace Laminas\Console\Adapter;
 
+use Laminas\Console\Charset;
+use Laminas\Console\Color\Xterm256;
+use Laminas\Console\ColorInterface as Color;
+use Laminas\Console\Exception;
 use ReflectionClass;
-use Zend\Console\Charset;
-use Zend\Console\Color\Xterm256;
-use Zend\Console\ColorInterface as Color;
-use Zend\Console\Exception;
 
 /**
  * @todo Add GNU readline support
@@ -393,8 +392,8 @@ class Posix extends AbstractAdapter
         if ($color !== null) {
             if (! isset(static::$ansiColorMap[$type][$color])) {
                 throw new Exception\BadMethodCallException(sprintf(
-                    'Unknown color "%s". Please use one of the Zend\Console\ColorInterface constants '
-                    . 'or use Zend\Console\Color\Xterm256::calculate',
+                    'Unknown color "%s". Please use one of the Laminas\Console\ColorInterface constants '
+                    . 'or use Laminas\Console\Color\Xterm256::calculate',
                     $color
                 ));
             }

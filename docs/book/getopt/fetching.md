@@ -1,20 +1,20 @@
 # Fetching Options and Arguments
 
-After you have declared the options that the `Zend\Console\Getopt` object should
+After you have declared the options that the `Laminas\Console\Getopt` object should
 recognize, and supplied arguments from the command-line or an array, you can
 query the object to find out which options were specified by a user in a given
 command-line invocation of your program. The class implements magic methods so
 you can query for options by name.
 
 The parsing of the data is deferred until the first query you make against the
-`Zend\Console\Getopt` object to find out if an option was given.  This allows
+`Laminas\Console\Getopt` object to find out if an option was given.  This allows
 you to use several method calls to configure the options, arguments, help
 strings, and configuration options before parsing takes place.
 
 ## Handling Getopt Exceptions
 
 If the user gave any invalid options on the command-line, the parsing function
-throws a `Zend\Console\Exception\RuntimeException`. You should catch this
+throws a `Laminas\Console\Exception\RuntimeException`. You should catch this
 exception in your application code. You can use the `parse()` method to force
 the object to parse the arguments. This is useful because you can invoke
 `parse()` in a `try` block; if it passes, you can be sure that the parsing won't
@@ -26,9 +26,9 @@ messages for all declared options.
 
 ```php
 try {
-    $opts = new Zend\Console\Getopt('abp:');
+    $opts = new Laminas\Console\Getopt('abp:');
     $opts->parse();
-} catch (Zend\Console\Exception\RuntimeException $e) {
+} catch (Laminas\Console\Exception\RuntimeException $e) {
     echo $e->getUsageMessage();
     exit;
 }
@@ -51,7 +51,7 @@ method returns `TRUE`. Otherwise the method returns `NULL`.
 ### Using getOption()
 
 ```php
-$opts = new Zend\Console\Getopt('abp:');
+$opts = new Laminas\Console\Getopt('abp:');
 $b = $opts->getOption('b');
 $p_parameter = $opts->getOption('p');
 ```
@@ -63,7 +63,7 @@ property names.
 ### Using property Overloading
 
 ```php
-$opts = new Zend\Console\Getopt('abp:');
+$opts = new Laminas\Console\Getopt('abp:');
 if (isset($opts->b)) {
     echo "I got the b option.\n";
 }
@@ -105,12 +105,12 @@ of the strings that were not part of any options.
 ### Using getRemainingArgs()
 
 ```php
-$opts = new Zend\Console\Getopt('abp:');
+$opts = new Laminas\Console\Getopt('abp:');
 $opts->setArguments(['-p', 'p_parameter', 'filename']);
 $args = $opts->getRemainingArgs(); // returns ['filename']
 ```
 
-`Zend\Console\Getopt` supports the GNU convention that an argument consisting of
+`Laminas\Console\Getopt` supports the GNU convention that an argument consisting of
 a double-dash signifies the end of options. Any arguments following this
 signifier must be treated as non-option arguments. This is useful if you might
 have a non-option argument that begins with a dash. For example: `rm --

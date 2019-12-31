@@ -1,26 +1,25 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console;
+namespace LaminasTest\Console;
 
+use Laminas\Console\Getopt;
 use PHPUnit\Framework\TestCase;
-use Zend\Console\Getopt;
 
 /**
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class GetoptTest extends TestCase
 {
     public function setUp()
     {
         if (ini_get('register_argc_argv') == false) {
-            $this->markTestSkipped("Cannot Test Zend\\Console\\Getopt without 'register_argc_argv' ini option true.");
+            $this->markTestSkipped("Cannot Test Laminas\\Console\\Getopt without 'register_argc_argv' ini option true.");
         }
         $_SERVER['argv'] = ['getopttest'];
     }
@@ -33,7 +32,7 @@ class GetoptTest extends TestCase
         $this->assertEquals($opts->p, 'p_arg');
     }
 
-    public function testGetoptLongOptionsZendMode()
+    public function testGetoptLongOptionsLaminasMode()
     {
         $opts = new Getopt(
             [
@@ -48,7 +47,7 @@ class GetoptTest extends TestCase
         $this->assertEquals($opts->pear, 'p_arg');
     }
 
-    public function testGetoptZendModeEqualsParam()
+    public function testGetoptLaminasModeEqualsParam()
     {
         $opts = new Getopt(
             [
@@ -100,14 +99,14 @@ class GetoptTest extends TestCase
 
     public function testGetoptExceptionForMissingFlag()
     {
-        $this->expectException('\Zend\Console\Exception\InvalidArgumentException');
+        $this->expectException('\Laminas\Console\Exception\InvalidArgumentException');
         $this->expectExceptionMessage('Blank flag not allowed in rule');
         $opts = new Getopt(['|a' => 'Apple option']);
     }
 
     public function testGetoptExceptionForKeyWithDuplicateFlagsViaOrOperator()
     {
-        $this->expectException('\Zend\Console\Exception\InvalidArgumentException');
+        $this->expectException('\Laminas\Console\Exception\InvalidArgumentException');
         $this->expectExceptionMessage('defined more than once');
         $opts = new Getopt(
             ['apple|apple' => 'apple-option']
@@ -116,7 +115,7 @@ class GetoptTest extends TestCase
 
     public function testGetoptExceptionForKeysThatDuplicateFlags()
     {
-        $this->expectException('\Zend\Console\Exception\InvalidArgumentException');
+        $this->expectException('\Laminas\Console\Exception\InvalidArgumentException');
         $this->expectExceptionMessage('defined more than once');
         $opts = new Getopt(
             ['a' => 'Apple option', 'apple|a' => 'Apple option']
@@ -134,8 +133,8 @@ class GetoptTest extends TestCase
         );
         try {
             $opts->parse();
-            $this->fail('Expected to catch Zend\Console\Exception\RuntimeException');
-        } catch (\Zend\Console\Exception\RuntimeException $e) {
+            $this->fail('Expected to catch Laminas\Console\Exception\RuntimeException');
+        } catch (\Laminas\Console\Exception\RuntimeException $e) {
             $this->assertEquals($e->getMessage(), 'Option "pear" is not recognized.');
         }
         $opts->addRules(['pear|p=s' => 'Pear option']);
@@ -151,7 +150,7 @@ class GetoptTest extends TestCase
             ],
             ['--apple']
         );
-        $this->expectException('\Zend\Console\Exception\RuntimeException');
+        $this->expectException('\Laminas\Console\Exception\RuntimeException');
         $this->expectExceptionMessage('requires a parameter');
         $opts->parse();
     }
@@ -180,7 +179,7 @@ class GetoptTest extends TestCase
         $this->assertEquals(true, $opts->B);
     }
 
-    public function testGetoptIgnoreCaseZendMode()
+    public function testGetoptIgnoreCaseLaminasMode()
     {
         $opts = new Getopt(
             [
@@ -247,12 +246,12 @@ class GetoptTest extends TestCase
     }
 
     /**
-     * @group ZF-5948
+     * @group Laminas-5948
      */
     public function testGetoptAddSetNonArrayArguments()
     {
         $opts = new Getopt('abp:', ['-foo']);
-        $this->expectException('\Zend\Console\Exception\InvalidArgumentException');
+        $this->expectException('\Laminas\Console\Exception\InvalidArgumentException');
         $this->expectExceptionMessage('should be an array');
         $opts->setArguments('-a');
     }
@@ -280,7 +279,7 @@ class GetoptTest extends TestCase
             ['-a', '--', '--fakeflag'],
             [Getopt::CONFIG_DASHDASH => false]
         );
-        $this->expectException('\Zend\Console\Exception\RuntimeException');
+        $this->expectException('\Laminas\Console\Exception\RuntimeException');
         $this->expectExceptionMessage('not recognized');
         $opts->parse();
     }
@@ -317,8 +316,8 @@ class GetoptTest extends TestCase
                 ['-x']
             );
             $opts->parse();
-            $this->fail('Expected to catch \Zend\Console\Exception\RuntimeException');
-        } catch (\Zend\Console\Exception\RuntimeException $e) {
+            $this->fail('Expected to catch \Laminas\Console\Exception\RuntimeException');
+        } catch (\Laminas\Console\Exception\RuntimeException $e) {
             $message = preg_replace(
                 '/Usage: .* \[ options \]/',
                 'Usage: <progname> [ options ]',
@@ -356,7 +355,7 @@ class GetoptTest extends TestCase
         $opts = new Getopt('abp:', ['--apple']);
         $opts->setAliases(['a' => 'apple']);
 
-        $this->expectException('\Zend\Console\Exception\InvalidArgumentException');
+        $this->expectException('\Laminas\Console\Exception\InvalidArgumentException');
         $this->expectExceptionMessage('defined more than once');
         $opts->setAliases(['b' => 'apple']);
     }
@@ -367,7 +366,7 @@ class GetoptTest extends TestCase
         $opts->setAliases(['c' => 'cumquat']);
         $opts->setArguments(['-c']);
 
-        $this->expectException('\Zend\Console\Exception\RuntimeException');
+        $this->expectException('\Laminas\Console\Exception\RuntimeException');
         $this->expectExceptionMessage('not recognized');
         $opts->parse();
     }
@@ -430,8 +429,8 @@ class GetoptTest extends TestCase
         $opts->setArguments(['-a', 'noninteger']);
         try {
             $opts->parse();
-            $this->fail('Expected to catch \Zend\Console\Exception\RuntimeException');
-        } catch (\Zend\Console\Exception\RuntimeException $e) {
+            $this->fail('Expected to catch \Laminas\Console\Exception\RuntimeException');
+        } catch (\Laminas\Console\Exception\RuntimeException $e) {
             $this->assertEquals(
                 $e->getMessage(),
                 'Option "apple" requires an integer parameter, but was given "noninteger".'
@@ -444,8 +443,8 @@ class GetoptTest extends TestCase
         $opts->setArguments(['-b', 'two words']);
         try {
             $opts->parse();
-            $this->fail('Expected to catch \Zend\Console\Exception\RuntimeException');
-        } catch (\Zend\Console\Exception\RuntimeException $e) {
+            $this->fail('Expected to catch \Laminas\Console\Exception\RuntimeException');
+        } catch (\Laminas\Console\Exception\RuntimeException $e) {
             $this->assertEquals(
                 $e->getMessage(),
                 'Option "banana" requires a single-word parameter, but was given "two words".'
@@ -469,7 +468,7 @@ class GetoptTest extends TestCase
     }
 
     /**
-     * @group ZF-2295
+     * @group Laminas-2295
      */
     public function testRegisterArgcArgvOffThrowsException()
     {
@@ -479,7 +478,7 @@ class GetoptTest extends TestCase
         try {
             $opts = new GetOpt('abp:');
             $this->fail();
-        } catch (\Zend\Console\Exception\InvalidArgumentException $e) {
+        } catch (\Laminas\Console\Exception\InvalidArgumentException $e) {
             $this->assertContains('$_SERVER["argv"]', $e->getMessage());
         }
 
@@ -489,7 +488,7 @@ class GetoptTest extends TestCase
     /**
      * Test to ensure that dashed long names will parse correctly
      *
-     * @group ZF-4763
+     * @group Laminas-4763
      */
     public function testDashWithinLongOptionGetsParsed()
     {
@@ -511,7 +510,7 @@ class GetoptTest extends TestCase
     }
 
     /**
-     * @group ZF-2064
+     * @group Laminas-2064
      */
     public function testAddRulesDoesNotThrowWarnings()
     {
@@ -525,7 +524,7 @@ class GetoptTest extends TestCase
     }
 
     /**
-     * @group ZF-5345
+     * @group Laminas-5345
      */
     public function testUsingDashWithoutOptionNameAsLastArgumentIsRecognizedAsRemainingArgument()
     {
@@ -537,18 +536,18 @@ class GetoptTest extends TestCase
     }
 
     /**
-     * @group ZF-5345
+     * @group Laminas-5345
      */
     public function testUsingDashWithoutOptionNotAsLastArgumentThrowsException()
     {
         $opts = new Getopt('abp:', ['-', 'file1']);
 
-        $this->expectException('\Zend\Console\Exception\RuntimeException');
+        $this->expectException('\Laminas\Console\Exception\RuntimeException');
         $opts->parse();
     }
 
     /**
-     * @group ZF-5624
+     * @group Laminas-5624
      */
     public function testEqualsCharacterInLongOptionsValue()
     {
@@ -638,7 +637,7 @@ class GetoptTest extends TestCase
     {
         $opts = new Getopt(
             ['colors' => 'Colors-option'],
-            ['color', '--freeform', 'test', 'zend'],
+            ['color', '--freeform', 'test', 'laminas'],
             [Getopt::CONFIG_FREEFORM_FLAGS => true]
         );
 
@@ -650,7 +649,7 @@ class GetoptTest extends TestCase
         // this formerly failed, because the index 'alias' is not set for freeform flags.
         $opts = new Getopt(
             ['colors' => 'Colors-option'],
-            ['color', '--freeform', 'test', 'zend'],
+            ['color', '--freeform', 'test', 'laminas'],
             [Getopt::CONFIG_FREEFORM_FLAGS => true]
         );
         $opts->parse();
@@ -662,7 +661,7 @@ class GetoptTest extends TestCase
     {
         $opts = new Getopt(
             ['colors' => 'Colors-option'],
-            ['color', '--freeform', 'test', 'zend'],
+            ['color', '--freeform', 'test', 'laminas'],
             [Getopt::CONFIG_FREEFORM_FLAGS => true]
         );
         $opts->parse();
@@ -683,7 +682,7 @@ class GetoptTest extends TestCase
             ['red', 'green', '-3']
         );
 
-        $this->expectException('\Zend\Console\Exception\RuntimeException');
+        $this->expectException('\Laminas\Console\Exception\RuntimeException');
         $opts->parse();
     }
 
@@ -706,7 +705,7 @@ class GetoptTest extends TestCase
             [Getopt::CONFIG_NUMERIC_FLAGS => true]
         );
 
-        $this->expectException('\Zend\Console\Exception\RuntimeException');
+        $this->expectException('\Laminas\Console\Exception\RuntimeException');
         $opts->parse();
     }
 
@@ -770,7 +769,7 @@ class GetoptTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Console\Exception\RuntimeException
+     * @expectedException \Laminas\Console\Exception\RuntimeException
      * @expectedExceptionMessage The option x is invalid. See usage.
      */
     public function testOptionCallbackReturnsFallsAndThrowException()

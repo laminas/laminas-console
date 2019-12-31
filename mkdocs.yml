@@ -1,23 +1,15 @@
 docs_dir: docs/book
 site_dir: docs/html
 nav:
-    - Home: index.md
-    - Introduction: intro.md
-    - Reference:
-      - 'Console Adapters': adapter.md
-      - 'Console Prompts': prompts.md
-      - Routes: routes.md
-    - 'MVC Integration':
-        - 'MVC Routing': mvc/routing.md
-        - 'Console-Aware Modules': mvc/modules.md
-        - 'Console-Aware Controllers': mvc/controllers.md
-    - Getopt:
-        - Introduction: getopt/intro.md
-        - 'Declaring Rules': getopt/rules.md
-        - 'Fetching Options and Arguments': getopt/fetching.md
-        - Configuration: getopt/configuration.md
+    - { Home: index.md }
+    - { Introduction: intro.md }
+    - { Reference: [{ 'Console Adapters': adapter.md }, { 'Console Prompts': prompts.md }, { Routes: routes.md }] }
+    - { 'MVC Integration': [{ 'MVC Routing': mvc/routing.md }, { 'Console-Aware Modules': mvc/modules.md }, { 'Console-Aware Controllers': mvc/controllers.md }] }
+    - { Getopt: [{ Introduction: getopt/intro.md }, { 'Declaring Rules': getopt/rules.md }, { 'Fetching Options and Arguments': getopt/fetching.md }, { Configuration: getopt/configuration.md }] }
 site_name: laminas-console
 site_description: 'Build console applications using getopt syntax or routing, complete with prompts'
 repo_url: 'https://github.com/laminas/laminas-console'
 extra:
     show_special_homepage: true
+    project: Components
+    project_url: 'https://docs.laminas.dev'

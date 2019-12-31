@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console\Prompt;
+namespace Laminas\Console\Prompt;
 
+use Laminas\Console\Adapter\AdapterInterface as ConsoleAdapter;
+use Laminas\Console\Console;
+use Laminas\Console\Exception;
 use ReflectionClass;
-use Zend\Console\Console;
-use Zend\Console\Adapter\AdapterInterface as ConsoleAdapter;
-use Zend\Console\Exception;
 
 /**
- * @category   Zend
- * @package    Zend_Console
+ * @category   Laminas
+ * @package    Laminas_Console
  * @subpackage Prompt
  */
 abstract class AbstractPrompt implements PromptInterface
@@ -78,7 +76,7 @@ abstract class AbstractPrompt implements PromptInterface
      *
      * This is a convenience method for creating statically creating prompts, i.e.:
      *
-     *      $name = Zend\Console\Prompt\Line::prompt("Enter your name: ");
+     *      $name = Laminas\Console\Prompt\Line::prompt("Enter your name: ");
      *
      * @return mixed
      * @throws Exception\BadMethodCallException
@@ -87,7 +85,7 @@ abstract class AbstractPrompt implements PromptInterface
     {
         if (get_called_class() === __CLASS__) {
             throw new Exception\BadMethodCallException(
-                'Cannot call prompt() on AbstractPrompt class. Use one of the Zend\Console\Prompt\ subclasses.'
+                'Cannot call prompt() on AbstractPrompt class. Use one of the Laminas\Console\Prompt\ subclasses.'
             );
         }
 

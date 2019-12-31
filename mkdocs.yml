@@ -1,6 +1,6 @@
 docs_dir: docs/book
 site_dir: docs/html
-pages:
+nav:
     - Home: index.md
     - Introduction: intro.md
     - Reference:
@@ -16,7 +16,6 @@ pages:
         - 'Declaring Rules': getopt/rules.md
         - 'Fetching Options and Arguments': getopt/fetching.md
         - Configuration: getopt/configuration.md
-site_name: zend-console
-site_description: Zend\Console
-repo_url: 'https://github.com/zendframework/zend-console'
-copyright: 'Copyright (c) 2005-2019 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
+site_name: laminas-console
+site_description: Laminas\Console
+repo_url: 'https://github.com/laminas/laminas-console'

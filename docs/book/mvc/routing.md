@@ -1,11 +1,11 @@
 # MVC Routing
 
-zend-mvc provides integration with zend-console, routing command line arguments
+laminas-mvc provides integration with laminas-console, routing command line arguments
 to the appropriate action controller and action method that will handle the
 request. Actions can perform any number of tasks prior to returning a result to
 display in the console window.
 
-When using zend-mvc, console routes are provided via configuration.
+When using laminas-mvc, console routes are provided via configuration.
 
 ```php
 // The following can sit inside of module/Application/config/module.config.php,
@@ -27,7 +27,7 @@ return [
 ];
 ```
 
-Console routes exposed via zend-mvc will only be processed when the application
+Console routes exposed via laminas-mvc will only be processed when the application
 is run inside a console (terminal) window; they are not used for web (HTTP)
 requests. It is possible to define only HTTP routes (web application only), only
 console routes (console-only application), or a mixture of the two.
@@ -58,13 +58,13 @@ invoked.
 
 In the last example of the previous section, we noted that configuration for a
 given route can accept a `type` argument. This refers to the route type (which
-maps to a class) to use when creating the route instance. zend-mvc defines
+maps to a class) to use when creating the route instance. laminas-mvc defines
 several types.
 
 ### Simple route
 
-`Zend\Mvc\Router\Console\Simple` is a factory for zend-console's
-`DefaultRouteMatcher`, and decorates it to work with the zend-mvc routing
+`Laminas\Mvc\Router\Console\Simple` is a factory for laminas-console's
+`DefaultRouteMatcher`, and decorates it to work with the laminas-mvc routing
 system. See the section on [the default route matcher](../routes.md#the-default-route-matcher)
 for details on route strings and available configuration to provide.
 

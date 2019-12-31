@@ -1,21 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console\Charset;
+namespace Laminas\Console\Charset;
 
 /**
  * DEC Special Graphics (VT100 line drawing) character set
  *
  * @link http://vt100.net/docs/vt220-rm/table2-4.html
- * @category   Zend
- * @package    Zend_Console
+ * @category   Laminas
+ * @package    Laminas_Console
  * @subpackage Charset
  */
 class DECSG implements CharsetInterface

@@ -1,18 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console\Adapter;
+namespace Laminas\Console\Adapter;
 
-use Zend\Console\Charset\CharsetInterface;
-use Zend\Console\Exception;
-use Zend\Console\Charset;
+use Laminas\Console\Charset;
+use Laminas\Console\Charset\CharsetInterface;
+use Laminas\Console\Exception;
 
 /**
  * MS Windows with ANSICON console adapter
@@ -28,8 +26,8 @@ use Zend\Console\Charset;
  * It's best to use non-unicode code page 437, 850, 851, 852 or similar. Run "help mode" for more
  * information on how to change Windows console code page.
  *
- * @category   Zend
- * @package    Zend_Console
+ * @category   Laminas
+ * @package    Laminas_Console
  * @subpackage Adapter
  */
 class WindowsAnsicon extends Posix

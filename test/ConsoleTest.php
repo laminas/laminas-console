@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console;
+namespace LaminasTest\Console;
 
-use Zend\Console\Console;
+use Laminas\Console\Console;
 
 /**
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class ConsoleTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +26,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(Console::isConsole());
         $className = Console::detectBestAdapter();
         $adpater = new $className;
-        $this->assertInstanceOf('Zend\Console\Adapter\AdapterInterface', $adpater);
+        $this->assertInstanceOf('Laminas\Console\Adapter\AdapterInterface', $adpater);
 
         Console::overrideIsConsole(false);
 
@@ -55,27 +54,27 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     public function testCanGetInstance()
     {
         $console = Console::getInstance();
-        $this->assertInstanceOf('Zend\Console\Adapter\AdapterInterface', $console);
+        $this->assertInstanceOf('Laminas\Console\Adapter\AdapterInterface', $console);
     }
 
     public function testCanNotGetInstanceInNoConsoleMode()
     {
         Console::overrideIsConsole(false);
-        $this->setExpectedException('Zend\Console\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Console\Exception\RuntimeException');
         Console::getInstance();
     }
 
     public function testCanForceInstance()
     {
         $console = Console::getInstance('Posix');
-        $this->assertInstanceOf('Zend\Console\Adapter\AdapterInterface', $console);
-        $this->assertInstanceOf('Zend\Console\Adapter\Posix', $console);
+        $this->assertInstanceOf('Laminas\Console\Adapter\AdapterInterface', $console);
+        $this->assertInstanceOf('Laminas\Console\Adapter\Posix', $console);
 
         Console::overrideIsConsole(null);
         Console::resetInstance();
 
         $console = Console::getInstance('Windows');
-        $this->assertInstanceOf('Zend\Console\Adapter\AdapterInterface', $console);
-        $this->assertInstanceOf('Zend\Console\Adapter\Windows', $console);
+        $this->assertInstanceOf('Laminas\Console\Adapter\AdapterInterface', $console);
+        $this->assertInstanceOf('Laminas\Console\Adapter\Windows', $console);
     }
 }

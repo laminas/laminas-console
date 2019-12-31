@@ -1,27 +1,26 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Console;
+namespace Laminas\Console;
 
-use Zend\Stdlib\Message;
-use Zend\Stdlib\Parameters;
-use Zend\Stdlib\RequestInterface;
+use Laminas\Stdlib\Message;
+use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\RequestInterface;
 
 class Request extends Message implements RequestInterface
 {
     /**
-     * @var \Zend\Stdlib\Parameters
+     * @var \Laminas\Stdlib\Parameters
      */
     protected $params = null;
 
     /**
-     * @var \Zend\Stdlib\Parameters
+     * @var \Laminas\Stdlib\Parameters
      */
     protected $envParams = null;
 
@@ -75,7 +74,7 @@ class Request extends Message implements RequestInterface
     /**
      * Exchange parameters object
      *
-     * @param \Zend\Stdlib\Parameters $params
+     * @param \Laminas\Stdlib\Parameters $params
      * @return Request
      */
     public function setParams(Parameters $params)
@@ -88,7 +87,7 @@ class Request extends Message implements RequestInterface
     /**
      * Return the container responsible for parameters
      *
-     * @return \Zend\Stdlib\Parameters
+     * @return \Laminas\Stdlib\Parameters
      */
     public function getParams()
     {
@@ -115,7 +114,7 @@ class Request extends Message implements RequestInterface
     /**
      * Return the container responsible for parameters
      *
-     * @return \Zend\Stdlib\Parameters
+     * @return \Laminas\Stdlib\Parameters
      */
     public function params()
     {
@@ -126,8 +125,8 @@ class Request extends Message implements RequestInterface
      * Provide an alternate Parameter Container implementation for env parameters in this object, (this is NOT the
      * primary API for value setting, for that see env())
      *
-     * @param \Zend\Stdlib\Parameters $env
-     * @return \Zend\Console\Request
+     * @param \Laminas\Stdlib\Parameters $env
+     * @return \Laminas\Console\Request
      */
     public function setEnv(Parameters $env)
     {
@@ -140,7 +139,7 @@ class Request extends Message implements RequestInterface
      *
      * @param string    $name       Parameter name
      * @param string    $default    (optional) default value in case the parameter does not exist
-     * @return \Zend\Stdlib\Parameters
+     * @return \Laminas\Stdlib\Parameters
      */
     public function getEnv($name, $default = null)
     {
@@ -150,7 +149,7 @@ class Request extends Message implements RequestInterface
     /**
      * Return the parameter container responsible for env parameters
      *
-     * @return \Zend\Stdlib\Parameters
+     * @return \Laminas\Stdlib\Parameters
      */
     public function env()
     {

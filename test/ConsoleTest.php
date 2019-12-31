@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console;
+namespace LaminasTest\Console;
 
-use Zend\Console\Console;
-use Zend\Console\Adapter;
+use Laminas\Console\Adapter;
+use Laminas\Console\Console;
 
 /**
- * @category   Zend
- * @package    Zend_Console
+ * @category   Laminas
+ * @package    Laminas_Console
  * @subpackage UnitTests
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class ConsoleTest extends \PHPUnit_Framework_TestCase
 {
@@ -66,7 +64,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     public function testCanNotGetInstanceInNoConsoleMode()
     {
         Console::overrideIsConsole(false);
-        $this->setExpectedException('Zend\Console\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Console\Exception\RuntimeException');
         Console::getInstance();
     }
 

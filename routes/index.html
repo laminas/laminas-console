@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build console applications using getopt syntax or routing, complete with prompts">  
+    <link rel="canonical" href="https://docs.laminas.dev/routes/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Routes - laminas-console - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-console</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../adapter/" class="subnavigation__link">Console Adapters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../prompts/" class="subnavigation__link">Console Prompts</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Routes</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">MVC Integration</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/routing/" class="subnavigation__link">MVC Routing</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/modules/" class="subnavigation__link">Console-Aware Modules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/controllers/" class="subnavigation__link">Console-Aware Controllers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Getopt</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/rules/" class="subnavigation__link">Declaring Rules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/fetching/" class="subnavigation__link">Fetching Options and Arguments</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/configuration/" class="subnavigation__link">Configuration</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-console</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-console/" class="header__link header__link--github" title="Go to repository of laminas-console">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#routematcherinterface" class="toc__link">RouteMatcherInterface</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#the-default-route-matcher" class="toc__link">The default Route Matcher</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#routing-strings" class="toc__link">Routing Strings</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#console-routes-cheat-sheet" class="toc__link">Console Routes Cheat-Sheet</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-console</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Routes</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="routes">Routes</h1>
+<p>A powerful feature the laminas-console component exposes is <em>routing</em>. Routing
+reads the command line arguments and matches them to criteria; if the criteria
+matches, it then returns a list of matched parameters and flags.</p>
+<blockquote>
+<h3>Handling routing results</h3>
+<p>laminas-console exposes routing via the <code>Laminas\Console\RouteMatcher\DefaultRouteMatcher</code>
+class, allowing you to create standalone routable console applications.</p>
+<p>laminas-mvc provides structure around routing results to controllers, which
+we <a href="../mvc/routing/">detail in the MVC Routing chapter</a>.</p>
+<p>Another option is <a href="https://github.com/zfcampus/zf-console">zf-console</a>, which
+provides a convenience wrapper around supplying routes and dispatching route
+handlers.</p>
+</blockquote>
+<h2 id="routematcherinterface">RouteMatcherInterface</h2>
+<p>laminas-console defines an interface for routing,
+<code>Laminas\Console\RouteMatcher\RouteMatcherInterface</code>, which defines a single
+method, <code>match()</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Console\RouteMatcher;</span>
+
+<span class=x>interface RouteMatcherInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * Match parameters against route passed to constructor</span>
+<span class=x>     *</span>
+<span class=x>     * @param array $params</span>
+<span class=x>     * @return array|null</span>
+<span class=x>     */</span>
+<span class=x>    public function match($params);</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Applications are expected to retrieve arguments from the console and pass them to
+the routing implementation as an array; the routing implementation will then
+return either a <code>null</code> value (meaning failure to match), or an associative array
+(the values matched).</p>
+<h2 id="the-default-route-matcher">The default Route Matcher</h2>
+<p>laminas-console's default routing implementation is <code>Laminas\Console\RouteMatcher\DefaultRouteMatcher</code>.
+Its constructor expects:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>    /**</span>
+<span class=x>     * @param string $route</span>
+<span class=x>     * @param array $constraints</span>
+<span class=x>     * @param array $defaults</span>
+<span class=x>     * @param array $aliases</span>
+<span class=x>     * @param array $filters</span>
+<span class=x>     * @param ValidatorInterface[] $validators</span>
+<span class=x>     * @throws Exception\InvalidArgumentException</span>
+<span class=x>     */</span>
+<span class=x>    public function __construct(</span>
+<span class=x>        $route,</span>
+<span class=x>        array $constraints = [],</span>
+<span class=x>        array $defaults = [],</span>
+<span class=x>        array $aliases = [],</span>
+<span class=x>        array $filters = null,</span>
+<span class=x>        array $validators = null</span>
+<span class=x>    )</span>
+</pre></div></p>
+<p>The arguments are as follows:</p>
+<ul>
+<li><code>$route</code> is a string pattern describing the argument list it will match.</li>
+<li><code>$constraints</code> is an associative array, with the keys being named arguments,
+  and the values being regular expressions to match against.</li>
+<li><code>$defaults</code> are an an associative array of named arguments, with the default
+  value to use if no value was provided; these should only be provided for
+  optional arguments (more on that below).</li>
+<li><code>$aliases</code> is an associative array where the key values are the alias names,
+  and the string values are the named argument the alias points to; if an alias
+  is used in the invocation, it will be returned using the named argument
+  instead. As an example, if you provide the alias <code>'FOO' =&gt; 'foo'</code>, and have
+  defined <code>--foo=</code> in the <code>$route</code>, you can invoke it with <code>--FOO=something</code>,
+  and the router will map it to the <code>foo</code> value.</li>
+<li><code>$filters</code> is an associative array of named arguments pointing to a
+  <code>Laminas\Filter\FilterInterface</code> instance (or <code>FilterChain</code> instance);
+  filters are used to normalize the value associated with the argument.</li>
+<li><code>$validators</code> is an associative array of named arguments pointing to a
+  <code>Laminas\Validator\ValidatorInterface</code> instance (or <code>ValidatorChain</code> instance);
+  validators are used to validate values, and provide more options than simply
+  regular expressions (as used with the <code>$constraints</code>).</li>
+</ul>
+<blockquote>
+<h3>Single Routes only</h3>
+<p><code>DefaultRouteMatcher</code> instances define <em>a single console route to match</em>. Most
+times, you will want to define multiple routes. The laminas-mvc integration and
+zf-console both provide methods for aggregating routes.</p>
+</blockquote>
+<h2 id="routing-strings">Routing Strings</h2>
+<p>Routing strings consist of one or more of the following:</p>
+<ul>
+<li><a href="#literal-parameters">Literal parameters</a> (e.g. <code>create object (external|internal)</code>)</li>
+<li><a href="#literal-flags">Literal flags</a> (e.g. <code>--verbose --direct [-d] [-a]</code>)</li>
+<li><a href="#positional-value-parameters">Positional value parameters</a> (e.g. <code>create &lt;modelName&gt; [&lt;destination&gt;]</code>)</li>
+<li><a href="#value-flag-parameters">Value flags</a> (e.g. <code>--name=NAME [--method=METHOD]</code>)</li>
+<li><a href="#grouping-literal-alternatives">Named literal alternative groups</a> (e.g., <code>(all|some|none):filter</code>)</li>
+<li><a href="#catch-all-parameters">Catch-all parameters</a> (e.g. <code>[...params]</code>)</li>
+</ul>
+<h3>Literal Parameters</h3>
+<p><em>Literal parameters</em> are expected to appear on the command line exactly the way
+they are provided in the route. For example:</p>
+<p> <div class=codehilite><pre><span></span>show users
+</pre></div></p>
+<p>This route will <strong>only</strong> match for the following command line</p>
+<p> <div class=codehilite><pre><span></span>$ laminas show users
+</pre></div></p>
+<p>It expects the <strong>mandatory literal parameters</strong> <code>show users</code>. It will not match
+if there are any more parameters, or if either one of the two words is missing.
+The order of words is also enforced.</p>
+<p>You can also provide <strong>optional literal parameters</strong>. As an example:</p>
+<p> <div class=codehilite><pre><span></span>show [all] users
+</pre></div></p>
+<p>The above route will match each of the following:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas show users
+$ laminas show all users
+</pre></div></p>
+<p>You can also provide <strong>parameter alternatives</strong>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>show [all|deleted|locked|admin] users</span>
+</pre></div></p>
+<p>The above route will match both with and without the second parameter; if
+provided, however, it must be one of the words listed. This enables matching any
+of the following:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$ laminas show users</span>
+<span class=x>$ laminas show locked users</span>
+<span class=x>$ laminas show admin users</span>
+<span class=x># etc.</span>
+</pre></div></p>
+<blockquote>
+<h4>Whitespace is ignored</h4>
+<p>Whitespaces in route definitions are ignored. If you separate your parameters
+with more spaces, or separate alternatives and pipe characters with spaces,
+the parser will ignore the whitespace.
+The above route definition is equivalent to:</p>
+<p><code>show [  all | deleted | locked | admin  ]   users</code></p>
+<p>As such, you can use whitespace for readability.</p>
+</blockquote>
+<h3>Literal Flags</h3>
+<p>Console tools commonly use flags. laminas-console allows you to define any number
+of optional and/or mandatory flags.</p>
+<p>Flag order is ignored; they can be defined in any order, and the user can
+provide them in any order.</p>
+<p>The following is a route with <strong>optional long flags</strong>:</p>
+<p> <div class=codehilite><pre><span></span>check users [--verbose] [--fast] [--thorough]
+</pre></div></p>
+<p>The above route will match commands like:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas check users
+$ laminas check users --fast
+$ laminas check users --verbose --thorough
+$ laminas check users --thorough --fast
+<span class=c1># etc</span>
+</pre></div></p>
+<p>You can also define one or more <strong>mandatory long flags</strong>, and group them as an
+alternative:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>check users (--suspicious|--expired) [--verbose] [--fast] [--thorough]</span>
+</pre></div></p>
+<p>The above will only match if we provide either the <code>--suspicious</code> or <code>--expired</code>
+flag:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas check users --expired
+$ laminas check users --expired --fast
+$ laminas check users --verbose --thorough --suspicious
+</pre></div></p>
+<p><strong>Short flags</strong> are also available, and may be grouped with long flags for
+convenience:</p>
+<p> <div class=codehilite><pre><span></span>check users [--verbose|-v] [--fast|-f] [--thorough|-t]
+</pre></div></p>
+<p>Now we can use short versions of our flags:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas check users -f
+$ laminas check users -v --thorough
+$ laminas check users -t -f -v
+<span class=c1># etc.</span>
+</pre></div></p>
+<h3>Positional Value Parameters</h3>
+<p>Value parameters capture any text-based input, and come in two forms: positional
+and flags (which we've already discussed).</p>
+<p><strong>Positional value parameters</strong> are expected to appear in an <em>exact</em> position on
+the command line, and are denoted using angle brackets (<code>&lt;&gt;</code>).</p>
+<p>Consider the following:</p>
+<p> <div class=codehilite><pre><span></span>delete user &lt;userEmail&gt;
+</pre></div></p>
+<p>This route will match the following commands:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas delete user john@acme.org
+$ laminas delete user betty@acme.org
+</pre></div></p>
+<p>When matched, the router will return the value under the key we provided in the
+route definition. If using the <code>DefaultRouteMatcher</code> standalone, this would be:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$matches = $route-&gt;match($argv);</span>
+<span class=x>$userEmail = $matches[&#39;userEmail&#39;];</span>
+</pre></div></p>
+<p>Under laminas-mvc, you will pull the parameter from the request:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$userEmail = $this-&gt;getRequest()-&gt;getParam(&#39;userEmail&#39;);</span>
+</pre></div></p>
+<p>You can also define <strong>optional positional value parameters</strong> by surrounding the
+parameter with square brackets:</p>
+<p> <div class=codehilite><pre><span></span>delete user [&lt;userEmail&gt;]
+</pre></div></p>
+<p>In this case, the <code>userEmail</code> parameter will not be required for the route to
+match. If it is not provided, the <code>userEmail</code> parameter will not be present in
+the matched parameters.</p>
+<p>You can define any number of positional value parameters:</p>
+<p> <div class=codehilite><pre><span></span>create user &lt;firstName&gt; &lt;lastName&gt; &lt;email&gt; &lt;position&gt;
+</pre></div></p>
+<p>This allows us to capture commands such as the following:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas create user Johnny Bravo john@acme.org Entertainer
+</pre></div></p>
+<blockquote>
+<h3>Escaping</h3>
+<p>Command line arguments on all systems must be properly escaped; otherwise they
+will not be passed to our application correctly. For example, to create a user
+with two names and a complex position description, we would issue the command
+like this:</p>
+<pre class=codehilite><code class=language-bash>
+$ laminas create user &quot;Johnan Tom&quot; Bravo john@acme.org &quot;Head of the Entertainment Department&quot;
+</code></pre>
+</blockquote>
+<h3>Value Flag Parameters</h3>
+<p>Positional value parameters are only matched if they appear in the exact order described in the
+route. If we do not want to enforce the order of parameters, we can define <strong>value flags</strong>.</p>
+<p><strong>Value flags</strong> can be defined and matched in <em>any</em> order, and can receive any
+text-based value.</p>
+<p> <div class=codehilite><pre><span></span>find user [--id=] [--firstName=] [--lastName=] [--email=] [--position=]
+</pre></div></p>
+<p>The above route will match for any of the following routes:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas find user
+$ laminas find user --id <span class=m>29110</span>
+$ laminas find user --id<span class=o>=</span><span class=m>29110</span>
+$ laminas find user --firstName<span class=o>=</span>Johny --lastName<span class=o>=</span>Bravo
+$ laminas find user --lastName Bravo --firstName Johny
+$ laminas find user --position<span class=o>=</span>Executive --firstName<span class=o>=</span>Bob
+$ laminas find user --position <span class=s2>&quot;Head of the Entertainment Department&quot;</span>
+<span class=c1># etc.</span>
+</pre></div></p>
+<p>As noted, the order of flags is irrelevant for the parser.</p>
+<blockquote>
+<h3>Providing Values</h3>
+<p>The parser understands values that are provided after either an equals symbol
+(<code>=</code>) or a single space, but only if the value itself does not contain
+whitespace.  Values containing any whitespace  must be properly quoted and
+appear following a space <em>only</em>; you cannot use the <code>=</code> sign to assign such
+values.</p>
+</blockquote>
+<p>In the previous example, all value flags are optional. You may also define
+<strong>mandatory value flags</strong> by omitting the square brackets:</p>
+<p> <div class=codehilite><pre><span></span>rename user --id= [--firstName=] [--lastName=]
+</pre></div></p>
+<p>In the above example, the <code>--id</code> parameter <strong>is required</strong> for the route to
+match. The following commands will work with this route:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas rename user --id <span class=m>123</span>
+$ laminas rename user --id <span class=m>123</span> --firstName Jonathan
+$ laminas rename user --id<span class=o>=</span><span class=m>123</span> --lastName<span class=o>=</span>Bravo
+<span class=c1># etc.</span>
+</pre></div></p>
+<h3>Grouping Literal Alternatives</h3>
+<p>In the flags section, we demonstrated grouping alternative flags:</p>
+<p> <div class=codehilite><pre><span></span>check users (--suspicious|--expired) [--verbose] [--fast] [--thorough]
+</pre></div></p>
+<p>This can also be done with literals:</p>
+<p> <div class=codehilite><pre><span></span>show (all|deleted|locked|admin) &lt;group&gt;
+</pre></div></p>
+<p>However, this makes checking for which alternative was used quite difficult:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>switch (true) {</span>
+<span class=x>    case (isset($params[&#39;all&#39;])):</span>
+<span class=x>        // all members</span>
+<span class=x>        break;</span>
+<span class=x>    case (isset($params[&#39;deleted&#39;])):</span>
+<span class=x>        // deleted members</span>
+<span class=x>        break;</span>
+<span class=x>    /* etc. */</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>To simplify this, you can <em>assign a name to the grouped alternatives</em>. Do this
+with the verbiage <code>:groupname</code> following the group:</p>
+<p> <div class=codehilite><pre><span></span>show (all|deleted|locked|admin):filter &lt;group&gt;
+</pre></div></p>
+<p>The above names the group "filter". When a group is provided a name, you can
+then retrieve the group name parameter, which will be set to the alternative
+used:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>switch ($params[&#39;filter&#39;]) {</span>
+<span class=x>    case &#39;all&#39;:</span>
+<span class=x>        // all members</span>
+<span class=x>        break;</span>
+<span class=x>    case &#39;deleted&#39;:</span>
+<span class=x>        // deleted members</span>
+<span class=x>        break;</span>
+<span class=x>    /* etc. */</span>
+<span class=x>}</span>
+</pre></div></p>
+<h3>Catch-all Parameters</h3>
+<ul>
+<li>Since 2.7.0</li>
+</ul>
+<p>When a route may receive a variable number of parameters (for example, to
+implement a feature like echo, or to process an arbitrary list of files),
+you can use a catch-all parameter to collect all parameters that are not
+matched by another part of the route. These collected values can be accessed
+as a single parameter (whose name is defined in the route) containing an array.</p>
+<p>When used, the catch-all parameter must come after all positional value
+parameters. You can only use one catch-all parameter per route.</p>
+<p>Example:</p>
+<p> <div class=codehilite><pre><span></span>say [loudly|softly]:volume [...words]
+</pre></div></p>
+<p>If the user entered the command line <code>say loudly I am here</code>, the 'volume'
+parameter would contain <code>'loudly'</code> and the 'words' parameter would contain
+<code>['I', 'am', 'here']</code>.</p>
+<h2 id="console-routes-cheat-sheet">Console Routes Cheat-Sheet</h2>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th align="left">Param type</th>
+<th align="left">Example route definition</th>
+<th align="left">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Literal params</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Literal</td>
+<td align="left"><code>foo bar</code></td>
+<td align="left">"foo" followed by "bar"</td>
+</tr>
+<tr>
+<td align="left">Literal alternative</td>
+<td align="left"><code>foo (bar|baz)</code></td>
+<td align="left">"foo" followed by "bar" or "baz"</td>
+</tr>
+<tr>
+<td align="left">Literal, optional</td>
+<td align="left"><code>foo [bar]</code></td>
+<td align="left">"foo", optional "bar"</td>
+</tr>
+<tr>
+<td align="left">Literal, optional alternative</td>
+<td align="left"><code>foo [bar|baz]</code></td>
+<td align="left">"foo", optional "bar" or "baz"</td>
+</tr>
+<tr>
+<td align="left"><strong>Flags</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Flag long</td>
+<td align="left"><code>foo --bar</code></td>
+<td align="left">"foo" as first parameter, "--bar" flag before or after</td>
+</tr>
+<tr>
+<td align="left">Flag long, optional</td>
+<td align="left"><code>foo [--bar]</code></td>
+<td align="left">"foo" as first parameter, optional "--bar" flag before or after</td>
+</tr>
+<tr>
+<td align="left">Flag long, optional, alternative</td>
+<td align="left"><code>foo [--bar|--baz]</code></td>
+<td align="left">"foo" as first parameter, optional "--bar" or "--baz", before or after</td>
+</tr>
+<tr>
+<td align="left">Flag short</td>
+<td align="left"><code>foo -b</code></td>
+<td align="left">"foo" as first parameter, "-b" flag before or after</td>
+</tr>
+<tr>
+<td align="left">Flag short, optional</td>
+<td align="left"><code>foo [-b]</code></td>
+<td align="left">"foo" as first parameter, optional "-b" flag before or after</td>
+</tr>
+<tr>
+<td align="left">Flag short, optional, alternative</td>
+<td align="left"><code>foo [-b|-z]</code></td>
+<td align="left">"foo" as first parameter, optional "-b" or "-z", before or after</td>
+</tr>
+<tr>
+<td align="left">Flag long/short alternative</td>
+<td align="left"><code>foo [--bar|-b]</code></td>
+<td align="left">"foo" as first parameter, optional "--bar" or "-b" before or after</td>
+</tr>
+<tr>
+<td align="left"><strong>Value parameters</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Value positional param</td>
+<td align="left"><code>foo &lt;bar&gt;</code></td>
+<td align="left">"foo" followed by any text (stored as "bar" param)</td>
+</tr>
+<tr>
+<td align="left">Value positional param, optional</td>
+<td align="left"><code>foo [&lt;bar&gt;]</code></td>
+<td align="left">"foo", optionally followed by any text (stored as "bar" param)</td>
+</tr>
+<tr>
+<td align="left">Value Flag</td>
+<td align="left"><code>foo --bar=</code></td>
+<td align="left">"foo" as first parameter, "--bar" with a value, before or after</td>
+</tr>
+<tr>
+<td align="left">Value Flag, optional</td>
+<td align="left"><code>foo [--bar=]</code></td>
+<td align="left">"foo" as first parameter, optionally "--bar" with a value, before or after</td>
+</tr>
+<tr>
+<td align="left"><strong>Parameter groups</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Literal params group</td>
+<td align="left"><code>foo (bar|baz):myParam</code></td>
+<td align="left">"foo" followed by "bar" or "baz" (stored as "myParam" param)</td>
+</tr>
+<tr>
+<td align="left">Literal optional params group</td>
+<td align="left"><code>foo [bar|baz]:myParam</code></td>
+<td align="left">"foo" followed by optional "bar" or "baz" (stored as "myParam" param)</td>
+</tr>
+<tr>
+<td align="left">Long flags group</td>
+<td align="left"><code>foo (--bar|--baz):myParam</code></td>
+<td align="left">"foo", "bar" or "baz" flag before or after (stored as "myParam" param)</td>
+</tr>
+<tr>
+<td align="left">Long optional flags group</td>
+<td align="left"><code>foo [--bar|--baz]:myParam</code></td>
+<td align="left">"foo", optional "bar" or "baz" flag before or after (as "myParam" param)</td>
+</tr>
+<tr>
+<td align="left">Short flags group</td>
+<td align="left"><code>foo (-b|-z):myParam</code></td>
+<td align="left">"foo", "-b" or "-z" flag before or after (stored as "myParam" param)</td>
+</tr>
+<tr>
+<td align="left">Short optional flags group</td>
+<td align="left"><code>foo [-b|-z]:myParam</code></td>
+<td align="left">"foo", optional "-b" or "-z" flag before or after (stored as "myParam" param)</td>
+</tr>
+<tr>
+<td align="left"><strong>Catch-all parameters</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Simple catch-all</td>
+<td align="left"><code>foo [...bar]</code></td>
+<td align="left">"foo" followed by any number of params, stored as array in "bar" param</td>
+</tr>
+<tr>
+<td align="left">Literal alternative w/ catch-all</td>
+<td align="left"><code>foo (bar|baz) [...xyzzy]</code></td>
+<td align="left">"foo" followed by "bar" or "baz", with extra input stored as "xyzzy" param</td>
+</tr>
+<tr>
+<td align="left">Value param w/ catch-all</td>
+<td align="left"><code>foo &lt;bar&gt; [...baz]</code></td>
+<td align="left">"foo", with first parameter stored as "bar" and remainder stored as "baz"</td>
+</tr>
+</tbody>
+</table></div>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../prompts/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../mvc/routing/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-console/edit/master/docs/book/routes.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-console</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../adapter/" class="subnavigation__link">Console Adapters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../prompts/" class="subnavigation__link">Console Prompts</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Routes</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">MVC Integration</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/routing/" class="subnavigation__link">MVC Routing</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/modules/" class="subnavigation__link">Console-Aware Modules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/controllers/" class="subnavigation__link">Console-Aware Controllers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Getopt</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/rules/" class="subnavigation__link">Declaring Rules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/fetching/" class="subnavigation__link">Fetching Options and Arguments</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/configuration/" class="subnavigation__link">Configuration</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-console';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-console" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

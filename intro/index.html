@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build console applications using getopt syntax or routing, complete with prompts">  
+    <link rel="canonical" href="https://docs.laminas.dev/intro/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Introduction - laminas-console - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-console</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../adapter/" class="subnavigation__link">Console Adapters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../prompts/" class="subnavigation__link">Console Prompts</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../routes/" class="subnavigation__link">Routes</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">MVC Integration</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/routing/" class="subnavigation__link">MVC Routing</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/modules/" class="subnavigation__link">Console-Aware Modules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/controllers/" class="subnavigation__link">Console-Aware Controllers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Getopt</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/rules/" class="subnavigation__link">Declaring Rules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/fetching/" class="subnavigation__link">Fetching Options and Arguments</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/configuration/" class="subnavigation__link">Configuration</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-console</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-console/" class="header__link header__link--github" title="Go to repository of laminas-console">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#quick-start-with-laminas-mvc" class="toc__link">Quick Start with laminas-mvc</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#handling-console-requests" class="toc__link">Handling Console Requests</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#adding-console-usage-info" class="toc__link">Adding Console Usage Info</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-console</a></li>
+
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Introduction</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+
+    <h1 id="introduction">Introduction</h1>
+<p>laminas-console provides both generic support for routable console applications, as
+well as the basis for adding console support to laminas-mvc-based applications.</p>
+<p>When a laminas-mvc application is run from a console window (a shell window or
+Windows command prompt), it will recognize this fact and prepare laminas-mvc
+components to handle the request. Console support is enabled by default, but to
+function properly it requires at least one <a href="../routes/">console route</a> and one
+<a href="https://getlaminas.org/manual/current/laminas.mvc.controllers.html">action controller</a>
+to handle the request.</p>
+<p>Alternately, you can build console-aware applications that are standalone;
+<a href="https://github.com/zfcampus/zf-console">zf-console</a> provides a standardized
+workflow for doing so.</p>
+<p>Features in laminas-console include:</p>
+<ul>
+<li><a href="../routes/">Console routing</a> allows you to invoke handlers (including
+  controller actions) depending on command line parameters provided by the user.</li>
+<li><a href="../adapter/">Console adapters</a> provide abstraction for interacting with
+  consoles exposed by different operating systems.</li>
+<li><a href="../prompts/">Console prompts</a> allow user interaction by asking questions and
+  retrieving input.</li>
+</ul>
+<p>When used with <a href="https://github.com/laminas/laminas-mvc">laminas-mvc</a>, the
+following features are also available:</p>
+<ul>
+<li><a href="../mvc/modules/">Module Manager integration</a> allows laminas-mvc applications and
+  modules to display help and usage information, either on demand, or in
+  situations where no route was matched.</li>
+<li><a href="../mvc/controllers/">Console-aware action controllers</a> will receive a console
+  request containing all named parameters and flags. They are able to send
+  output back to the console window.</li>
+</ul>
+<h2 id="quick-start-with-laminas-mvc">Quick Start with laminas-mvc</h2>
+<blockquote>
+<p>The following example details integration of laminas-console with laminas-mvc.
+However, all information pertaining to routing can also be used <em>without</em>
+laminas-mvc, but requires that you react to the routing results yourself. The
+aforementioned zf-console provides some basic wiring around that, and can and
+should be consulted if you do not choose to use laminas-console with laminas-mvc.</p>
+</blockquote>
+<p>A console route defines required and optional command line parameters. When a
+route matches, it returns an array of matched parameters &mdash; which may
+include default parameters, or even parameters not exposed via the command line
+(e.g., metadata related to the route).</p>
+<p>Let's assume that we'd like our application to handle the following command line:</p>
+<p> <div class=codehilite><pre><span></span>$ laminas user resetpassword user@mail.com
+</pre></div></p>
+<p>When a user runs our application (<code>laminas</code>) with these parameters, we'd like to call
+the action <code>resetpassword</code> of <code>Application\Controller\IndexController</code>.</p>
+<blockquote>
+<h3>The laminas command</h3>
+<p>We will use <code>laminas</code> to depict the entry point for your application; it can be
+a shell script in the application's <code>bin/</code> directory, or simply an alias for <code>php
+public/index.php</code>.</p>
+</blockquote>
+<p>First we need to create a <strong>route definition</strong>:</p>
+<p> <div class=codehilite><pre><span></span>user resetpassword &lt;userEmail&gt;
+</pre></div></p>
+<p>This simple route definition expects exactly three arguments: the literal
+"user", the literal "resetpassword", and the dynamic argument we're calling
+"userEmail". Let's assume we also accept one optional parameter to enable
+verbose operation:</p>
+<p> <div class=codehilite><pre><span></span>user resetpassword [--verbose|-v] &lt;userEmail&gt;
+</pre></div></p>
+<p>The modified console route above expects the same three arguments from our
+original example, but will also recognise an optional <code>--verbose</code> flag, or its
+shorthand version, <code>-v</code>.</p>
+<blockquote>
+<h3>Flag Order</h3>
+<p>The order of flags is ignored by laminas-console. Flags can appear before
+positional parameters, after them, or anywhere in between. The order of
+multiple flags is also irrelevant. This applies both to route definitions and
+the order that flags are used on the command line.</p>
+</blockquote>
+<p>Let's use the definition above and configure our console route. When using
+laminas-mvc, console routes are defined using the following configuration
+structure:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>return [</span>
+<span class=x>    &#39;router&#39; =&gt; [</span>
+<span class=x>        &#39;routes&#39; =&gt; [</span>
+<span class=x>            // HTTP routes are defined here</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+
+<span class=x>    &#39;console&#39; =&gt; [</span>
+<span class=x>        &#39;router&#39; =&gt; [</span>
+<span class=x>            &#39;routes&#39; =&gt; [</span>
+<span class=x>                // Console routes go here</span>
+<span class=x>            ],</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+
+<span class=x>    /* ... */</span>
+<span class=x>];</span>
+</pre></div></p>
+<p>Let's create our console route and point it to
+<code>Application\Controller\IndexController::resetpasswordAction()</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// We could define routes for Application\Controller\IndexController in</span>
+<span class=x>// the Application module config file, usually located at</span>
+<span class=x>// modules/application/config/module.config.php, or in one of the</span>
+<span class=x>// config/autoload/*.php files.</span>
+<span class=x>return [</span>
+<span class=x>    &#39;console&#39; =&gt; [</span>
+<span class=x>        &#39;router&#39; =&gt; [</span>
+<span class=x>            &#39;routes&#39; =&gt; [</span>
+<span class=x>                &#39;user-reset-password&#39; =&gt; [</span>
+<span class=x>                    &#39;options&#39; =&gt; [</span>
+<span class=x>                        &#39;route&#39;    =&gt; &#39;user resetpassword [--verbose|-v] &lt;userEmail&gt;&#39;,</span>
+<span class=x>                        &#39;defaults&#39; =&gt; [</span>
+<span class=x>                            &#39;controller&#39; =&gt; Application\Controller\Index::class,</span>
+<span class=x>                            &#39;action&#39;     =&gt; &#39;resetpassword&#39;,</span>
+<span class=x>                        ],</span>
+<span class=x>                    ],</span>
+<span class=x>                ],</span>
+<span class=x>            ],</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+<span class=x>    /* ... */</span>
+<span class=x>;</span>
+</pre></div></p>
+<h2 id="handling-console-requests">Handling Console Requests</h2>
+<p>When a user runs our application from the command line and arguments match our
+console route, the specified controller will be instantiated, and the specified
+action method will be called, just as happens with laminas-mvc HTTP requests.</p>
+<p>As such, let's add the <code>resetpassword</code> action to our
+<code>Application\Controller\IndexController</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Application\Controller;</span>
+
+<span class=x>use RuntimeException;</span>
+<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
+<span class=x>use Laminas\View\Model\ViewModel;</span>
+<span class=x>use Laminas\Console\Request as ConsoleRequest;</span>
+<span class=x>use Laminas\Math\Rand;</span>
+
+<span class=x>class IndexController extends AbstractActionController</span>
+<span class=x>{</span>
+<span class=x>    /* ... */</span>
+
+<span class=x>    public function resetpasswordAction()</span>
+<span class=x>    {</span>
+<span class=x>        $request = $this-&gt;getRequest();</span>
+
+<span class=x>        // Make sure that we are running in a console, and the user has not</span>
+<span class=x>        // tricked our application into running this action from a public web</span>
+<span class=x>        // server:</span>
+<span class=x>        if (! $request instanceof ConsoleRequest) {</span>
+<span class=x>            throw new RuntimeException(&#39;You can only use this action from a console!&#39;);</span>
+<span class=x>        }</span>
+
+<span class=x>        // Get user email from the console, and check if the user requested</span>
+<span class=x>        // verbosity:</span>
+<span class=x>        $userEmail   = $request-&gt;getParam(&#39;userEmail&#39;);</span>
+<span class=x>        $verbose     = $request-&gt;getParam(&#39;verbose&#39;) || $request-&gt;getParam(&#39;v&#39;);</span>
+
+<span class=x>        // Reset new password</span>
+<span class=x>        $newPassword = Rand::getString(16);</span>
+
+<span class=x>        // Fetch the user and change his password, then email him ...</span>
+<span class=x>        /* ... */</span>
+
+<span class=x>        if ($verbose) {</span>
+<span class=x>            return &quot;Done! New password for user $userEmail is &#39;$newPassword&#39;. &quot;</span>
+<span class=x>                . &quot;It has also been emailed to him.\n&quot;;</span>
+<span class=x>        }</span>
+
+<span class=x>        return &quot;Done! $userEmail has received an email with his new password.\n&quot;;</span>
+
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>The above creates <code>resetpasswordAction()</code>, which:</p>
+<ul>
+<li>retrieves the current request;</li>
+<li>checks if it's really coming from the console (as a precaution); in this
+  example, we do not want our action to be invocable from a web page;</li>
+<li>pulls console arguments via <code>$request-&gt;getParam()</code>; flags are represented by
+  boolean values, where <code>true</code> means the flag was used, and <code>false</code> means
+  otherwise;</li>
+<li>performs work based on the arguments;</li>
+<li>and finally returns a simple string to display to the user via the console.</li>
+</ul>
+<h2 id="adding-console-usage-info">Adding Console Usage Info</h2>
+<p>Console applications commonly display usage information when run without
+arguments. The combination of laminas-console and laminas-mvc enables this out of the
+box. Modules can provide usage information, and laminas-console will query all loaded
+modules for console usage information they expose.</p>
+<p>Let's modify our <code>Application\Module</code> to provide usage info:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Application;</span>
+
+<span class=x>use Laminas\ModuleManager\Feature\AutoloaderProviderInterface;</span>
+<span class=x>use Laminas\ModuleManager\Feature\ConfigProviderInterface;</span>
+<span class=x>use Laminas\ModuleManager\Feature\ConsoleUsageProviderInterface;</span>
+<span class=x>use Laminas\Console\Adapter\AdapterInterface as Console;</span>
+
+<span class=x>/**</span>
+<span class=x> * Implementing ConsoleUsageProviderInterface allows the Module to provide</span>
+<span class=x> * console usage information.</span>
+<span class=x> */</span>
+<span class=x>class Module implements</span>
+<span class=x>    AutoloaderProviderInterface,</span>
+<span class=x>    ConfigProviderInterface,</span>
+<span class=x>    ConsoleUsageProviderInterface</span>
+<span class=x>{</span>
+<span class=x>    public function getConfig()</span>
+<span class=x>    {</span>
+<span class=x>        /* ... */</span>
+<span class=x>    }</span>
+
+<span class=x>    public function getAutoloaderConfig()</span>
+<span class=x>    {</span>
+<span class=x>        /* ... */</span>
+<span class=x>    }</span>
+
+<span class=x>    public function getConsoleUsage(Console $console)</span>
+<span class=x>    {</span>
+<span class=x>        return [</span>
+<span class=x>            // Describe available commands</span>
+<span class=x>            &#39;user resetpassword [--verbose|-v] EMAIL&#39; =&gt; &#39;Reset password for a user&#39;,</span>
+
+<span class=x>            // Describe expected parameters</span>
+<span class=x>            [ &#39;EMAIL&#39;,        &#39;Email of the user for a password reset&#39; ],</span>
+<span class=x>            [ &#39;--verbose|-v&#39;, &#39;(optional) turn on verbose mode&#39;        ],</span>
+<span class=x>        ];</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Each module that implements <code>ConsoleUsageProviderInterface</code> will be queried for
+console usage info.  On route mismatch, all info from all modules will be
+concatenated, formatted to console width, and shown to the user.</p>
+<blockquote>
+<h3>Usage Order</h3>
+<p>The order of usage info displayed in the console is in the same order in which
+modules load. If you want your application to display important usage info
+first, change the order your modules are loaded.</p>
+</blockquote>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="..">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../adapter/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-console/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-console</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../adapter/" class="subnavigation__link">Console Adapters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../prompts/" class="subnavigation__link">Console Prompts</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../routes/" class="subnavigation__link">Routes</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">MVC Integration</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/routing/" class="subnavigation__link">MVC Routing</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/modules/" class="subnavigation__link">Console-Aware Modules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../mvc/controllers/" class="subnavigation__link">Console-Aware Controllers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Getopt</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/rules/" class="subnavigation__link">Declaring Rules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/fetching/" class="subnavigation__link">Fetching Options and Arguments</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../getopt/configuration/" class="subnavigation__link">Configuration</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-console';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-console" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

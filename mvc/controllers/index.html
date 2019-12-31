@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build console applications using getopt syntax or routing, complete with prompts">  
+    <link rel="canonical" href="https://docs.laminas.dev/mvc/controllers/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Console-Aware Controllers - laminas-console - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">laminas-console</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../adapter/" class="subnavigation__link">Console Adapters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../prompts/" class="subnavigation__link">Console Prompts</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../routes/" class="subnavigation__link">Routes</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">MVC Integration</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../routing/" class="subnavigation__link">MVC Routing</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../modules/" class="subnavigation__link">Console-Aware Modules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Console-Aware Controllers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Getopt</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/rules/" class="subnavigation__link">Declaring Rules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/fetching/" class="subnavigation__link">Fetching Options and Arguments</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/configuration/" class="subnavigation__link">Configuration</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-console</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-console/" class="header__link header__link--github" title="Go to repository of laminas-console">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#handling-console-requests" class="toc__link">Handling Console Requests</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#sending-output-to-the-console" class="toc__link">Sending Output to the Console</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#are-we-in-a-console" class="toc__link">Are we in a Console?</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#reading-values-from-console-parameters" class="toc__link">Reading Values from Console Parameters</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../..">laminas-console</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">MVC Integration</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Console-Aware Controllers</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">MVC Integration</h2>
+    
+
+    <h1 id="console-aware-controllers">Console-Aware Controllers</h1>
+<p>When using the laminas-mvc integration with laminas-console, a matched route results
+in dispatch of an action controller. In this chapter we will learn how Laminas
+Controllers can interact with and return output to console window.</p>
+<h2 id="handling-console-requests">Handling Console Requests</h2>
+<p>Console requests are very similar to HTTP requests. In fact, they implement a
+common interface and are created at the same time in the MVC workflow. <a href="../../routes/">Console
+routes</a> match against command line arguments and provide a <code>defaults</code>
+array, which holds the <code>controller</code> and <code>action</code> keys. These correspond with
+controller aliases in the <code>ServiceManager</code>, and method names in the controller
+class. This is analogous to the way HTTP requests are handled under laminas-mvc.</p>
+<p>In this example we'll use the following route:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// in file module/Application/config/module.config.php:</span>
+<span class=x>return [</span>
+<span class=x>    &#39;router&#39; =&gt; [</span>
+<span class=x>        &#39;routes&#39; =&gt; [</span>
+<span class=x>            // HTTP routes are here</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+
+<span class=x>    &#39;console&#39; =&gt; [</span>
+<span class=x>        &#39;router&#39; =&gt; [</span>
+<span class=x>            &#39;routes&#39; =&gt; [</span>
+<span class=x>                &#39;list-users&#39; =&gt; [</span>
+<span class=x>                    &#39;options&#39; =&gt; [</span>
+<span class=x>                        &#39;route&#39;    =&gt; &#39;show [all|disabled|deleted]:mode users [--verbose|-v]&#39;,</span>
+<span class=x>                        &#39;defaults&#39; =&gt; [</span>
+<span class=x>                            &#39;controller&#39; =&gt; Application\Controller\Index::class,</span>
+<span class=x>                            &#39;action&#39;     =&gt; &#39;show-users&#39;,</span>
+<span class=x>                        ],</span>
+<span class=x>                    ],</span>
+<span class=x>                ],</span>
+<span class=x>            ],</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+
+<span class=x>    /* ... */</span>
+<span class=x>);</span>
+</pre></div></p>
+<p>This route will match commands such as:</p>
+<p> <div class=codehilite><pre><span></span>$ php public/index.php show users
+$ php public/index.php show all users
+$ php public/index.php show disabled users
+</pre></div></p>
+<p>This route maps to the method <code>Application\Controller\IndexController::showUsersAction()</code>.</p>
+<p>Let's add it that method to our controller.</p>
+<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?php</span>
+<span class=k>namespace</span> <span class=nx>Application\Controller</span><span class=p>;</span>
+
+<span class=k>use</span> <span class=nx>Laminas\Mvc\Controller\AbstractActionController</span><span class=p>;</span>
+<span class=k>use</span> <span class=nx>Laminas\View\Model\ViewModel</span><span class=p>;</span>
+
+<span class=k>class</span> <span class=nc>IndexController</span> <span class=k>extends</span> <span class=nx>AbstractActionController</span>
+<span class=p>{</span>
+    <span class=k>public</span> <span class=k>function</span> <span class=nf>indexAction</span><span class=p>()</span>
+    <span class=p>{</span>
+        <span class=k>return</span> <span class=k>new</span> <span class=nx>ViewModel</span><span class=p>();</span> <span class=c1>// display standard index page</span>
+    <span class=p>}</span>
+
+    <span class=k>public</span> <span class=k>function</span> <span class=nf>showUsersAction</span><span class=p>()</span>
+    <span class=p>{</span>
+        <span class=nv>$request</span> <span class=o>=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>getRequest</span><span class=p>();</span>
+        <span class=nv>$users</span>   <span class=o>=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>getServiceLocator</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>get</span><span class=p>(</span><span class=s1>&#39;users&#39;</span><span class=p>);</span>
+
+        <span class=c1>// Check verbose flag</span>
+        <span class=nv>$verbose</span> <span class=o>=</span> <span class=nv>$request</span><span class=o>-&gt;</span><span class=na>getParam</span><span class=p>(</span><span class=s1>&#39;verbose&#39;</span><span class=p>)</span> <span class=o>||</span> <span class=nv>$request</span><span class=o>-&gt;</span><span class=na>getParam</span><span class=p>(</span><span class=s1>&#39;v&#39;</span><span class=p>);</span>
+
+        <span class=c1>// Check mode</span>
+        <span class=nv>$mode</span> <span class=o>=</span> <span class=nv>$request</span><span class=o>-&gt;</span><span class=na>getParam</span><span class=p>(</span><span class=s1>&#39;mode&#39;</span><span class=p>,</span> <span class=s1>&#39;all&#39;</span><span class=p>);</span> <span class=c1>// defaults to &#39;all&#39;</span>
+
+        <span class=nv>$users</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
+        <span class=k>switch</span> <span class=p>(</span><span class=nv>$mode</span><span class=p>)</span> <span class=p>{</span>
+            <span class=k>case</span> <span class=s1>&#39;disabled&#39;</span><span class=o>:</span>
+                <span class=nv>$users</span> <span class=o>=</span> <span class=nv>$users</span><span class=o>-&gt;</span><span class=na>fetchDisabledUsers</span><span class=p>();</span>
+                <span class=k>break</span><span class=p>;</span>
+            <span class=k>case</span> <span class=s1>&#39;deleted&#39;</span><span class=o>:</span>
+                <span class=nv>$users</span> <span class=o>=</span> <span class=nv>$users</span><span class=o>-&gt;</span><span class=na>fetchDeletedUsers</span><span class=p>();</span>
+                <span class=k>break</span><span class=p>;</span>
+            <span class=k>case</span> <span class=s1>&#39;all&#39;</span><span class=o>:</span>
+            <span class=k>default</span><span class=o>:</span>
+                <span class=nv>$users</span> <span class=o>=</span> <span class=nv>$users</span><span class=o>-&gt;</span><span class=na>fetchAllUsers</span><span class=p>();</span>
+                <span class=k>break</span><span class=p>;</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</pre></div></p>
+<p>We fetch the console request, read parameters, and load users from our
+(theoretical) users service.  In order to make this method functional, we'll
+have to display the result in the console window.</p>
+<h2 id="sending-output-to-the-console">Sending Output to the Console</h2>
+<p>The simplest way for our controller to display data in the console window is to
+return a string. Let's modify our example to output a list of users:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>public function showUsersAction()</span>
+<span class=x>{</span>
+<span class=x>    $request = $this-&gt;getRequest();</span>
+<span class=x>    $users   = $this-&gt;getServiceLocator()-&gt;get(&#39;users&#39;);</span>
+
+<span class=x>    // Check verbose flag</span>
+<span class=x>    $verbose = $request-&gt;getParam(&#39;verbose&#39;) || $request-&gt;getParam(&#39;v&#39;);</span>
+
+<span class=x>    // Check mode</span>
+<span class=x>    $mode = $request-&gt;getParam(&#39;mode&#39;, &#39;all&#39;); // defaults to &#39;all&#39;</span>
+
+<span class=x>    $users = array();</span>
+<span class=x>    switch ($mode) {</span>
+<span class=x>        case &#39;disabled&#39;:</span>
+<span class=x>            $users = $users-&gt;fetchDisabledUsers();</span>
+<span class=x>            break;</span>
+<span class=x>        case &#39;deleted&#39;:</span>
+<span class=x>            $users = $users-&gt;fetchDeletedUsers();</span>
+<span class=x>            break;</span>
+<span class=x>        case &#39;all&#39;:</span>
+<span class=x>        default:</span>
+<span class=x>            $users = $users-&gt;fetchAllUsers();</span>
+<span class=x>            break;</span>
+<span class=x>    }</span>
+
+<span class=x>    if (count($users) === 0) {</span>
+<span class=x>        // Show an error message in the console</span>
+<span class=x>        return &quot;There are no users in the database\n&quot;;</span>
+<span class=x>    }</span>
+
+<span class=x>    $result = &#39;&#39;;</span>
+
+<span class=x>    foreach ($users as $user) {</span>
+<span class=x>        $result .= $user-&gt;name . &#39; &#39; . $user-&gt;email . &quot;\n&quot;;</span>
+<span class=x>    }</span>
+
+<span class=x>    return $result; // show it in the console</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>In the second conditional, we are checking if the users service found any users;
+if not, we return an error message to display immediately, terminating the
+application.</p>
+<p>If any users are found, we loop through each to prepare a listing, which we then
+return from the action for display in the console.</p>
+<h2 id="are-we-in-a-console">Are we in a Console?</h2>
+<p>Sometimes we might need to check if our method is being called from a console or
+from a web request. This is useful to block certain methods from running in the
+console or to change their behavior based on that context.</p>
+<p>Here is an example of how to check if we are dealing with a console request:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Application\Controller;</span>
+
+<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
+<span class=x>use Laminas\View\Model\ViewModel;</span>
+<span class=x>use Laminas\Console\Request as ConsoleRequest;</span>
+<span class=x>use RuntimeException;</span>
+
+<span class=x>class IndexController extends AbstractActionController</span>
+<span class=x>{</span>
+<span class=x>    public function showUsersAction()</span>
+<span class=x>    {</span>
+<span class=x>        $request = $this-&gt;getRequest();</span>
+
+<span class=x>        // Make sure that we are running in a console and the user has not tricked our</span>
+<span class=x>        // application into running this action from a public web server.</span>
+<span class=x>        if (! $request instanceof ConsoleRequest) {</span>
+<span class=x>            throw new RuntimeException(&#39;You can only use this action from a console!&#39;);</span>
+<span class=x>        }</span>
+
+<span class=x>        /* ... */</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<blockquote>
+<h3>Use Routing to protect Methods</h3>
+<p>You do not need to secure all your controllers and methods from console
+requests. Controller actions will <strong>only be invoked</strong> when at least one
+console route matches it.  HTTP and Console routes are separated and defined
+in different places in module (and application) configuration.</p>
+<p>There is no way to invoke a console action unless there is at least one route
+pointing to it.  Similarly, there is no way for an HTTP action to be invoked
+unless there is at least one HTTP route that points to it.</p>
+</blockquote>
+<p>The example below shows how a single controller method can handle <strong>both Console
+and HTTP requests</strong>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Application\Controller;</span>
+
+<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
+<span class=x>use Laminas\View\Model\ViewModel;</span>
+<span class=x>use Laminas\Console\Request as ConsoleRequest;</span>
+<span class=x>use Laminas\Http\Request as HttpRequest;</span>
+<span class=x>use RuntimeException;</span>
+
+<span class=x>class IndexController extends AbstractActionController</span>
+<span class=x>{</span>
+<span class=x>    public function showUsersAction()</span>
+<span class=x>    {</span>
+<span class=x>        $request = $this-&gt;getRequest();</span>
+
+<span class=x>        $users = array();</span>
+<span class=x>        /* ... fetch users from database ... */</span>
+
+<span class=x>        if ($request instanceof HttpRequest) {</span>
+<span class=x>            // display a web page with users list</span>
+<span class=x>            return new ViewModel($result);</span>
+<span class=x>        }</span>
+
+<span class=x>        if ($request instanceof ConsoleRequest) {</span>
+<span class=x>            // ... prepare console output and return it ...</span>
+<span class=x>            return $result;</span>
+<span class=x>        }</span>
+
+<span class=x>        throw new RuntimeException(&#39;Cannot handle request of type &#39; . get_class($request));</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<blockquote>
+<h3>AbstractConsoleController</h3>
+<p>One way to ensure you always receive a console request instance is to extend
+<code>Laminas\Mvc\Controller\AbstractConsoleController</code>. This controller instance also
+exposes a new method, <code>getConsole()</code>, providing you access to the console
+adapter, allowing you to use prompts, send output (including colorized output),
+and more.</p>
+</blockquote>
+<h2 id="reading-values-from-console-parameters">Reading Values from Console Parameters</h2>
+<p>There are several types of parameters recognized by the Console component, all
+of which are described in the <a href="../../routes/">console routing chapter</a>. Here, we'll
+focus on how to retrieve values from distinct parameters and flags.</p>
+<h3>Positional Parameters</h3>
+<p>After a route matches, we can access both <strong>literal parameters</strong> and <strong>value
+parameters</strong> via the <code>$request</code> instance, using the <code>getParam()</code> method.</p>
+<p>Assuming we have the following route:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>&#39;show-users&#39; =&gt; [</span>
+<span class=x>    &#39;options&#39; =&gt; [</span>
+<span class=x>        &#39;route&#39;    =&gt; &#39;show (all|deleted|locked|admin) [&lt;groupName&gt;]&#39;</span>
+<span class=x>        &#39;defaults&#39; =&gt; [</span>
+<span class=x>            &#39;controller&#39; =&gt; &#39;Application\Controller\Users&#39;,</span>
+<span class=x>            &#39;action&#39;     =&gt; &#39;showusers&#39;,</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+<span class=x>],</span>
+</pre></div></p>
+<p>If this route matches, our action can now query parameters in the following way:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// an action inside Application\Controller\UsersController:</span>
+<span class=x>public function showUsersAction()</span>
+<span class=x>{</span>
+<span class=x>    $request = $this-&gt;getRequest();</span>
+
+<span class=x>    // We can access named value parameters directly by their name:</span>
+<span class=x>    $showUsersFromGroup = $request-&gt;getParam(&#39;groupName&#39;);</span>
+
+<span class=x>    // Literal parameters can be checked with isset() against their exact spelling</span>
+<span class=x>    if (isset($request-&gt;getParam(&#39;all&#39;))) {</span>
+<span class=x>        // show all users</span>
+<span class=x>    } elseif (isset($request-&gt;getParam(&#39;deleted&#39;))) {</span>
+<span class=x>        // show deleted users</span>
+<span class=x>    }</span>
+
+<span class=x>    /* ... */</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>In case of parameter alternatives, it is a good idea to <strong>assign a name to the group</strong>, which
+simplifies the branching in our action controllers. We can do this with the following syntax:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// inside of config.console.router.routes:</span>
+<span class=x>&#39;show-users&#39; =&gt; array(</span>
+<span class=x>    &#39;options&#39; =&gt; array(</span>
+<span class=x>        &#39;route&#39;    =&gt; &#39;show (all|deleted|locked|admin):userTypeFilter [&lt;groupName&gt;]&#39;</span>
+<span class=x>        &#39;defaults&#39; =&gt; array(</span>
+<span class=x>            &#39;controller&#39; =&gt; &#39;Application\Controller\Users&#39;,</span>
+<span class=x>            &#39;action&#39;     =&gt; &#39;showusers&#39;</span>
+<span class=x>        )</span>
+<span class=x>    )</span>
+<span class=x>)</span>
+</pre></div></p>
+<p>Now we can use a the group name <code>userTypeFilter</code> to check which option has been
+selected by the user:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>public function showUsersAction()</span>
+<span class=x>{</span>
+<span class=x>    $request = $this-&gt;getRequest();</span>
+
+<span class=x>    // We can access named value parameters directly by their name:</span>
+<span class=x>    $showUsersFromGroup = $request-&gt;getParam(&#39;groupName&#39;);</span>
+
+<span class=x>    // The selected option from second parameter is now stored under &#39;userTypeFilter&#39;</span>
+<span class=x>    $userTypeFilter = $request-&gt;getParam(&#39;userTypeFilter&#39;);</span>
+
+<span class=x>    switch ($userTypeFilter) {</span>
+<span class=x>        case &#39;all&#39;:</span>
+<span class=x>            // all users</span>
+<span class=x>        case &#39;deleted&#39;:</span>
+<span class=x>            // deleted users</span>
+<span class=x>        case &#39;locked&#39;</span>
+<span class=x>           // ...</span>
+<span class=x>           // ...</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<h3>Flags</h3>
+<p>Flags are directly accessible by name. Value-capturing flags will contain string
+values, as provided by the user. Non-value flags will be equal to <code>true</code>, or
+<code>null</code> if not present.</p>
+<p>Given the following route:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>&#39;find-user&#39; =&gt; [</span>
+<span class=x>    &#39;options&#39; =&gt; [</span>
+<span class=x>        &#39;route&#39;    =&gt; &#39;find user [--fast] [--verbose] [--id=] [--firstName=] [--lastName=] [--email=] &#39;,</span>
+<span class=x>        &#39;defaults&#39; =&gt; [</span>
+<span class=x>            &#39;controller&#39; =&gt; &#39;Application\Controller\Users&#39;,</span>
+<span class=x>            &#39;action&#39;     =&gt; &#39;find&#39;,</span>
+<span class=x>        ],</span>
+<span class=x>    ],</span>
+<span class=x>],</span>
+</pre></div></p>
+<p>We can retrieve values in the following fashion:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>public function findAction()</span>
+<span class=x>{</span>
+<span class=x>    $request = $this-&gt;getRequest();</span>
+
+<span class=x>    // We can retrieve values from value flags using their name</span>
+<span class=x>    $searchId        = $request-&gt;getParam(&#39;id&#39;,        null); // default null</span>
+<span class=x>    $searchFirstName = $request-&gt;getParam(&#39;firstName&#39;, null);</span>
+<span class=x>    $searchLastName  = $request-&gt;getParam(&#39;lastName&#39;,  null);</span>
+<span class=x>    $searchEmail     = $request-&gt;getParam(&#39;email&#39;,     null);</span>
+
+<span class=x>    // Standard flags that have been matched will be equal to TRUE</span>
+<span class=x>    $isFast          = (bool) $request-&gt;getParam(&#39;fast&#39;,    false); // default false</span>
+<span class=x>    $isVerbose       = (bool) $request-&gt;getParam(&#39;verbose&#39;, false);</span>
+
+<span class=x>    if ($isFast) {</span>
+<span class=x>        // perform a fast query ...</span>
+<span class=x>    } else {</span>
+<span class=x>        // perform standard query ...</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>In case of <strong>flag alternatives</strong>, we have to check each alternative separately:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>/*</span>
+<span class=x> * Assuming our route now reads:</span>
+<span class=x> *      &#39;route&#39;    =&gt; &#39;find user [--fast|-f] [--verbose|-v] ... &#39;,</span>
+<span class=x> */</span>
+<span class=x>public function findAction()</span>
+<span class=x>{</span>
+<span class=x>    $request = $this-&gt;getRequest();</span>
+
+<span class=x>    // Check both alternatives</span>
+<span class=x>    $isFast    = $request-&gt;getParam(&#39;fast&#39;, false)    || $request-&gt;getParam(&#39;f&#39;, false);</span>
+<span class=x>    $isVerbose = $request-&gt;getParam(&#39;verbose&#39;, false) || $request-&gt;getParam(&#39;v&#39;, false);</span>
+
+<span class=x>    // ...</span>
+<span class=x>}</span>
+</pre></div></p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../modules/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../../getopt/intro/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-console/edit/master/docs/book/mvc/controllers.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">laminas-console</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../adapter/" class="subnavigation__link">Console Adapters</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../prompts/" class="subnavigation__link">Console Prompts</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../routes/" class="subnavigation__link">Routes</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">MVC Integration</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../routing/" class="subnavigation__link">MVC Routing</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../modules/" class="subnavigation__link">Console-Aware Modules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Console-Aware Controllers</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Getopt</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/rules/" class="subnavigation__link">Declaring Rules</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/fetching/" class="subnavigation__link">Fetching Options and Arguments</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../getopt/configuration/" class="subnavigation__link">Configuration</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../..',
+            project  = "components",
+            siteName = 'laminas-console';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-console" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

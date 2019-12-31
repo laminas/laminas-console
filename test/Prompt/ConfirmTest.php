@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console\Char;
+namespace LaminasTest\Console\Char;
 
-use Zend\Console\Prompt\Confirm;
-use ZendTest\Console\TestAssets\ConsoleAdapter;
+use Laminas\Console\Prompt\Confirm;
+use LaminasTest\Console\TestAssets\ConsoleAdapter;
 
 /**
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class ConfirmTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,13 +36,13 @@ class ConfirmTest extends \PHPUnit_Framework_TestCase
     {
         fwrite($this->adapter->stream, 'y');
 
-        $confirm = new Confirm("Is ZF2 the best framework ?");
+        $confirm = new Confirm("Is Laminas the best framework ?");
         $confirm->setEcho(false);
         $confirm->setConsole($this->adapter);
         ob_start();
         $response = $confirm->show();
         $text = ob_get_clean();
-        $this->assertEquals($text, "Is ZF2 the best framework ?\n");
+        $this->assertEquals($text, "Is Laminas the best framework ?\n");
         $this->assertTrue($response);
     }
 
@@ -51,13 +50,13 @@ class ConfirmTest extends \PHPUnit_Framework_TestCase
     {
         fwrite($this->adapter->stream, 'Y');
 
-        $confirm = new Confirm("Is ZF2 the best framework ?");
+        $confirm = new Confirm("Is Laminas the best framework ?");
         $confirm->setEcho(false);
         $confirm->setConsole($this->adapter);
         ob_start();
         $response = $confirm->show();
         $text = ob_get_clean();
-        $this->assertEquals($text, "Is ZF2 the best framework ?\n");
+        $this->assertEquals($text, "Is Laminas the best framework ?\n");
         $this->assertTrue($response);
     }
 
@@ -65,14 +64,14 @@ class ConfirmTest extends \PHPUnit_Framework_TestCase
     {
         fwrite($this->adapter->stream, 'Yn');
 
-        $confirm = new Confirm("Is ZF2 the best framework ?");
+        $confirm = new Confirm("Is Laminas the best framework ?");
         $confirm->setEcho(false);
         $confirm->setConsole($this->adapter);
         $confirm->setIgnoreCase(false);
         ob_start();
         $response = $confirm->show();
         $text = ob_get_clean();
-        $this->assertEquals($text, "Is ZF2 the best framework ?\n");
+        $this->assertEquals($text, "Is Laminas the best framework ?\n");
         $this->assertFalse($response);
     }
 
@@ -80,13 +79,13 @@ class ConfirmTest extends \PHPUnit_Framework_TestCase
     {
         fwrite($this->adapter->stream, 'on0');
 
-        $confirm = new Confirm("Is ZF2 the best framework ?", "1", "0");
+        $confirm = new Confirm("Is Laminas the best framework ?", "1", "0");
         $confirm->setEcho(false);
         $confirm->setConsole($this->adapter);
         ob_start();
         $response = $confirm->show();
         $text = ob_get_clean();
-        $this->assertEquals($text, "Is ZF2 the best framework ?\n");
+        $this->assertEquals($text, "Is Laminas the best framework ?\n");
         $this->assertFalse($response);
     }
 
@@ -94,7 +93,7 @@ class ConfirmTest extends \PHPUnit_Framework_TestCase
     {
         fwrite($this->adapter->stream, 'oaB');
 
-        $confirm = new Confirm("Is ZF2 the best framework ?", "1", "0");
+        $confirm = new Confirm("Is Laminas the best framework ?", "1", "0");
         $confirm->setYesChar("A");
         $confirm->setNoChar("B");
         $confirm->setEcho(false);
@@ -102,7 +101,7 @@ class ConfirmTest extends \PHPUnit_Framework_TestCase
         ob_start();
         $response = $confirm->show();
         $text = ob_get_clean();
-        $this->assertEquals($text, "Is ZF2 the best framework ?\n");
+        $this->assertEquals($text, "Is Laminas the best framework ?\n");
         $this->assertTrue($response);
     }
 }

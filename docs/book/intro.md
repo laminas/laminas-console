@@ -1,20 +1,20 @@
-# Introduction to zend-console
+# Introduction to laminas-console
 
-zend-console provides both generic support for routable console applications, as
-well as the basis for adding console support to zend-mvc-based applications.
+laminas-console provides both generic support for routable console applications, as
+well as the basis for adding console support to laminas-mvc-based applications.
 
-When a zend-mvc application is run from a console window (a shell window or
-Windows command prompt), it will recognize this fact and prepare zend-mvc
+When a laminas-mvc application is run from a console window (a shell window or
+Windows command prompt), it will recognize this fact and prepare laminas-mvc
 components to handle the request. Console support is enabled by default, but to
 function properly it requires at least one [console route](routes.md) and one
-[action controller](http://framework.zend.com/manual/current/zend.mvc.controllers.html)
+[action controller](https://getlaminas.org/manual/current/laminas.mvc.controllers.html)
 to handle the request.
 
 Alternately, you can build console-aware applications that are standalone;
 [zf-console](https://github.com/zfcampus/zf-console) provides a standardized
 workflow for doing so.
 
-Features in zend-console include:
+Features in laminas-console include:
 
 - [Console routing](routes.md) allows you to invoke handlers (including
   controller actions) depending on command line parameters provided by the user.
@@ -23,23 +23,23 @@ Features in zend-console include:
 - [Console prompts](prompts.md) allow user interaction by asking questions and
   retrieving input.
 
-When used with [zend-mvc](https://github.com/zendframework/zend-mvc), the
+When used with [laminas-mvc](https://github.com/laminas/laminas-mvc), the
 following features are also available:
 
-- [Module Manager integration](mvc/modules.md) allows zend-mvc applications and
+- [Module Manager integration](mvc/modules.md) allows laminas-mvc applications and
   modules to display help and usage information, either on demand, or in
   situations where no route was matched.
 - [Console-aware action controllers](mvc/controllers.md) will receive a console
   request containing all named parameters and flags. They are able to send
   output back to the console window.
 
-## Quick Start with zend-mvc
+## Quick Start with laminas-mvc
 
-> The following example details integration of zend-console with zend-mvc.
+> The following example details integration of laminas-console with laminas-mvc.
 > However, all information pertaining to routing can also be used *without*
-> zend-mvc, but requires that you react to the routing results yourself. The
+> laminas-mvc, but requires that you react to the routing results yourself. The
 > aforementioned zf-console provides some basic wiring around that, and can and
-> should be consulted if you do not choose to use zend-console with zend-mvc.
+> should be consulted if you do not choose to use laminas-console with laminas-mvc.
 
 A console route defines required and optional command line parameters. When a
 route matches, it returns an array of matched parameters &mdash; which may
@@ -49,15 +49,15 @@ include default parameters, or even parameters not exposed via the command line
 Let's assume that we'd like our application to handle the following command line:
 
 ```bash
-$ zf user resetpassword user@mail.com
+$ laminas user resetpassword user@mail.com
 ```
 
-When a user runs our application (`zf`) with these parameters, we'd like to call
+When a user runs our application (`laminas`) with these parameters, we'd like to call
 the action `resetpassword` of `Application\Controller\IndexController`.
 
-> ### The zf command
+> ### The laminas command
 >
-> We will use `zf` to depict the entry point for your application; it can be
+> We will use `laminas` to depict the entry point for your application; it can be
 > a shell script in the application's `bin/` directory, or simply an alias for `php
 > public/index.php`.
 
@@ -82,13 +82,13 @@ shorthand version, `-v`.
 
 > ### Flag order
 >
-> The order of flags is ignored by zend-console. Flags can appear before
+> The order of flags is ignored by laminas-console. Flags can appear before
 > positional parameters, after them, or anywhere in between. The order of
 > multiple flags is also irrelevant. This applies both to route definitions and
 > the order that flags are used on the command line.
 
 Let's use the definition above and configure our console route. When using
-zend-mvc, console routes are defined using the following configuration
+laminas-mvc, console routes are defined using the following configuration
 structure:
 
 ```php
@@ -143,7 +143,7 @@ return [
 
 When a user runs our application from the command line and arguments match our
 console route, the specified controller will be instantiated, and the specified
-action method will be called, just as happens with zend-mvc HTTP requests.
+action method will be called, just as happens with laminas-mvc HTTP requests.
 
 As such, let's add the `resetpassword` action to our
 `Application\Controller\IndexController`:
@@ -153,10 +153,10 @@ As such, let's add the `resetpassword` action to our
 namespace Application\Controller;
 
 use RuntimeException;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-use Zend\Console\Request as ConsoleRequest;
-use Zend\Math\Rand;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
+use Laminas\Console\Request as ConsoleRequest;
+use Laminas\Math\Rand;
 
 class IndexController extends AbstractActionController
 {
@@ -209,8 +209,8 @@ The above creates `resetpasswordAction()`, which:
 ## Adding console usage info
 
 Console applications commonly display usage information when run without
-arguments. The combination of zend-console and zend-mvc enables this out of the
-box. Modules can provide usage information, and zend-console will query all loaded
+arguments. The combination of laminas-console and laminas-mvc enables this out of the
+box. Modules can provide usage information, and laminas-console will query all loaded
 modules for console usage information they expose.
 
 Let's modify our `Application\Module` to provide usage info:
@@ -220,10 +220,10 @@ Let's modify our `Application\Module` to provide usage info:
 
 namespace Application;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
-use Zend\Console\Adapter\AdapterInterface as Console;
+use Laminas\ModuleManager\Feature\AutoloaderProviderInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Laminas\Console\Adapter\AdapterInterface as Console;
 
 /**
  * Implementing ConsoleUsageProviderInterface allows the Module to provide

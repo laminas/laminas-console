@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console\Adapter;
+namespace LaminasTest\Console\Adapter;
 
+use LaminasTest\Console\TestAssets\ConsoleAdapter;
 use PHPUnit\Framework\TestCase;
-use ZendTest\Console\TestAssets\ConsoleAdapter;
 
 /**
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class AbstractAdapterTest extends TestCase
 {
@@ -63,7 +62,7 @@ class AbstractAdapterTest extends TestCase
     }
 
     /**
-     * @issue ZF2-4051
+     * @issue Laminas-4051
      * @link https://github.com/zendframework/zf2/issues/4051
      */
     public function testWriteLineOverflowAndWidthMatch()
@@ -188,7 +187,7 @@ class AbstractAdapterTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Console\Exception\InvalidArgumentException
+     * @expectedException \Laminas\Console\Exception\InvalidArgumentException
      * @expectedExceptionMessage Supplied X,Y coordinates are invalid.
      */
     public function testInvalidCoords()
@@ -197,7 +196,7 @@ class AbstractAdapterTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Console\Exception\InvalidArgumentException
+     * @expectedException \Laminas\Console\Exception\InvalidArgumentException
      * @expectedExceptionMessage Invalid width supplied.
      */
     public function testInvalidWidth()
@@ -206,7 +205,7 @@ class AbstractAdapterTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Console\Exception\InvalidArgumentException
+     * @expectedException \Laminas\Console\Exception\InvalidArgumentException
      * @expectedExceptionMessage Invalid height supplied.
      */
     public function testInvalidHeight()

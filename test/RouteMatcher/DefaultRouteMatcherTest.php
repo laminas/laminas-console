@@ -1,27 +1,25 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console\RouteMatcher;
+namespace LaminasTest\Console\RouteMatcher;
 
+use Laminas\Console\Exception\InvalidArgumentException;
+use Laminas\Console\RouteMatcher\DefaultRouteMatcher;
+use Laminas\Filter\FilterInterface;
+use Laminas\Validator\Digits;
+use Laminas\Validator\StringLength;
 use PHPUnit\Framework\TestCase;
-use Zend\Console\Exception\InvalidArgumentException;
-use Zend\Console\RouteMatcher\DefaultRouteMatcher;
-use Zend\Filter\FilterInterface;
-use Zend\Validator\Digits;
-use Zend\Validator\StringLength;
 
 /**
- * @category   Zend
- * @package    Zend_Console
+ * @category   Laminas
+ * @package    Laminas_Console
  * @subpackage UnitTests
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class DefaultRouteMatcherTest extends TestCase
 {
@@ -712,7 +710,7 @@ class DefaultRouteMatcherTest extends TestCase
             ],
 
             /**
-             * @bug ZF2-4315
+             * @bug Laminas-4315
              * @link https://github.com/zendframework/zf2/issues/4315
              */
             'literal-with-dashes' => [
@@ -897,7 +895,7 @@ class DefaultRouteMatcherTest extends TestCase
                 ]
             ],
             /**
-             * @bug ZF2-5671
+             * @bug Laminas-5671
              * @link https://github.com/zendframework/zf2/issues/5671
              */
             'mandatory-literal-camel-case' => [
@@ -1358,7 +1356,7 @@ class DefaultRouteMatcherTest extends TestCase
             'filters-single' => [
                 '<number>',
                 [
-                    'number' => new \Zend\Filter\ToInt()
+                    'number' => new \Laminas\Filter\ToInt()
                 ],
                 ['123four'],
                 [
@@ -1368,8 +1366,8 @@ class DefaultRouteMatcherTest extends TestCase
             'filters-multiple' => [
                 '<number> <strtolower>',
                 [
-                    'number' => new \Zend\Filter\ToInt(),
-                    'strtolower' => new \Zend\Filter\StringToLower(),
+                    'number' => new \Laminas\Filter\ToInt(),
+                    'strtolower' => new \Laminas\Filter\StringToLower(),
                 ],
                 ['nan', 'FOOBAR'],
                 [
@@ -1409,7 +1407,7 @@ class DefaultRouteMatcherTest extends TestCase
 
     public function testConstructorDoesNotAcceptInvalidFilters()
     {
-        $this->expectException('Zend\Console\Exception\InvalidArgumentException');
+        $this->expectException('Laminas\Console\Exception\InvalidArgumentException');
         new DefaultRouteMatcher('<foo>', [], [], [], [
             new \stdClass()
         ]);
@@ -1417,7 +1415,7 @@ class DefaultRouteMatcherTest extends TestCase
 
     public function testConstructorDoesNotAcceptInvalidValidators()
     {
-        $this->expectException('Zend\Console\Exception\InvalidArgumentException');
+        $this->expectException('Laminas\Console\Exception\InvalidArgumentException');
         new DefaultRouteMatcher('<foo>', [], [], [], [], [
             new \stdClass()
         ]);

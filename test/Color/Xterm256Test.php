@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console\Color;
+namespace LaminasTest\Console\Color;
 
+use Laminas\Console\Color\Xterm256;
 use ReflectionClass;
-use Zend\Console\Color\Xterm256;
 
 /**
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class Xterm256Test extends \PHPUnit_Framework_TestCase
 {

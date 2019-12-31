@@ -1,15 +1,15 @@
 # Console routes and routing
 
-A powerful feature the zend-console component exposes is *routing*. Routing
+A powerful feature the laminas-console component exposes is *routing*. Routing
 reads the command line arguments and matches them to criteria; if the criteria
 matches, it then returns a list of matched parameters and flags.
 
 > ## Handling routing results
 >
-> zend-console exposes routing via the `Zend\Console\RouteMatcher\DefaultRouteMatcher`
+> laminas-console exposes routing via the `Laminas\Console\RouteMatcher\DefaultRouteMatcher`
 > class, allowing you to create standalone routable console applications.
 >
-> zend-mvc provides structure around routing results to controllers, which
+> laminas-mvc provides structure around routing results to controllers, which
 > we [detail in the MVC Routing chapter](mvc/routing.md).
 >
 > Another option is [zf-console](https://github.com/zfcampus/zf-console), which
@@ -18,12 +18,12 @@ matches, it then returns a list of matched parameters and flags.
 
 ## RouteMatcherInterface
 
-zend-console defines an interface for routing,
-`Zend\Console\RouteMatcher\RouteMatcherInterface`, which defines a single
+laminas-console defines an interface for routing,
+`Laminas\Console\RouteMatcher\RouteMatcherInterface`, which defines a single
 method, `match()`:
 
 ```php
-namespace Zend\Console\RouteMatcher;
+namespace Laminas\Console\RouteMatcher;
 
 interface RouteMatcherInterface
 {
@@ -44,7 +44,7 @@ return either a `null` value (meaning failure to match), or an associative array
 
 ## The default route matcher
 
-zend-console's default routing implementation is `Zend\Console\RouteMatcher\DefaultRouteMatcher`.
+laminas-console's default routing implementation is `Laminas\Console\RouteMatcher\DefaultRouteMatcher`.
 Its constructor expects:
 
 ```php
@@ -82,17 +82,17 @@ The arguments are as follows:
   defined `--foo=` in the `$route`, you can invoke it with `--FOO=something`,
   and the router will map it to the `foo` value.
 - `$filters` is an associative array of named arguments pointing to a
-  `Zend\Filter\FilterInterface` instance (or `FilterChain` instance);
+  `Laminas\Filter\FilterInterface` instance (or `FilterChain` instance);
   filters are used to normalize the value associated with the argument.
 - `$validators` is an associative array of named arguments pointing to a
-  `Zend\Validator\ValidatorInterface` instance (or `ValidatorChain` instance);
+  `Laminas\Validator\ValidatorInterface` instance (or `ValidatorChain` instance);
   validators are used to validate values, and provide more options than simply
   regular expressions (as used with the `$constraints`).
 
 > ### Single routes only
 >
 > `DefaultRouteMatcher` instances define *a single console route to match*. Most
-> times, you will want to define multiple routes. The zend-mvc integration and
+> times, you will want to define multiple routes. The laminas-mvc integration and
 > zf-console both provide methods for aggregating routes.
 
 ## Routing strings
@@ -117,7 +117,7 @@ show users
 This route will **only** match for the following command line
 
 ```bash
-$ zf show users
+$ laminas show users
 ```
 
 It expects the **mandatory literal parameters** `show users`. It will not match
@@ -133,8 +133,8 @@ show [all] users
 The above route will match each of the following:
 
 ```bash
-$ zf show users
-$ zf show all users
+$ laminas show users
+$ laminas show all users
 ```
 
 You can also provide **parameter alternatives**:
@@ -148,9 +148,9 @@ provided, however, it must be one of the words listed. This enables matching any
 of the following:
 
 ```php
-$ zf show users
-$ zf show locked users
-$ zf show admin users
+$ laminas show users
+$ laminas show locked users
+$ laminas show admin users
 # etc.
 ```
 
@@ -169,7 +169,7 @@ $ zf show admin users
 
 ### Literal flags
 
-Console tools commonly use flags. zend-console allows you to define any number
+Console tools commonly use flags. laminas-console allows you to define any number
 of optional and/or mandatory flags.
 
 Flag order is ignored; they can be defined in any order, and the user can
@@ -184,10 +184,10 @@ check users [--verbose] [--fast] [--thorough]
 The above route will match commands like:
 
 ```bash
-$ zf check users
-$ zf check users --fast
-$ zf check users --verbose --thorough
-$ zf check users --thorough --fast
+$ laminas check users
+$ laminas check users --fast
+$ laminas check users --verbose --thorough
+$ laminas check users --thorough --fast
 # etc
 ```
 
@@ -202,9 +202,9 @@ The above will only match if we provide either the `--suspicious` or `--expired`
 flag:
 
 ```bash
-$ zf check users --expired
-$ zf check users --expired --fast
-$ zf check users --verbose --thorough --suspicious
+$ laminas check users --expired
+$ laminas check users --expired --fast
+$ laminas check users --verbose --thorough --suspicious
 ```
 
 **Short flags** are also available, and may be grouped with long flags for
@@ -217,9 +217,9 @@ check users [--verbose|-v] [--fast|-f] [--thorough|-t]
 Now we can use short versions of our flags:
 
 ```bash
-$ zf check users -f
-$ zf check users -v --thorough
-$ zf check users -t -f -v
+$ laminas check users -f
+$ laminas check users -v --thorough
+$ laminas check users -t -f -v
 # etc.
 ```
 
@@ -240,8 +240,8 @@ delete user <userEmail>
 This route will match the following commands:
 
 ```bash
-$ zf delete user john@acme.org
-$ zf delete user betty@acme.org
+$ laminas delete user john@acme.org
+$ laminas delete user betty@acme.org
 ```
 
 When matched, the router will return the value under the key we provided in the
@@ -252,7 +252,7 @@ $matches = $route->match($argv);
 $userEmail = $matches['userEmail'];
 ```
 
-Under zend-mvc, you will pull the parameter from the request:
+Under laminas-mvc, you will pull the parameter from the request:
 
 ```php
 $userEmail = $this->getRequest()->getParam('userEmail');
@@ -278,7 +278,7 @@ create user <firstName> <lastName> <email> <position>
 This allows us to capture commands such as the following:
 
 ```bash
-$ zf create user Johnny Bravo john@acme.org Entertainer
+$ laminas create user Johnny Bravo john@acme.org Entertainer
 ```
 
 > #### Escaping
@@ -289,7 +289,7 @@ $ zf create user Johnny Bravo john@acme.org Entertainer
 > like this:
 >
 > ```bash
-> $ zf create user "Johnan Tom" Bravo john@acme.org "Head of the Entertainment Department"
+> $ laminas create user "Johnan Tom" Bravo john@acme.org "Head of the Entertainment Department"
 > ```
 
 ### Value flag parameters
@@ -307,13 +307,13 @@ find user [--id=] [--firstName=] [--lastName=] [--email=] [--position=]
 The above route will match for any of the following routes:
 
 ```bash
-$ zf find user
-$ zf find user --id 29110
-$ zf find user --id=29110
-$ zf find user --firstName=Johny --lastName=Bravo
-$ zf find user --lastName Bravo --firstName Johny
-$ zf find user --position=Executive --firstName=Bob
-$ zf find user --position "Head of the Entertainment Department"
+$ laminas find user
+$ laminas find user --id 29110
+$ laminas find user --id=29110
+$ laminas find user --firstName=Johny --lastName=Bravo
+$ laminas find user --lastName Bravo --firstName Johny
+$ laminas find user --position=Executive --firstName=Bob
+$ laminas find user --position "Head of the Entertainment Department"
 # etc.
 ```
 
@@ -338,9 +338,9 @@ In the above example, the `--id` parameter **is required** for the route to
 match. The following commands will work with this route:
 
 ```bash
-$ zf rename user --id 123
-$ zf rename user --id 123 --firstName Jonathan
-$ zf rename user --id=123 --lastName=Bravo
+$ laminas rename user --id 123
+$ laminas rename user --id 123 --firstName Jonathan
+$ laminas rename user --id=123 --lastName=Bravo
 # etc.
 ```
 

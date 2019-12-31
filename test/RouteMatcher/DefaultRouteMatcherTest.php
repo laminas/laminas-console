@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
+ * @see       https://github.com/laminas/laminas-console for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-console/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-console/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Console\RouteMatcher;
+namespace LaminasTest\Console\RouteMatcher;
 
-use Zend\Console\RouteMatcher\DefaultRouteMatcher;
-use Zend\Validator\Digits;
-use Zend\Validator\StringLength;
+use Laminas\Console\RouteMatcher\DefaultRouteMatcher;
+use Laminas\Validator\Digits;
+use Laminas\Validator\StringLength;
 
 /**
- * @category   Zend
- * @package    Zend_Console
+ * @category   Laminas
+ * @package    Laminas_Console
  * @subpackage UnitTests
- * @group      Zend_Console
+ * @group      Laminas_Console
  */
 class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -709,7 +707,7 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
             ],
 
             /**
-             * @bug ZF2-4315
+             * @bug Laminas-4315
              * @link https://github.com/zendframework/zf2/issues/4315
              */
             'literal-with-dashes' => [
@@ -894,7 +892,7 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
                 ]
             ],
             /**
-             * @bug ZF2-5671
+             * @bug Laminas-5671
              * @link https://github.com/zendframework/zf2/issues/5671
              */
             'mandatory-literal-camel-case' => [
@@ -1309,8 +1307,8 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
     {
         if (! class_exists(Digits::class)) {
             $this->markTestSkipped(sprintf(
-                '%s is skipped due to a dependency on zend-validator; update once that component '
-                . 'is forwards-compatible with zend-stdlib and zend-servicemanager v3',
+                '%s is skipped due to a dependency on laminas-validator; update once that component '
+                . 'is forwards-compatible with laminas-stdlib and laminas-servicemanager v3',
                 __METHOD__
             ));
         }
@@ -1326,7 +1324,7 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
 
     public function routeFiltersProvider()
     {
-        $genericFilter = $this->getMock('Zend\Filter\FilterInterface', ['filter']);
+        $genericFilter = $this->getMock('Laminas\Filter\FilterInterface', ['filter']);
         $genericFilter->expects($this->once())->method('filter')
             ->with('foobar')->will($this->returnValue('foobaz'));
 
@@ -1344,7 +1342,7 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
             'filters-single' => [
                 '<number>',
                 [
-                    'number' => new \Zend\Filter\ToInt()
+                    'number' => new \Laminas\Filter\ToInt()
                 ],
                 ['123four'],
                 [
@@ -1354,8 +1352,8 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
             'filters-multiple' => [
                 '<number> <strtolower>',
                 [
-                    'number' => new \Zend\Filter\ToInt(),
-                    'strtolower' => new \Zend\Filter\StringToLower(),
+                    'number' => new \Laminas\Filter\ToInt(),
+                    'strtolower' => new \Laminas\Filter\StringToLower(),
                 ],
                 ['nan', 'FOOBAR'],
                 [
@@ -1395,7 +1393,7 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorDoesNotAcceptInvalidFilters()
     {
-        $this->setExpectedException('Zend\Console\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Console\Exception\InvalidArgumentException');
         new DefaultRouteMatcher('<foo>', [], [], [], [
             new \stdClass()
         ]);
@@ -1403,7 +1401,7 @@ class DefaultRouteMatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorDoesNotAcceptInvalidValidators()
     {
-        $this->setExpectedException('Zend\Console\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Console\Exception\InvalidArgumentException');
         new DefaultRouteMatcher('<foo>', [], [], [], [], [
             new \stdClass()
         ]);

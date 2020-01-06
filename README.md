@@ -1,6 +1,6 @@
 # laminas-console
 
-[![Build Status](https://travis-ci.org/laminas/laminas-console.svg?branch=master)](https://travis-ci.org/laminas/laminas-console)
+[![Build Status](https://travis-ci.com/laminas/laminas-console.svg?branch=master)](https://travis-ci.com/laminas/laminas-console)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-console/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-console?branch=master)
 
 `Laminas\Console` is a component to design and implement console applications in PHP.

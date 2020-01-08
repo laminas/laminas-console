@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -304,42 +308,40 @@ to the appropriate action controller and action method that will handle the
 request. Actions can perform any number of tasks prior to returning a result to
 display in the console window.</p>
 <p>When using laminas-mvc, console routes are provided via configuration.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// The following can sit inside of module/Application/config/module.config.php,</span>
-<span class=x>// any other module&#39;s configuration, or within files under config/autoload/:</span>
-<span class=x>return [</span>
-<span class=x>    &#39;router&#39; =&gt; [</span>
-<span class=x>        &#39;routes&#39; =&gt; [</span>
-<span class=x>            // HTTP routes are here</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
+<pre class=codehilite><code class=language-php>// The following can sit inside of module/Application/config/module.config.php,
+// any other module's configuration, or within files under config/autoload/:
+return [
+    'router' =&gt; [
+        'routes' =&gt; [
+            // HTTP routes are here
+        ],
+    ],
 
-<span class=x>    &#39;console&#39; =&gt; [</span>
-<span class=x>        &#39;router&#39; =&gt; [</span>
-<span class=x>            &#39;routes&#39; =&gt; [</span>
-<span class=x>                // Console routes go here</span>
-<span class=x>            ],</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
-</pre></div></p>
+    'console' =&gt; [
+        'router' =&gt; [
+            'routes' =&gt; [
+                // Console routes go here
+            ],
+        ],
+    ],
+];</code></pre>
 <p>Console routes exposed via laminas-mvc will only be processed when the application
 is run inside a console (terminal) window; they are not used for web (HTTP)
 requests. It is possible to define only HTTP routes (web application only), only
 console routes (console-only application), or a mixture of the two.</p>
 <p>As an example of a single route:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// inside config.console.router.routes:</span>
-<span class=x>&#39;my-first-route&#39; =&gt; [</span>
-<span class=x>    &#39;type&#39;    =&gt; &#39;simple&#39;,  // This is the default, and may be omitted; more on</span>
-<span class=x>                            // types below</span>
-<span class=x>    &#39;options&#39; =&gt; [</span>
-<span class=x>        &#39;route&#39;    =&gt; &#39;foo bar&#39;,</span>
-<span class=x>        &#39;defaults&#39; =&gt; [</span>
-<span class=x>            &#39;controller&#39; =&gt; Application\Controller\Index::class,</span>
-<span class=x>            &#39;action&#39;     =&gt; &#39;password&#39;,</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>],</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// inside config.console.router.routes:
+'my-first-route' =&gt; [
+    'type'    =&gt; 'simple',  // This is the default, and may be omitted; more on
+                            // types below
+    'options' =&gt; [
+        'route'    =&gt; 'foo bar',
+        'defaults' =&gt; [
+            'controller' =&gt; Application\Controller\Index::class,
+            'action'     =&gt; 'password',
+        ],
+    ],
+],</code></pre>
 <p>We have created a <code>simple</code> console route with the name <code>my-first-route</code>. It
 expects two parameters: <code>foo</code> and <code>bar</code>. If user puts these in a console,
 <code>Application\Controller\IndexController::passwordAction()</code> action will be
@@ -356,17 +358,16 @@ system. See the section on <a href="../../routes/#the-default-route-matcher">the
 for details on route strings and available configuration to provide.</p>
 <h3>Catchall Route</h3>
 <p>This special route will catch all console requests, regardless of the parameters provided.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>&#39;default-route&#39; =&gt; [</span>
-<span class=x>    &#39;type&#39;     =&gt; &#39;catchall&#39;,</span>
-<span class=x>    &#39;options&#39; =&gt; [</span>
-<span class=x>        &#39;route&#39;    =&gt; &#39;&#39;,</span>
-<span class=x>        &#39;defaults&#39; =&gt; [</span>
-<span class=x>            &#39;controller&#39; =&gt; &#39;Application\Controller\Index&#39;,</span>
-<span class=x>            &#39;action&#39;     =&gt; &#39;consoledefault&#39;,</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>],</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>'default-route' =&gt; [
+    'type'     =&gt; 'catchall',
+    'options' =&gt; [
+        'route'    =&gt; '',
+        'defaults' =&gt; [
+            'controller' =&gt; 'Application\Controller\Index',
+            'action'     =&gt; 'consoledefault',
+        ],
+    ],
+],</code></pre>
 <p>This route type is rarely used; one possible use case is to register it as the
 last console route, in order to display usage information. Before you do so,
 read about the <a href="../modules/">preferred way of displaying console usage
@@ -581,9 +582,10 @@ interoperation with other modules in your application.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -620,7 +622,7 @@ interoperation with other modules in your application.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-console/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -629,8 +631,8 @@ interoperation with other modules in your application.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

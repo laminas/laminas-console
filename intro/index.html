@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -341,8 +345,7 @@ route matches, it returns an array of matched parameters &mdash; which may
 include default parameters, or even parameters not exposed via the command line
 (e.g., metadata related to the route).</p>
 <p>Let's assume that we'd like our application to handle the following command line:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas user resetpassword user@mail.com
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ laminas user resetpassword user@mail.com</code></pre>
 <p>When a user runs our application (<code>laminas</code>) with these parameters, we'd like to call
 the action <code>resetpassword</code> of <code>Application\Controller\IndexController</code>.</p>
 <blockquote>
@@ -352,14 +355,12 @@ a shell script in the application's <code>bin/</code> directory, or simply an al
 public/index.php</code>.</p>
 </blockquote>
 <p>First we need to create a <strong>route definition</strong>:</p>
-<p> <div class=codehilite><pre><span></span>user resetpassword &lt;userEmail&gt;
-</pre></div></p>
+<pre class=codehilite><code class=language-text>user resetpassword &lt;userEmail&gt;</code></pre>
 <p>This simple route definition expects exactly three arguments: the literal
 "user", the literal "resetpassword", and the dynamic argument we're calling
 "userEmail". Let's assume we also accept one optional parameter to enable
 verbose operation:</p>
-<p> <div class=codehilite><pre><span></span>user resetpassword [--verbose|-v] &lt;userEmail&gt;
-</pre></div></p>
+<pre class=codehilite><code class=language-text>user resetpassword [--verbose|-v] &lt;userEmail&gt;</code></pre>
 <p>The modified console route above expects the same three arguments from our
 original example, but will also recognise an optional <code>--verbose</code> flag, or its
 shorthand version, <code>-v</code>.</p>
@@ -373,99 +374,96 @@ the order that flags are used on the command line.</p>
 <p>Let's use the definition above and configure our console route. When using
 laminas-mvc, console routes are defined using the following configuration
 structure:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>return [</span>
-<span class=x>    &#39;router&#39; =&gt; [</span>
-<span class=x>        &#39;routes&#39; =&gt; [</span>
-<span class=x>            // HTTP routes are defined here</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
+<pre class=codehilite><code class=language-php>return [
+    'router' =&gt; [
+        'routes' =&gt; [
+            // HTTP routes are defined here
+        ],
+    ],
 
-<span class=x>    &#39;console&#39; =&gt; [</span>
-<span class=x>        &#39;router&#39; =&gt; [</span>
-<span class=x>            &#39;routes&#39; =&gt; [</span>
-<span class=x>                // Console routes go here</span>
-<span class=x>            ],</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
+    'console' =&gt; [
+        'router' =&gt; [
+            'routes' =&gt; [
+                // Console routes go here
+            ],
+        ],
+    ],
 
-<span class=x>    /* ... */</span>
-<span class=x>];</span>
-</pre></div></p>
+    /* ... */
+];</code></pre>
 <p>Let's create our console route and point it to
 <code>Application\Controller\IndexController::resetpasswordAction()</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// We could define routes for Application\Controller\IndexController in</span>
-<span class=x>// the Application module config file, usually located at</span>
-<span class=x>// modules/application/config/module.config.php, or in one of the</span>
-<span class=x>// config/autoload/*.php files.</span>
-<span class=x>return [</span>
-<span class=x>    &#39;console&#39; =&gt; [</span>
-<span class=x>        &#39;router&#39; =&gt; [</span>
-<span class=x>            &#39;routes&#39; =&gt; [</span>
-<span class=x>                &#39;user-reset-password&#39; =&gt; [</span>
-<span class=x>                    &#39;options&#39; =&gt; [</span>
-<span class=x>                        &#39;route&#39;    =&gt; &#39;user resetpassword [--verbose|-v] &lt;userEmail&gt;&#39;,</span>
-<span class=x>                        &#39;defaults&#39; =&gt; [</span>
-<span class=x>                            &#39;controller&#39; =&gt; Application\Controller\Index::class,</span>
-<span class=x>                            &#39;action&#39;     =&gt; &#39;resetpassword&#39;,</span>
-<span class=x>                        ],</span>
-<span class=x>                    ],</span>
-<span class=x>                ],</span>
-<span class=x>            ],</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>    /* ... */</span>
-<span class=x>;</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// We could define routes for Application\Controller\IndexController in
+// the Application module config file, usually located at
+// modules/application/config/module.config.php, or in one of the
+// config/autoload/*.php files.
+return [
+    'console' =&gt; [
+        'router' =&gt; [
+            'routes' =&gt; [
+                'user-reset-password' =&gt; [
+                    'options' =&gt; [
+                        'route'    =&gt; 'user resetpassword [--verbose|-v] &lt;userEmail&gt;',
+                        'defaults' =&gt; [
+                            'controller' =&gt; Application\Controller\Index::class,
+                            'action'     =&gt; 'resetpassword',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    /* ... */
+;</code></pre>
 <h2 id="handling-console-requests">Handling Console Requests</h2>
 <p>When a user runs our application from the command line and arguments match our
 console route, the specified controller will be instantiated, and the specified
 action method will be called, just as happens with laminas-mvc HTTP requests.</p>
 <p>As such, let's add the <code>resetpassword</code> action to our
 <code>Application\Controller\IndexController</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Application\Controller;</span>
+<pre class=codehilite><code class=language-php>namespace Application\Controller;
 
-<span class=x>use RuntimeException;</span>
-<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
-<span class=x>use Laminas\View\Model\ViewModel;</span>
-<span class=x>use Laminas\Console\Request as ConsoleRequest;</span>
-<span class=x>use Laminas\Math\Rand;</span>
+use RuntimeException;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
+use Laminas\Console\Request as ConsoleRequest;
+use Laminas\Math\Rand;
 
-<span class=x>class IndexController extends AbstractActionController</span>
-<span class=x>{</span>
-<span class=x>    /* ... */</span>
+class IndexController extends AbstractActionController
+{
+    /* ... */
 
-<span class=x>    public function resetpasswordAction()</span>
-<span class=x>    {</span>
-<span class=x>        $request = $this-&gt;getRequest();</span>
+    public function resetpasswordAction()
+    {
+        $request = $this-&gt;getRequest();
 
-<span class=x>        // Make sure that we are running in a console, and the user has not</span>
-<span class=x>        // tricked our application into running this action from a public web</span>
-<span class=x>        // server:</span>
-<span class=x>        if (! $request instanceof ConsoleRequest) {</span>
-<span class=x>            throw new RuntimeException(&#39;You can only use this action from a console!&#39;);</span>
-<span class=x>        }</span>
+        // Make sure that we are running in a console, and the user has not
+        // tricked our application into running this action from a public web
+        // server:
+        if (! $request instanceof ConsoleRequest) {
+            throw new RuntimeException('You can only use this action from a console!');
+        }
 
-<span class=x>        // Get user email from the console, and check if the user requested</span>
-<span class=x>        // verbosity:</span>
-<span class=x>        $userEmail   = $request-&gt;getParam(&#39;userEmail&#39;);</span>
-<span class=x>        $verbose     = $request-&gt;getParam(&#39;verbose&#39;) || $request-&gt;getParam(&#39;v&#39;);</span>
+        // Get user email from the console, and check if the user requested
+        // verbosity:
+        $userEmail   = $request-&gt;getParam('userEmail');
+        $verbose     = $request-&gt;getParam('verbose') || $request-&gt;getParam('v');
 
-<span class=x>        // Reset new password</span>
-<span class=x>        $newPassword = Rand::getString(16);</span>
+        // Reset new password
+        $newPassword = Rand::getString(16);
 
-<span class=x>        // Fetch the user and change his password, then email him ...</span>
-<span class=x>        /* ... */</span>
+        // Fetch the user and change his password, then email him ...
+        /* ... */
 
-<span class=x>        if ($verbose) {</span>
-<span class=x>            return &quot;Done! New password for user $userEmail is &#39;$newPassword&#39;. &quot;</span>
-<span class=x>                . &quot;It has also been emailed to him.\n&quot;;</span>
-<span class=x>        }</span>
+        if ($verbose) {
+            return &quot;Done! New password for user $userEmail is '$newPassword'. &quot;
+                . &quot;It has also been emailed to him.\n&quot;;
+        }
 
-<span class=x>        return &quot;Done! $userEmail has received an email with his new password.\n&quot;;</span>
+        return &quot;Done! $userEmail has received an email with his new password.\n&quot;;
 
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    }
+}</code></pre>
 <p>The above creates <code>resetpasswordAction()</code>, which:</p>
 <ul>
 <li>retrieves the current request;</li>
@@ -483,45 +481,44 @@ arguments. The combination of laminas-console and laminas-mvc enables this out o
 box. Modules can provide usage information, and laminas-console will query all loaded
 modules for console usage information they expose.</p>
 <p>Let's modify our <code>Application\Module</code> to provide usage info:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Application;</span>
+<pre class=codehilite><code class=language-php>namespace Application;
 
-<span class=x>use Laminas\ModuleManager\Feature\AutoloaderProviderInterface;</span>
-<span class=x>use Laminas\ModuleManager\Feature\ConfigProviderInterface;</span>
-<span class=x>use Laminas\ModuleManager\Feature\ConsoleUsageProviderInterface;</span>
-<span class=x>use Laminas\Console\Adapter\AdapterInterface as Console;</span>
+use Laminas\ModuleManager\Feature\AutoloaderProviderInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Laminas\Console\Adapter\AdapterInterface as Console;
 
-<span class=x>/**</span>
-<span class=x> * Implementing ConsoleUsageProviderInterface allows the Module to provide</span>
-<span class=x> * console usage information.</span>
-<span class=x> */</span>
-<span class=x>class Module implements</span>
-<span class=x>    AutoloaderProviderInterface,</span>
-<span class=x>    ConfigProviderInterface,</span>
-<span class=x>    ConsoleUsageProviderInterface</span>
-<span class=x>{</span>
-<span class=x>    public function getConfig()</span>
-<span class=x>    {</span>
-<span class=x>        /* ... */</span>
-<span class=x>    }</span>
+/**
+ * Implementing ConsoleUsageProviderInterface allows the Module to provide
+ * console usage information.
+ */
+class Module implements
+    AutoloaderProviderInterface,
+    ConfigProviderInterface,
+    ConsoleUsageProviderInterface
+{
+    public function getConfig()
+    {
+        /* ... */
+    }
 
-<span class=x>    public function getAutoloaderConfig()</span>
-<span class=x>    {</span>
-<span class=x>        /* ... */</span>
-<span class=x>    }</span>
+    public function getAutoloaderConfig()
+    {
+        /* ... */
+    }
 
-<span class=x>    public function getConsoleUsage(Console $console)</span>
-<span class=x>    {</span>
-<span class=x>        return [</span>
-<span class=x>            // Describe available commands</span>
-<span class=x>            &#39;user resetpassword [--verbose|-v] EMAIL&#39; =&gt; &#39;Reset password for a user&#39;,</span>
+    public function getConsoleUsage(Console $console)
+    {
+        return [
+            // Describe available commands
+            'user resetpassword [--verbose|-v] EMAIL' =&gt; 'Reset password for a user',
 
-<span class=x>            // Describe expected parameters</span>
-<span class=x>            [ &#39;EMAIL&#39;,        &#39;Email of the user for a password reset&#39; ],</span>
-<span class=x>            [ &#39;--verbose|-v&#39;, &#39;(optional) turn on verbose mode&#39;        ],</span>
-<span class=x>        ];</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+            // Describe expected parameters
+            [ 'EMAIL',        'Email of the user for a password reset' ],
+            [ '--verbose|-v', '(optional) turn on verbose mode'        ],
+        ];
+    }
+}</code></pre>
 <p>Each module that implements <code>ConsoleUsageProviderInterface</code> will be queried for
 console usage info.  On route mismatch, all info from all modules will be
 concatenated, formatted to console width, and shown to the user.</p>
@@ -740,9 +737,10 @@ first, change the order your modules are loaded.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -779,7 +777,7 @@ first, change the order your modules are loaded.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-console/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -788,8 +786,8 @@ first, change the order your modules are loaded.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

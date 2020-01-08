@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -322,125 +326,121 @@ array, which holds the <code>controller</code> and <code>action</code> keys. The
 controller aliases in the <code>ServiceManager</code>, and method names in the controller
 class. This is analogous to the way HTTP requests are handled under laminas-mvc.</p>
 <p>In this example we'll use the following route:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// in file module/Application/config/module.config.php:</span>
-<span class=x>return [</span>
-<span class=x>    &#39;router&#39; =&gt; [</span>
-<span class=x>        &#39;routes&#39; =&gt; [</span>
-<span class=x>            // HTTP routes are here</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
+<pre class=codehilite><code class=language-php>// in file module/Application/config/module.config.php:
+return [
+    'router' =&gt; [
+        'routes' =&gt; [
+            // HTTP routes are here
+        ],
+    ],
 
-<span class=x>    &#39;console&#39; =&gt; [</span>
-<span class=x>        &#39;router&#39; =&gt; [</span>
-<span class=x>            &#39;routes&#39; =&gt; [</span>
-<span class=x>                &#39;list-users&#39; =&gt; [</span>
-<span class=x>                    &#39;options&#39; =&gt; [</span>
-<span class=x>                        &#39;route&#39;    =&gt; &#39;show [all|disabled|deleted]:mode users [--verbose|-v]&#39;,</span>
-<span class=x>                        &#39;defaults&#39; =&gt; [</span>
-<span class=x>                            &#39;controller&#39; =&gt; Application\Controller\Index::class,</span>
-<span class=x>                            &#39;action&#39;     =&gt; &#39;show-users&#39;,</span>
-<span class=x>                        ],</span>
-<span class=x>                    ],</span>
-<span class=x>                ],</span>
-<span class=x>            ],</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
+    'console' =&gt; [
+        'router' =&gt; [
+            'routes' =&gt; [
+                'list-users' =&gt; [
+                    'options' =&gt; [
+                        'route'    =&gt; 'show [all|disabled|deleted]:mode users [--verbose|-v]',
+                        'defaults' =&gt; [
+                            'controller' =&gt; Application\Controller\Index::class,
+                            'action'     =&gt; 'show-users',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
 
-<span class=x>    /* ... */</span>
-<span class=x>);</span>
-</pre></div></p>
+    /* ... */
+);</code></pre>
 <p>This route will match commands such as:</p>
-<p> <div class=codehilite><pre><span></span>$ php public/index.php show users
+<pre class=codehilite><code class=language-bash>$ php public/index.php show users
 $ php public/index.php show all users
-$ php public/index.php show disabled users
-</pre></div></p>
+$ php public/index.php show disabled users</code></pre>
 <p>This route maps to the method <code>Application\Controller\IndexController::showUsersAction()</code>.</p>
 <p>Let's add it that method to our controller.</p>
-<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?php</span>
-<span class=k>namespace</span> <span class=nx>Application\Controller</span><span class=p>;</span>
+<pre class=codehilite><code class=language-php>&lt;?php
+namespace Application\Controller;
 
-<span class=k>use</span> <span class=nx>Laminas\Mvc\Controller\AbstractActionController</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\View\Model\ViewModel</span><span class=p>;</span>
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
-<span class=k>class</span> <span class=nc>IndexController</span> <span class=k>extends</span> <span class=nx>AbstractActionController</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>indexAction</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=k>return</span> <span class=k>new</span> <span class=nx>ViewModel</span><span class=p>();</span> <span class=c1>// display standard index page</span>
-    <span class=p>}</span>
+class IndexController extends AbstractActionController
+{
+    public function indexAction()
+    {
+        return new ViewModel(); // display standard index page
+    }
 
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>showUsersAction</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=nv>$request</span> <span class=o>=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>getRequest</span><span class=p>();</span>
-        <span class=nv>$users</span>   <span class=o>=</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>getServiceLocator</span><span class=p>()</span><span class=o>-&gt;</span><span class=na>get</span><span class=p>(</span><span class=s1>&#39;users&#39;</span><span class=p>);</span>
+    public function showUsersAction()
+    {
+        $request = $this-&gt;getRequest();
+        $users   = $this-&gt;getServiceLocator()-&gt;get('users');
 
-        <span class=c1>// Check verbose flag</span>
-        <span class=nv>$verbose</span> <span class=o>=</span> <span class=nv>$request</span><span class=o>-&gt;</span><span class=na>getParam</span><span class=p>(</span><span class=s1>&#39;verbose&#39;</span><span class=p>)</span> <span class=o>||</span> <span class=nv>$request</span><span class=o>-&gt;</span><span class=na>getParam</span><span class=p>(</span><span class=s1>&#39;v&#39;</span><span class=p>);</span>
+        // Check verbose flag
+        $verbose = $request-&gt;getParam('verbose') || $request-&gt;getParam('v');
 
-        <span class=c1>// Check mode</span>
-        <span class=nv>$mode</span> <span class=o>=</span> <span class=nv>$request</span><span class=o>-&gt;</span><span class=na>getParam</span><span class=p>(</span><span class=s1>&#39;mode&#39;</span><span class=p>,</span> <span class=s1>&#39;all&#39;</span><span class=p>);</span> <span class=c1>// defaults to &#39;all&#39;</span>
+        // Check mode
+        $mode = $request-&gt;getParam('mode', 'all'); // defaults to 'all'
 
-        <span class=nv>$users</span> <span class=o>=</span> <span class=k>array</span><span class=p>();</span>
-        <span class=k>switch</span> <span class=p>(</span><span class=nv>$mode</span><span class=p>)</span> <span class=p>{</span>
-            <span class=k>case</span> <span class=s1>&#39;disabled&#39;</span><span class=o>:</span>
-                <span class=nv>$users</span> <span class=o>=</span> <span class=nv>$users</span><span class=o>-&gt;</span><span class=na>fetchDisabledUsers</span><span class=p>();</span>
-                <span class=k>break</span><span class=p>;</span>
-            <span class=k>case</span> <span class=s1>&#39;deleted&#39;</span><span class=o>:</span>
-                <span class=nv>$users</span> <span class=o>=</span> <span class=nv>$users</span><span class=o>-&gt;</span><span class=na>fetchDeletedUsers</span><span class=p>();</span>
-                <span class=k>break</span><span class=p>;</span>
-            <span class=k>case</span> <span class=s1>&#39;all&#39;</span><span class=o>:</span>
-            <span class=k>default</span><span class=o>:</span>
-                <span class=nv>$users</span> <span class=o>=</span> <span class=nv>$users</span><span class=o>-&gt;</span><span class=na>fetchAllUsers</span><span class=p>();</span>
-                <span class=k>break</span><span class=p>;</span>
-        <span class=p>}</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</pre></div></p>
+        $users = array();
+        switch ($mode) {
+            case 'disabled':
+                $users = $users-&gt;fetchDisabledUsers();
+                break;
+            case 'deleted':
+                $users = $users-&gt;fetchDeletedUsers();
+                break;
+            case 'all':
+            default:
+                $users = $users-&gt;fetchAllUsers();
+                break;
+        }
+    }
+}</code></pre>
 <p>We fetch the console request, read parameters, and load users from our
 (theoretical) users service.  In order to make this method functional, we'll
 have to display the result in the console window.</p>
 <h2 id="sending-output-to-the-console">Sending Output to the Console</h2>
 <p>The simplest way for our controller to display data in the console window is to
 return a string. Let's modify our example to output a list of users:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function showUsersAction()</span>
-<span class=x>{</span>
-<span class=x>    $request = $this-&gt;getRequest();</span>
-<span class=x>    $users   = $this-&gt;getServiceLocator()-&gt;get(&#39;users&#39;);</span>
+<pre class=codehilite><code class=language-php>public function showUsersAction()
+{
+    $request = $this-&gt;getRequest();
+    $users   = $this-&gt;getServiceLocator()-&gt;get('users');
 
-<span class=x>    // Check verbose flag</span>
-<span class=x>    $verbose = $request-&gt;getParam(&#39;verbose&#39;) || $request-&gt;getParam(&#39;v&#39;);</span>
+    // Check verbose flag
+    $verbose = $request-&gt;getParam('verbose') || $request-&gt;getParam('v');
 
-<span class=x>    // Check mode</span>
-<span class=x>    $mode = $request-&gt;getParam(&#39;mode&#39;, &#39;all&#39;); // defaults to &#39;all&#39;</span>
+    // Check mode
+    $mode = $request-&gt;getParam('mode', 'all'); // defaults to 'all'
 
-<span class=x>    $users = array();</span>
-<span class=x>    switch ($mode) {</span>
-<span class=x>        case &#39;disabled&#39;:</span>
-<span class=x>            $users = $users-&gt;fetchDisabledUsers();</span>
-<span class=x>            break;</span>
-<span class=x>        case &#39;deleted&#39;:</span>
-<span class=x>            $users = $users-&gt;fetchDeletedUsers();</span>
-<span class=x>            break;</span>
-<span class=x>        case &#39;all&#39;:</span>
-<span class=x>        default:</span>
-<span class=x>            $users = $users-&gt;fetchAllUsers();</span>
-<span class=x>            break;</span>
-<span class=x>    }</span>
+    $users = array();
+    switch ($mode) {
+        case 'disabled':
+            $users = $users-&gt;fetchDisabledUsers();
+            break;
+        case 'deleted':
+            $users = $users-&gt;fetchDeletedUsers();
+            break;
+        case 'all':
+        default:
+            $users = $users-&gt;fetchAllUsers();
+            break;
+    }
 
-<span class=x>    if (count($users) === 0) {</span>
-<span class=x>        // Show an error message in the console</span>
-<span class=x>        return &quot;There are no users in the database\n&quot;;</span>
-<span class=x>    }</span>
+    if (count($users) === 0) {
+        // Show an error message in the console
+        return &quot;There are no users in the database\n&quot;;
+    }
 
-<span class=x>    $result = &#39;&#39;;</span>
+    $result = '';
 
-<span class=x>    foreach ($users as $user) {</span>
-<span class=x>        $result .= $user-&gt;name . &#39; &#39; . $user-&gt;email . &quot;\n&quot;;</span>
-<span class=x>    }</span>
+    foreach ($users as $user) {
+        $result .= $user-&gt;name . ' ' . $user-&gt;email . &quot;\n&quot;;
+    }
 
-<span class=x>    return $result; // show it in the console</span>
-<span class=x>}</span>
-</pre></div></p>
+    return $result; // show it in the console
+}</code></pre>
 <p>In the second conditional, we are checking if the users service found any users;
 if not, we return an error message to display immediately, terminating the
 application.</p>
@@ -451,29 +451,28 @@ return from the action for display in the console.</p>
 from a web request. This is useful to block certain methods from running in the
 console or to change their behavior based on that context.</p>
 <p>Here is an example of how to check if we are dealing with a console request:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Application\Controller;</span>
+<pre class=codehilite><code class=language-php>namespace Application\Controller;
 
-<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
-<span class=x>use Laminas\View\Model\ViewModel;</span>
-<span class=x>use Laminas\Console\Request as ConsoleRequest;</span>
-<span class=x>use RuntimeException;</span>
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
+use Laminas\Console\Request as ConsoleRequest;
+use RuntimeException;
 
-<span class=x>class IndexController extends AbstractActionController</span>
-<span class=x>{</span>
-<span class=x>    public function showUsersAction()</span>
-<span class=x>    {</span>
-<span class=x>        $request = $this-&gt;getRequest();</span>
+class IndexController extends AbstractActionController
+{
+    public function showUsersAction()
+    {
+        $request = $this-&gt;getRequest();
 
-<span class=x>        // Make sure that we are running in a console and the user has not tricked our</span>
-<span class=x>        // application into running this action from a public web server.</span>
-<span class=x>        if (! $request instanceof ConsoleRequest) {</span>
-<span class=x>            throw new RuntimeException(&#39;You can only use this action from a console!&#39;);</span>
-<span class=x>        }</span>
+        // Make sure that we are running in a console and the user has not tricked our
+        // application into running this action from a public web server.
+        if (! $request instanceof ConsoleRequest) {
+            throw new RuntimeException('You can only use this action from a console!');
+        }
 
-<span class=x>        /* ... */</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        /* ... */
+    }
+}</code></pre>
 <blockquote>
 <h3>Use Routing to protect Methods</h3>
 <p>You do not need to secure all your controllers and methods from console
@@ -486,37 +485,36 @@ unless there is at least one HTTP route that points to it.</p>
 </blockquote>
 <p>The example below shows how a single controller method can handle <strong>both Console
 and HTTP requests</strong>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Application\Controller;</span>
+<pre class=codehilite><code class=language-php>namespace Application\Controller;
 
-<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
-<span class=x>use Laminas\View\Model\ViewModel;</span>
-<span class=x>use Laminas\Console\Request as ConsoleRequest;</span>
-<span class=x>use Laminas\Http\Request as HttpRequest;</span>
-<span class=x>use RuntimeException;</span>
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
+use Laminas\Console\Request as ConsoleRequest;
+use Laminas\Http\Request as HttpRequest;
+use RuntimeException;
 
-<span class=x>class IndexController extends AbstractActionController</span>
-<span class=x>{</span>
-<span class=x>    public function showUsersAction()</span>
-<span class=x>    {</span>
-<span class=x>        $request = $this-&gt;getRequest();</span>
+class IndexController extends AbstractActionController
+{
+    public function showUsersAction()
+    {
+        $request = $this-&gt;getRequest();
 
-<span class=x>        $users = array();</span>
-<span class=x>        /* ... fetch users from database ... */</span>
+        $users = array();
+        /* ... fetch users from database ... */
 
-<span class=x>        if ($request instanceof HttpRequest) {</span>
-<span class=x>            // display a web page with users list</span>
-<span class=x>            return new ViewModel($result);</span>
-<span class=x>        }</span>
+        if ($request instanceof HttpRequest) {
+            // display a web page with users list
+            return new ViewModel($result);
+        }
 
-<span class=x>        if ($request instanceof ConsoleRequest) {</span>
-<span class=x>            // ... prepare console output and return it ...</span>
-<span class=x>            return $result;</span>
-<span class=x>        }</span>
+        if ($request instanceof ConsoleRequest) {
+            // ... prepare console output and return it ...
+            return $result;
+        }
 
-<span class=x>        throw new RuntimeException(&#39;Cannot handle request of type &#39; . get_class($request));</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        throw new RuntimeException('Cannot handle request of type ' . get_class($request));
+    }
+}</code></pre>
 <blockquote>
 <h3>AbstractConsoleController</h3>
 <p>One way to ensure you always receive a console request instance is to extend
@@ -533,124 +531,117 @@ focus on how to retrieve values from distinct parameters and flags.</p>
 <p>After a route matches, we can access both <strong>literal parameters</strong> and <strong>value
 parameters</strong> via the <code>$request</code> instance, using the <code>getParam()</code> method.</p>
 <p>Assuming we have the following route:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>&#39;show-users&#39; =&gt; [</span>
-<span class=x>    &#39;options&#39; =&gt; [</span>
-<span class=x>        &#39;route&#39;    =&gt; &#39;show (all|deleted|locked|admin) [&lt;groupName&gt;]&#39;</span>
-<span class=x>        &#39;defaults&#39; =&gt; [</span>
-<span class=x>            &#39;controller&#39; =&gt; &#39;Application\Controller\Users&#39;,</span>
-<span class=x>            &#39;action&#39;     =&gt; &#39;showusers&#39;,</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>],</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>'show-users' =&gt; [
+    'options' =&gt; [
+        'route'    =&gt; 'show (all|deleted|locked|admin) [&lt;groupName&gt;]'
+        'defaults' =&gt; [
+            'controller' =&gt; 'Application\Controller\Users',
+            'action'     =&gt; 'showusers',
+        ],
+    ],
+],</code></pre>
 <p>If this route matches, our action can now query parameters in the following way:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// an action inside Application\Controller\UsersController:</span>
-<span class=x>public function showUsersAction()</span>
-<span class=x>{</span>
-<span class=x>    $request = $this-&gt;getRequest();</span>
+<pre class=codehilite><code class=language-php>// an action inside Application\Controller\UsersController:
+public function showUsersAction()
+{
+    $request = $this-&gt;getRequest();
 
-<span class=x>    // We can access named value parameters directly by their name:</span>
-<span class=x>    $showUsersFromGroup = $request-&gt;getParam(&#39;groupName&#39;);</span>
+    // We can access named value parameters directly by their name:
+    $showUsersFromGroup = $request-&gt;getParam('groupName');
 
-<span class=x>    // Literal parameters can be checked with isset() against their exact spelling</span>
-<span class=x>    if (isset($request-&gt;getParam(&#39;all&#39;))) {</span>
-<span class=x>        // show all users</span>
-<span class=x>    } elseif (isset($request-&gt;getParam(&#39;deleted&#39;))) {</span>
-<span class=x>        // show deleted users</span>
-<span class=x>    }</span>
+    // Literal parameters can be checked with isset() against their exact spelling
+    if (isset($request-&gt;getParam('all'))) {
+        // show all users
+    } elseif (isset($request-&gt;getParam('deleted'))) {
+        // show deleted users
+    }
 
-<span class=x>    /* ... */</span>
-<span class=x>}</span>
-</pre></div></p>
+    /* ... */
+}</code></pre>
 <p>In case of parameter alternatives, it is a good idea to <strong>assign a name to the group</strong>, which
 simplifies the branching in our action controllers. We can do this with the following syntax:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// inside of config.console.router.routes:</span>
-<span class=x>&#39;show-users&#39; =&gt; array(</span>
-<span class=x>    &#39;options&#39; =&gt; array(</span>
-<span class=x>        &#39;route&#39;    =&gt; &#39;show (all|deleted|locked|admin):userTypeFilter [&lt;groupName&gt;]&#39;</span>
-<span class=x>        &#39;defaults&#39; =&gt; array(</span>
-<span class=x>            &#39;controller&#39; =&gt; &#39;Application\Controller\Users&#39;,</span>
-<span class=x>            &#39;action&#39;     =&gt; &#39;showusers&#39;</span>
-<span class=x>        )</span>
-<span class=x>    )</span>
-<span class=x>)</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// inside of config.console.router.routes:
+'show-users' =&gt; array(
+    'options' =&gt; array(
+        'route'    =&gt; 'show (all|deleted|locked|admin):userTypeFilter [&lt;groupName&gt;]'
+        'defaults' =&gt; array(
+            'controller' =&gt; 'Application\Controller\Users',
+            'action'     =&gt; 'showusers'
+        )
+    )
+)</code></pre>
 <p>Now we can use a the group name <code>userTypeFilter</code> to check which option has been
 selected by the user:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function showUsersAction()</span>
-<span class=x>{</span>
-<span class=x>    $request = $this-&gt;getRequest();</span>
+<pre class=codehilite><code class=language-php>public function showUsersAction()
+{
+    $request = $this-&gt;getRequest();
 
-<span class=x>    // We can access named value parameters directly by their name:</span>
-<span class=x>    $showUsersFromGroup = $request-&gt;getParam(&#39;groupName&#39;);</span>
+    // We can access named value parameters directly by their name:
+    $showUsersFromGroup = $request-&gt;getParam('groupName');
 
-<span class=x>    // The selected option from second parameter is now stored under &#39;userTypeFilter&#39;</span>
-<span class=x>    $userTypeFilter = $request-&gt;getParam(&#39;userTypeFilter&#39;);</span>
+    // The selected option from second parameter is now stored under 'userTypeFilter'
+    $userTypeFilter = $request-&gt;getParam('userTypeFilter');
 
-<span class=x>    switch ($userTypeFilter) {</span>
-<span class=x>        case &#39;all&#39;:</span>
-<span class=x>            // all users</span>
-<span class=x>        case &#39;deleted&#39;:</span>
-<span class=x>            // deleted users</span>
-<span class=x>        case &#39;locked&#39;</span>
-<span class=x>           // ...</span>
-<span class=x>           // ...</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    switch ($userTypeFilter) {
+        case 'all':
+            // all users
+        case 'deleted':
+            // deleted users
+        case 'locked'
+           // ...
+           // ...
+    }
+}</code></pre>
 <h3>Flags</h3>
 <p>Flags are directly accessible by name. Value-capturing flags will contain string
 values, as provided by the user. Non-value flags will be equal to <code>true</code>, or
 <code>null</code> if not present.</p>
 <p>Given the following route:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>&#39;find-user&#39; =&gt; [</span>
-<span class=x>    &#39;options&#39; =&gt; [</span>
-<span class=x>        &#39;route&#39;    =&gt; &#39;find user [--fast] [--verbose] [--id=] [--firstName=] [--lastName=] [--email=] &#39;,</span>
-<span class=x>        &#39;defaults&#39; =&gt; [</span>
-<span class=x>            &#39;controller&#39; =&gt; &#39;Application\Controller\Users&#39;,</span>
-<span class=x>            &#39;action&#39;     =&gt; &#39;find&#39;,</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>],</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>'find-user' =&gt; [
+    'options' =&gt; [
+        'route'    =&gt; 'find user [--fast] [--verbose] [--id=] [--firstName=] [--lastName=] [--email=] ',
+        'defaults' =&gt; [
+            'controller' =&gt; 'Application\Controller\Users',
+            'action'     =&gt; 'find',
+        ],
+    ],
+],</code></pre>
 <p>We can retrieve values in the following fashion:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function findAction()</span>
-<span class=x>{</span>
-<span class=x>    $request = $this-&gt;getRequest();</span>
+<pre class=codehilite><code class=language-php>public function findAction()
+{
+    $request = $this-&gt;getRequest();
 
-<span class=x>    // We can retrieve values from value flags using their name</span>
-<span class=x>    $searchId        = $request-&gt;getParam(&#39;id&#39;,        null); // default null</span>
-<span class=x>    $searchFirstName = $request-&gt;getParam(&#39;firstName&#39;, null);</span>
-<span class=x>    $searchLastName  = $request-&gt;getParam(&#39;lastName&#39;,  null);</span>
-<span class=x>    $searchEmail     = $request-&gt;getParam(&#39;email&#39;,     null);</span>
+    // We can retrieve values from value flags using their name
+    $searchId        = $request-&gt;getParam('id',        null); // default null
+    $searchFirstName = $request-&gt;getParam('firstName', null);
+    $searchLastName  = $request-&gt;getParam('lastName',  null);
+    $searchEmail     = $request-&gt;getParam('email',     null);
 
-<span class=x>    // Standard flags that have been matched will be equal to TRUE</span>
-<span class=x>    $isFast          = (bool) $request-&gt;getParam(&#39;fast&#39;,    false); // default false</span>
-<span class=x>    $isVerbose       = (bool) $request-&gt;getParam(&#39;verbose&#39;, false);</span>
+    // Standard flags that have been matched will be equal to TRUE
+    $isFast          = (bool) $request-&gt;getParam('fast',    false); // default false
+    $isVerbose       = (bool) $request-&gt;getParam('verbose', false);
 
-<span class=x>    if ($isFast) {</span>
-<span class=x>        // perform a fast query ...</span>
-<span class=x>    } else {</span>
-<span class=x>        // perform standard query ...</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    if ($isFast) {
+        // perform a fast query ...
+    } else {
+        // perform standard query ...
+    }
+}</code></pre>
 <p>In case of <strong>flag alternatives</strong>, we have to check each alternative separately:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>/*</span>
-<span class=x> * Assuming our route now reads:</span>
-<span class=x> *      &#39;route&#39;    =&gt; &#39;find user [--fast|-f] [--verbose|-v] ... &#39;,</span>
-<span class=x> */</span>
-<span class=x>public function findAction()</span>
-<span class=x>{</span>
-<span class=x>    $request = $this-&gt;getRequest();</span>
+<pre class=codehilite><code class=language-php>/*
+ * Assuming our route now reads:
+ *      'route'    =&gt; 'find user [--fast|-f] [--verbose|-v] ... ',
+ */
+public function findAction()
+{
+    $request = $this-&gt;getRequest();
 
-<span class=x>    // Check both alternatives</span>
-<span class=x>    $isFast    = $request-&gt;getParam(&#39;fast&#39;, false)    || $request-&gt;getParam(&#39;f&#39;, false);</span>
-<span class=x>    $isVerbose = $request-&gt;getParam(&#39;verbose&#39;, false) || $request-&gt;getParam(&#39;v&#39;, false);</span>
+    // Check both alternatives
+    $isFast    = $request-&gt;getParam('fast', false)    || $request-&gt;getParam('f', false);
+    $isVerbose = $request-&gt;getParam('verbose', false) || $request-&gt;getParam('v', false);
 
-<span class=x>    // ...</span>
-<span class=x>}</span>
-</pre></div></p>
+    // ...
+}</code></pre>
 
 
 
@@ -860,9 +851,10 @@ values, as provided by the user. Non-value flags will be equal to <code>true</co
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -899,7 +891,7 @@ values, as provided by the user. Non-value flags will be equal to <code>true</co
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-console/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -908,8 +900,8 @@ values, as provided by the user. Non-value flags will be equal to <code>true</co
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

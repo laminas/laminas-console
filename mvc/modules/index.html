@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -320,31 +324,29 @@ banners</a> and <a href="#usage-information">usage information</a>.</p>
 <h2 id="application-banner">Application banner</h2>
 <p>When using laminas-console within a laminas-mvc application, you can invoke it via
 the application bootstrap:</p>
-<p> <div class=codehilite><pre><span></span>$ php public/index.php
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ php public/index.php</code></pre>
 <p>By default, it will simply output the current Laminas 2 version, like this:</p>
 <p><img alt="Basic console invocation" src="../images/laminas.console.empty.png" class="img-responsive"/></p>
 <p>Our <code>Application</code> module (and any other module) can provide an <strong>application
 banner</strong>. In order to do so, our <code>Module</code> class has to implement
 <code>Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface</code>. As an example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// module/Application/Module.php</span>
-<span class=cp>&lt;?php</span>
-<span class=k>namespace</span> <span class=nx>Application</span><span class=p>;</span>
+<pre class=codehilite><code class=language-php>// module/Application/Module.php
+&lt;?php
+namespace Application;
 
-<span class=k>use</span> <span class=nx>Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\Console\Adapter\AdapterInterface</span> <span class=k>as</span> <span class=nx>Console</span><span class=p>;</span>
+use Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface;
+use Laminas\Console\Adapter\AdapterInterface as Console;
 
-<span class=k>class</span> <span class=nc>Module</span> <span class=k>implements</span> <span class=nx>ConsoleBannerProviderInterface</span>
-<span class=p>{</span>
-    <span class=sd>/**</span>
-<span class=sd>     * This method is defined in ConsoleBannerProviderInterface</span>
-<span class=sd>     */</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>getConsoleBanner</span><span class=p>(</span><span class=nx>Console</span> <span class=nv>$console</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=k>return</span> <span class=s1>&#39;MyModule 0.0.1&#39;</span><span class=p>;</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</pre></div></p>
+class Module implements ConsoleBannerProviderInterface
+{
+    /**
+     * This method is defined in ConsoleBannerProviderInterface
+     */
+    public function getConsoleBanner(Console $console)
+    {
+        return 'MyModule 0.0.1';
+    }
+}</code></pre>
 <p>As you can see, the application banner should be a single line string that
 returns the module's name and (if available) its current version.</p>
 <p>If several modules define their own banner, they are displayed one after the
@@ -353,33 +355,31 @@ glance which modules expose console commands.</p>
 <p>If we execute our console application now, we'll see the newly created banner:</p>
 <p><img alt="Application banner" src="../images/laminas.console.banner.png" class="img-responsive"/></p>
 <p>Let's create and load a second module that provides a banner:</p>
-<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?php</span>
-<span class=c1>// config/application.config.php</span>
-<span class=k>return</span> <span class=k>array</span><span class=p>(</span>
-    <span class=s1>&#39;modules&#39;</span> <span class=o>=&gt;</span> <span class=k>array</span><span class=p>(</span>
-        <span class=s1>&#39;Application&#39;</span><span class=p>,</span>
-        <span class=s1>&#39;User&#39;</span><span class=p>,</span>     <span class=c1>// &lt;- load user module in module/User</span>
-    <span class=p>),</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>&lt;?php
+// config/application.config.php
+return array(
+    'modules' =&gt; array(
+        'Application',
+        'User',     // &lt;- load user module in module/User
+    ),</code></pre>
 <p>The <code>User</code> module will provide info about itself:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// module/User/Module.php</span>
-<span class=cp>&lt;?php</span>
-<span class=k>namespace</span> <span class=nx>User</span><span class=p>;</span>
+<pre class=codehilite><code class=language-php>// module/User/Module.php
+&lt;?php
+namespace User;
 
-<span class=k>use</span> <span class=nx>Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\Console\Adapter\AdapterInterface</span> <span class=k>as</span> <span class=nx>Console</span><span class=p>;</span>
+use Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface;
+use Laminas\Console\Adapter\AdapterInterface as Console;
 
-<span class=k>class</span> <span class=nc>Module</span> <span class=k>implements</span> <span class=nx>ConsoleBannerProviderInterface</span>
-<span class=p>{</span>
-    <span class=sd>/**</span>
-<span class=sd>     * This method is defined in ConsoleBannerProviderInterface</span>
-<span class=sd>     */</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>getConsoleBanner</span><span class=p>(</span><span class=nx>Console</span> <span class=nv>$console</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=k>return</span> <span class=s2>&quot;User Module 0.0.1&quot;</span><span class=p>;</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</pre></div></p>
+class Module implements ConsoleBannerProviderInterface
+{
+    /**
+     * This method is defined in ConsoleBannerProviderInterface
+     */
+    public function getConsoleBanner(Console $console)
+    {
+        return &quot;User Module 0.0.1&quot;;
+    }
+}</code></pre>
 <p>Because the <code>User</code> module is loaded after the <code>Application</code> module, the result
 will look like this:</p>
 <p><img alt="Two modules" src="../images/laminas.console.banner2.png" class="img-responsive"/></p>
@@ -393,36 +393,35 @@ banners are also automatically colorized as blue.</p>
 <p>In order to display usage information, our Module class must implement
 <code>Laminas\ModuleManager\Feature\ConsoleUsageProviderInterface</code>. Let's modify our
 example and add the new method defined in that interface:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// module/Application/Module.php</span>
-<span class=cp>&lt;?php</span>
-<span class=k>namespace</span> <span class=nx>Application</span><span class=p>;</span>
+<pre class=codehilite><code class=language-php>// module/Application/Module.php
+&lt;?php
+namespace Application;
 
-<span class=k>use</span> <span class=nx>Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\ModuleManager\Feature\ConsoleUsageProviderInterface</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\Console\Adapter\AdapterInterface</span> <span class=k>as</span> <span class=nx>Console</span><span class=p>;</span>
+use Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface;
+use Laminas\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Laminas\Console\Adapter\AdapterInterface as Console;
 
-<span class=k>class</span> <span class=nc>Module</span> <span class=k>implements</span>
-    <span class=nx>ConsoleBannerProviderInterface</span><span class=p>,</span>
-    <span class=nx>ConsoleUsageProviderInterface</span>
-<span class=p>{</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>getConsoleBanner</span><span class=p>(</span><span class=nx>Console</span> <span class=nv>$console</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=cm>/* ... */</span>
-    <span class=p>}</span>
+class Module implements
+    ConsoleBannerProviderInterface,
+    ConsoleUsageProviderInterface
+{
+    public function getConsoleBanner(Console $console)
+    {
+        /* ... */
+    }
 
-    <span class=sd>/**</span>
-<span class=sd>     * This method is defined in ConsoleUsageProviderInterface</span>
-<span class=sd>     */</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>getConsoleUsage</span><span class=p>(</span><span class=nx>Console</span> <span class=nv>$console</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=k>return</span> <span class=p>[</span>
-            <span class=s1>&#39;show stats&#39;</span>             <span class=o>=&gt;</span> <span class=s1>&#39;Show application statistics&#39;</span><span class=p>,</span>
-            <span class=s1>&#39;run cron&#39;</span>               <span class=o>=&gt;</span> <span class=s1>&#39;Run automated jobs&#39;</span><span class=p>,</span>
-            <span class=s1>&#39;(enable|disable) debug&#39;</span> <span class=o>=&gt;</span> <span class=s1>&#39;Enable or disable debug mode for the application.&#39;</span><span class=p>,</span>
-        <span class=p>];</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</pre></div></p>
+    /**
+     * This method is defined in ConsoleUsageProviderInterface
+     */
+    public function getConsoleUsage(Console $console)
+    {
+        return [
+            'show stats'             =&gt; 'Show application statistics',
+            'run cron'               =&gt; 'Run automated jobs',
+            '(enable|disable) debug' =&gt; 'Enable or disable debug mode for the application.',
+        ];
+    }
+}</code></pre>
 <p>This will display the following information:</p>
 <p><img alt="Console usage" src="../images/laminas.console.usage.png" class="img-responsive"/></p>
 <p>Similar to <a href="#application-banner">application banners</a>, multiple modules can
@@ -444,12 +443,11 @@ real console requests, you still need to define console routes.</p>
 <p>In order to output free-form text as usage information, <code>getConsoleUsage()</code> can
 return a string or an array of strings. As an example, the following is a
 single, free-form usage text:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function getConsoleUsage(Console $console)</span>
-<span class=x>{</span>
-<span class=x>    return &#39;User module expects exactly one argument - user name. &#39;</span>
-<span class=x>        . &#39;It will display information for the provided user.&#39;;</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>public function getConsoleUsage(Console $console)
+{
+    return 'User module expects exactly one argument - user name. '
+        . 'It will display information for the provided user.';
+}</code></pre>
 <p><img alt="Free-form usage text" src="../images/laminas.console.usage2.png" class="img-responsive"/></p>
 <blockquote>
 <h4>Usage text is provided as-is</h4>
@@ -462,16 +460,15 @@ window, you could check its width with <code>$console-getWidth()</code>.</p>
 aligned in 2 columns.  The first column will be prepended with script name (the
 entry point for the application). This is useful to display the various
 commands exposed.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function getConsoleUsage(Console $console)</span>
-<span class=x>{</span>
-<span class=x>     return [</span>
-<span class=x>        &#39;delete user &lt;userEmail&gt;&#39;        =&gt; &#39;Delete user with email &lt;userEmail&gt;&#39;,</span>
-<span class=x>        &#39;disable user &lt;userEmail&gt;&#39;       =&gt; &#39;Disable user with email &lt;userEmail&gt;&#39;,</span>
-<span class=x>        &#39;list [all|disabled] users&#39;      =&gt; &#39;Show a list of users&#39;,</span>
-<span class=x>        &#39;find user [--email=] [--name=]&#39; =&gt; &#39;Attempt to find a user by email or name&#39;,</span>
-<span class=x>     ];</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>public function getConsoleUsage(Console $console)
+{
+     return [
+        'delete user &lt;userEmail&gt;'        =&gt; 'Delete user with email &lt;userEmail&gt;',
+        'disable user &lt;userEmail&gt;'       =&gt; 'Disable user with email &lt;userEmail&gt;',
+        'list [all|disabled] users'      =&gt; 'Show a list of users',
+        'find user [--email=] [--name=]' =&gt; 'Attempt to find a user by email or name',
+     ];
+}</code></pre>
 <p><img alt="Listing multiple commands" src="../images/laminas.console.usage3.png" class="img-responsive"/></p>
 <blockquote>
 <h4>Command list alignment</h4>
@@ -487,30 +484,28 @@ parameters. This is useful for explaining flags, switches, possible values and
 other information. The output will be aligned in multiple columns for
 readability.</p>
 <p>As an example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function getConsoleUsage(Console $console)</span>
-<span class=x>{</span>
-<span class=x>    return [</span>
-<span class=x>        [ &#39;&lt;userEmail&gt;&#39;, &#39;email of the user&#39; ],</span>
-<span class=x>        [ &#39;--verbose&#39;,   &#39;Turn on verbose mode&#39; ],</span>
-<span class=x>        [ &#39;--quick&#39;,     &#39;Perform a &quot;quick&quot; operation&#39; ],</span>
-<span class=x>        [ &#39;-v&#39;,          &#39;Same as --verbose&#39; ],</span>
-<span class=x>        [ &#39;-w&#39;,          &#39;Wide output&#39;],</span>
-<span class=x>    );</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>public function getConsoleUsage(Console $console)
+{
+    return [
+        [ '&lt;userEmail&gt;', 'email of the user' ],
+        [ '--verbose',   'Turn on verbose mode' ],
+        [ '--quick',     'Perform a &quot;quick&quot; operation' ],
+        [ '-v',          'Same as --verbose' ],
+        [ '-w',          'Wide output'],
+    );
+}</code></pre>
 <p><img alt="Parameter lists" src="../images/laminas.console.usage4.png" class="img-responsive"/></p>
 <p>This method can be used to display more than 2 columns of information:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function getConsoleUsage(Console $console)</span>
-<span class=x>{</span>
-<span class=x>    return [</span>
-<span class=x>        [ &#39;&lt;userEmail&gt;&#39;, &#39;user email&#39;,        &#39;Full email address of the user to find.&#39; ],</span>
-<span class=x>        [ &#39;--verbose&#39;,   &#39;verbose mode&#39;,      &#39;Display additional information during processing&#39; ],</span>
-<span class=x>        [ &#39;--quick&#39;,     &#39;&quot;quick&quot; operation&#39;, &#39;Do not check integrity, just make changes and finish&#39; ],</span>
-<span class=x>        [ &#39;-v&#39;,          &#39;Same as --verbose&#39;, &#39;Display additional information during processing&#39; ],</span>
-<span class=x>        [ &#39;-w&#39;,          &#39;wide output&#39;,       &#39;When listing users, use the whole available screen width&#39; ],</span>
-<span class=x>    ];</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>public function getConsoleUsage(Console $console)
+{
+    return [
+        [ '&lt;userEmail&gt;', 'user email',        'Full email address of the user to find.' ],
+        [ '--verbose',   'verbose mode',      'Display additional information during processing' ],
+        [ '--quick',     '&quot;quick&quot; operation', 'Do not check integrity, just make changes and finish' ],
+        [ '-v',          'Same as --verbose', 'Display additional information during processing' ],
+        [ '-w',          'wide output',       'When listing users, use the whole available screen width' ],
+    ];
+}</code></pre>
 <p><img alt="Multiple columns" src="../images/laminas.console.usage5.png" class="img-responsive"/></p>
 <blockquote>
 <h4>Alignment</h4>
@@ -523,30 +518,29 @@ with its own alignment and column widths.</p>
 </blockquote>
 <h3>Mixing styles</h3>
 <p>You can use mix together all of the above styles to provide comprehensive usage information.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>public function getConsoleUsage(Console $console)</span>
-<span class=x>{</span>
-<span class=x>    return [</span>
-<span class=x>        &#39;Finding and listing users&#39;,</span>
-<span class=x>        &#39;list [all|disabled] users [-w]&#39; =&gt; &#39;Show a list of users&#39;,</span>
-<span class=x>        &#39;find user [--email=] [--name=]&#39; =&gt; &#39;Attempt to find a user by email or name&#39;,</span>
+<pre class=codehilite><code class=language-php>public function getConsoleUsage(Console $console)
+{
+    return [
+        'Finding and listing users',
+        'list [all|disabled] users [-w]' =&gt; 'Show a list of users',
+        'find user [--email=] [--name=]' =&gt; 'Attempt to find a user by email or name',
 
-<span class=x>        [&#39;[all|disabled]&#39;, &#39;Display all users or only disabled accounts&#39;],</span>
-<span class=x>        [&#39;--email=EMAIL&#39;,  &#39;Email of the user to find&#39;],</span>
-<span class=x>        [&#39;--name=NAME&#39;,    &#39;Full name of the user to find.&#39;],</span>
-<span class=x>        [&#39;-w&#39;,             &#39;Wide output - When listing users use the whole available screen width&#39;],</span>
+        ['[all|disabled]', 'Display all users or only disabled accounts'],
+        ['--email=EMAIL',  'Email of the user to find'],
+        ['--name=NAME',    'Full name of the user to find.'],
+        ['-w',             'Wide output - When listing users use the whole available screen width'],
 
-<span class=x>        &#39;Manipulation of user database:&#39;,</span>
-<span class=x>        &#39;delete user &lt;userEmail&gt; [--verbose|-v] [--quick]&#39; =&gt; &#39;Delete user with email &lt;userEmail&gt;&#39;,</span>
-<span class=x>        &#39;disable user &lt;userEmail&gt; [--verbose|-v]&#39;          =&gt; &#39;Disable user with email &lt;userEmail&gt;&#39;,</span>
+        'Manipulation of user database:',
+        'delete user &lt;userEmail&gt; [--verbose|-v] [--quick]' =&gt; 'Delete user with email &lt;userEmail&gt;',
+        'disable user &lt;userEmail&gt; [--verbose|-v]'          =&gt; 'Disable user with email &lt;userEmail&gt;',
 
-<span class=x>        [ &#39;&lt;userEmail&gt;&#39;, &#39;user email&#39;,        &#39;Full email address of the user to change.&#39;],</span>
-<span class=x>        [ &#39;--verbose&#39;,   &#39;verbose mode&#39;,      &#39;Display additional information during processing&#39;],</span>
-<span class=x>        [ &#39;--quick&#39;,     &#39;&quot;quick&quot; operation&#39;, &#39;Do not check integrity, just make changes and finish&#39;],</span>
-<span class=x>        [ &#39;-v&#39;,          &#39;Same as --verbose&#39;, &#39;Display additional information during processing&#39;],</span>
+        [ '&lt;userEmail&gt;', 'user email',        'Full email address of the user to change.'],
+        [ '--verbose',   'verbose mode',      'Display additional information during processing'],
+        [ '--quick',     '&quot;quick&quot; operation', 'Do not check integrity, just make changes and finish'],
+        [ '-v',          'Same as --verbose', 'Display additional information during processing'],
 
-<span class=x>    );</span>
-<span class=x>}</span>
-</pre></div></p>
+    );
+}</code></pre>
 <p><img alt="Mixed styles" src="../images/laminas.console.usage6.png" class="img-responsive"/></p>
 <h2 id="best-practices">Best practices</h2>
 <p>Here are the best practices when providing usage for your commands:</p>
@@ -766,9 +760,10 @@ with its own alignment and column widths.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -805,7 +800,7 @@ with its own alignment and column widths.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-console/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -814,8 +809,8 @@ with its own alignment and column widths.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

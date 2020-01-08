@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -328,16 +332,15 @@ appropriate adapter for the current environment in a generic way.</p>
 <h3>Standalone</h3>
 <p>laminas-console provides a factory for creating and returning the console adapter
 specific to your environment:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Console\Console;</span>
-<span class=x>use Laminas\Console\Exception\ExceptionInterface as ConsoleException;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Console\Console;
+use Laminas\Console\Exception\ExceptionInterface as ConsoleException;
 
-<span class=x>try {</span>
-<span class=x>    $console = Console::getInstance();</span>
-<span class=x>} catch (ConsoleException $e) {</span>
-<span class=x>    // Could not get console adapter; most likely we are not running inside a</span>
-<span class=x>    // console window.</span>
-<span class=x>}</span>
-</pre></div></p>
+try {
+    $console = Console::getInstance();
+} catch (ConsoleException $e) {
+    // Could not get console adapter; most likely we are not running inside a
+    // console window.
+}</code></pre>
 <p>This returns a <code>Laminas\Console\Adapter\AdapterInterface</code> implementation suitable
 for your current environment.</p>
 <blockquote>
@@ -351,39 +354,37 @@ classes; you should do this only as a last resort, however!</p>
 <h3>laminas-mvc</h3>
 <p>If you are using MVC controllers you can obtain Console adapter instance using
 the <code>ServiceManager</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Application;</span>
+<pre class=codehilite><code class=language-php>namespace Application;
 
-<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
-<span class=x>use Laminas\Console\Adapter\AdapterInterface as Console;</span>
-<span class=x>use Laminas\Console\Exception\RuntimeException;</span>
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Console\Adapter\AdapterInterface as Console;
+use Laminas\Console\Exception\RuntimeException;
 
-<span class=x>class ConsoleController extends AbstractActionController</span>
-<span class=x>{</span>
-<span class=x>    public function testAction()</span>
-<span class=x>    {</span>
-<span class=x>        $console = $this-&gt;getServiceLocator()-&gt;get(&#39;console&#39;);</span>
-<span class=x>        if (! $console instanceof Console) {</span>
-<span class=x>            throw new RuntimeException(&#39;Cannot obtain console adapter. Are we running in a</span>
-<span class=x>console?&#39;);</span>
-<span class=x>        }</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+class ConsoleController extends AbstractActionController
+{
+    public function testAction()
+    {
+        $console = $this-&gt;getServiceLocator()-&gt;get('console');
+        if (! $console instanceof Console) {
+            throw new RuntimeException('Cannot obtain console adapter. Are we running in a
+console?');
+        }
+    }
+}</code></pre>
 <p>If you extend <code>AbstractConsoleController</code>, you can use the <code>getConsole()</code> method
 instead:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Application;</span>
+<pre class=codehilite><code class=language-php>namespace Application;
 
-<span class=x>use Laminas\Mvc\Controller\AbstractConsoleController;</span>
-<span class=x>use Laminas\Console\Exception\RuntimeException;</span>
+use Laminas\Mvc\Controller\AbstractConsoleController;
+use Laminas\Console\Exception\RuntimeException;
 
-<span class=x>class ConsoleController extends AbstractConsoleController</span>
-<span class=x>{</span>
-<span class=x>    public function testAction()</span>
-<span class=x>    {</span>
-<span class=x>        $console = $this-&gt;getConsole();</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+class ConsoleController extends AbstractConsoleController
+{
+    public function testAction()
+    {
+        $console = $this-&gt;getConsole();
+    }
+}</code></pre>
 <blockquote>
 <h4>Use dependency injection</h4>
 <p>We recommend using dependency injection. Instead of pulling the console
@@ -728,9 +729,10 @@ width is 80 chars, <code>getWidth()</code> will return <code>80</code>.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -767,7 +769,7 @@ width is 80 chars, <code>getWidth()</code> will return <code>80</code>.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-console/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -776,8 +778,8 @@ width is 80 chars, <code>getWidth()</code> will return <code>80</code>.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -330,14 +334,13 @@ throw an exception again. The exception thrown has a custom method
 <code>getUsageMessage()</code> which returns as a string the formatted set of usage
 messages for all declared options.</p>
 <h3>Catching Getopt Exceptions</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>try {</span>
-<span class=x>    $opts = new Laminas\Console\Getopt(&#39;abp:&#39;);</span>
-<span class=x>    $opts-&gt;parse();</span>
-<span class=x>} catch (Laminas\Console\Exception\RuntimeException $e) {</span>
-<span class=x>    echo $e-&gt;getUsageMessage();</span>
-<span class=x>    exit;</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>try {
+    $opts = new Laminas\Console\Getopt('abp:');
+    $opts-&gt;parse();
+} catch (Laminas\Console\Exception\RuntimeException $e) {
+    echo $e-&gt;getUsageMessage();
+    exit;
+}</code></pre>
 <p>Cases where parsing throws an exception include:</p>
 <ul>
 <li>Option given is not recognized.</li>
@@ -351,20 +354,18 @@ option had a parameter, this method returns the value of the parameter. If the
 option had no parameter but the user did specify it on the command-line, the
 method returns <code>TRUE</code>. Otherwise the method returns <code>NULL</code>.</p>
 <h3>Using getOption()</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$opts = new Laminas\Console\Getopt(&#39;abp:&#39;);</span>
-<span class=x>$b = $opts-&gt;getOption(&#39;b&#39;);</span>
-<span class=x>$p_parameter = $opts-&gt;getOption(&#39;p&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$opts = new Laminas\Console\Getopt('abp:');
+$b = $opts-&gt;getOption('b');
+$p_parameter = $opts-&gt;getOption('p');</code></pre>
 <p>Alternatively, you can use the property overloading via the magic <code>__isset()</code> and
 <code>__get()</code> methods, allowing you to test for and retrieve values as if they were
 property names.</p>
 <h3>Using property Overloading</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$opts = new Laminas\Console\Getopt(&#39;abp:&#39;);</span>
-<span class=x>if (isset($opts-&gt;b)) {</span>
-<span class=x>    echo &quot;I got the b option.\n&quot;;</span>
-<span class=x>}</span>
-<span class=x>$p_parameter = $opts-&gt;p; // null if not set</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$opts = new Laminas\Console\Getopt('abp:');
+if (isset($opts-&gt;b)) {
+    echo &quot;I got the b option.\n&quot;;
+}
+$p_parameter = $opts-&gt;p; // null if not set</code></pre>
 <blockquote>
 <h3>Using Aliases</h3>
 <p>If your options are declared with aliases, you may use any of the aliases for
@@ -394,10 +395,9 @@ command-line, there may be additional arguments remaining. You can query these
 arguments using the <code>getRemainingArgs()</code> method.  This method returns an array
 of the strings that were not part of any options.</p>
 <h3>Using getRemainingArgs()</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>$opts = new Laminas\Console\Getopt(&#39;abp:&#39;);</span>
-<span class=x>$opts-&gt;setArguments([&#39;-p&#39;, &#39;p_parameter&#39;, &#39;filename&#39;]);</span>
-<span class=x>$args = $opts-&gt;getRemainingArgs(); // returns [&#39;filename&#39;]</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$opts = new Laminas\Console\Getopt('abp:');
+$opts-&gt;setArguments(['-p', 'p_parameter', 'filename']);
+$args = $opts-&gt;getRemainingArgs(); // returns ['filename']</code></pre>
 <p><code>Laminas\Console\Getopt</code> supports the GNU convention that an argument consisting of
 a double-dash signifies the end of options. Any arguments following this
 signifier must be treated as non-option arguments. This is useful if you might
@@ -612,9 +612,10 @@ have a non-option argument that begins with a dash. For example: <code>rm --
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -651,7 +652,7 @@ have a non-option argument that begins with a dash. For example: <code>rm --
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-console/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -660,8 +661,8 @@ have a non-option argument that begins with a dash. For example: <code>rm --
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

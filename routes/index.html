@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -328,19 +332,18 @@ handlers.</p>
 <p>laminas-console defines an interface for routing,
 <code>Laminas\Console\RouteMatcher\RouteMatcherInterface</code>, which defines a single
 method, <code>match()</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Console\RouteMatcher;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Console\RouteMatcher;
 
-<span class=x>interface RouteMatcherInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Match parameters against route passed to constructor</span>
-<span class=x>     *</span>
-<span class=x>     * @param array $params</span>
-<span class=x>     * @return array|null</span>
-<span class=x>     */</span>
-<span class=x>    public function match($params);</span>
-<span class=x>}</span>
-</pre></div></p>
+interface RouteMatcherInterface
+{
+    /**
+     * Match parameters against route passed to constructor
+     *
+     * @param array $params
+     * @return array|null
+     */
+    public function match($params);
+}</code></pre>
 <p>Applications are expected to retrieve arguments from the console and pass them to
 the routing implementation as an array; the routing implementation will then
 return either a <code>null</code> value (meaning failure to match), or an associative array
@@ -348,24 +351,23 @@ return either a <code>null</code> value (meaning failure to match), or an associ
 <h2 id="the-default-route-matcher">The default Route Matcher</h2>
 <p>laminas-console's default routing implementation is <code>Laminas\Console\RouteMatcher\DefaultRouteMatcher</code>.
 Its constructor expects:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>    /**</span>
-<span class=x>     * @param string $route</span>
-<span class=x>     * @param array $constraints</span>
-<span class=x>     * @param array $defaults</span>
-<span class=x>     * @param array $aliases</span>
-<span class=x>     * @param array $filters</span>
-<span class=x>     * @param ValidatorInterface[] $validators</span>
-<span class=x>     * @throws Exception\InvalidArgumentException</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct(</span>
-<span class=x>        $route,</span>
-<span class=x>        array $constraints = [],</span>
-<span class=x>        array $defaults = [],</span>
-<span class=x>        array $aliases = [],</span>
-<span class=x>        array $filters = null,</span>
-<span class=x>        array $validators = null</span>
-<span class=x>    )</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>    /**
+     * @param string $route
+     * @param array $constraints
+     * @param array $defaults
+     * @param array $aliases
+     * @param array $filters
+     * @param ValidatorInterface[] $validators
+     * @throws Exception\InvalidArgumentException
+     */
+    public function __construct(
+        $route,
+        array $constraints = [],
+        array $defaults = [],
+        array $aliases = [],
+        array $filters = null,
+        array $validators = null
+    )</code></pre>
 <p>The arguments are as follows:</p>
 <ul>
 <li><code>$route</code> is a string pattern describing the argument list it will match.</li>
@@ -407,32 +409,26 @@ zf-console both provide methods for aggregating routes.</p>
 <h3>Literal Parameters</h3>
 <p><em>Literal parameters</em> are expected to appear on the command line exactly the way
 they are provided in the route. For example:</p>
-<p> <div class=codehilite><pre><span></span>show users
-</pre></div></p>
+<pre class=codehilite><code class=language-text>show users</code></pre>
 <p>This route will <strong>only</strong> match for the following command line</p>
-<p> <div class=codehilite><pre><span></span>$ laminas show users
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ laminas show users</code></pre>
 <p>It expects the <strong>mandatory literal parameters</strong> <code>show users</code>. It will not match
 if there are any more parameters, or if either one of the two words is missing.
 The order of words is also enforced.</p>
 <p>You can also provide <strong>optional literal parameters</strong>. As an example:</p>
-<p> <div class=codehilite><pre><span></span>show [all] users
-</pre></div></p>
+<pre class=codehilite><code class=language-text>show [all] users</code></pre>
 <p>The above route will match each of the following:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas show users
-$ laminas show all users
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ laminas show users
+$ laminas show all users</code></pre>
 <p>You can also provide <strong>parameter alternatives</strong>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>show [all|deleted|locked|admin] users</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>show [all|deleted|locked|admin] users</code></pre>
 <p>The above route will match both with and without the second parameter; if
 provided, however, it must be one of the words listed. This enables matching any
 of the following:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$ laminas show users</span>
-<span class=x>$ laminas show locked users</span>
-<span class=x>$ laminas show admin users</span>
-<span class=x># etc.</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$ laminas show users
+$ laminas show locked users
+$ laminas show admin users
+# etc.</code></pre>
 <blockquote>
 <h4>Whitespace is ignored</h4>
 <p>Whitespaces in route definitions are ignored. If you separate your parameters
@@ -448,75 +444,62 @@ of optional and/or mandatory flags.</p>
 <p>Flag order is ignored; they can be defined in any order, and the user can
 provide them in any order.</p>
 <p>The following is a route with <strong>optional long flags</strong>:</p>
-<p> <div class=codehilite><pre><span></span>check users [--verbose] [--fast] [--thorough]
-</pre></div></p>
+<pre class=codehilite><code class=language-text>check users [--verbose] [--fast] [--thorough]</code></pre>
 <p>The above route will match commands like:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas check users
+<pre class=codehilite><code class=language-bash>$ laminas check users
 $ laminas check users --fast
 $ laminas check users --verbose --thorough
 $ laminas check users --thorough --fast
-<span class=c1># etc</span>
-</pre></div></p>
+# etc</code></pre>
 <p>You can also define one or more <strong>mandatory long flags</strong>, and group them as an
 alternative:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>check users (--suspicious|--expired) [--verbose] [--fast] [--thorough]</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>check users (--suspicious|--expired) [--verbose] [--fast] [--thorough]</code></pre>
 <p>The above will only match if we provide either the <code>--suspicious</code> or <code>--expired</code>
 flag:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas check users --expired
+<pre class=codehilite><code class=language-bash>$ laminas check users --expired
 $ laminas check users --expired --fast
-$ laminas check users --verbose --thorough --suspicious
-</pre></div></p>
+$ laminas check users --verbose --thorough --suspicious</code></pre>
 <p><strong>Short flags</strong> are also available, and may be grouped with long flags for
 convenience:</p>
-<p> <div class=codehilite><pre><span></span>check users [--verbose|-v] [--fast|-f] [--thorough|-t]
-</pre></div></p>
+<pre class=codehilite><code class=language-text>check users [--verbose|-v] [--fast|-f] [--thorough|-t]</code></pre>
 <p>Now we can use short versions of our flags:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas check users -f
+<pre class=codehilite><code class=language-bash>$ laminas check users -f
 $ laminas check users -v --thorough
 $ laminas check users -t -f -v
-<span class=c1># etc.</span>
-</pre></div></p>
+# etc.</code></pre>
 <h3>Positional Value Parameters</h3>
 <p>Value parameters capture any text-based input, and come in two forms: positional
 and flags (which we've already discussed).</p>
 <p><strong>Positional value parameters</strong> are expected to appear in an <em>exact</em> position on
 the command line, and are denoted using angle brackets (<code>&lt;&gt;</code>).</p>
 <p>Consider the following:</p>
-<p> <div class=codehilite><pre><span></span>delete user &lt;userEmail&gt;
-</pre></div></p>
+<pre class=codehilite><code class=language-text>delete user &lt;userEmail&gt;</code></pre>
 <p>This route will match the following commands:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas delete user john@acme.org
-$ laminas delete user betty@acme.org
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ laminas delete user john@acme.org
+$ laminas delete user betty@acme.org</code></pre>
 <p>When matched, the router will return the value under the key we provided in the
 route definition. If using the <code>DefaultRouteMatcher</code> standalone, this would be:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$matches = $route-&gt;match($argv);</span>
-<span class=x>$userEmail = $matches[&#39;userEmail&#39;];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$matches = $route-&gt;match($argv);
+$userEmail = $matches['userEmail'];</code></pre>
 <p>Under laminas-mvc, you will pull the parameter from the request:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$userEmail = $this-&gt;getRequest()-&gt;getParam(&#39;userEmail&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$userEmail = $this-&gt;getRequest()-&gt;getParam('userEmail');</code></pre>
 <p>You can also define <strong>optional positional value parameters</strong> by surrounding the
 parameter with square brackets:</p>
-<p> <div class=codehilite><pre><span></span>delete user [&lt;userEmail&gt;]
-</pre></div></p>
+<pre class=codehilite><code class=language-text>delete user [&lt;userEmail&gt;]</code></pre>
 <p>In this case, the <code>userEmail</code> parameter will not be required for the route to
 match. If it is not provided, the <code>userEmail</code> parameter will not be present in
 the matched parameters.</p>
 <p>You can define any number of positional value parameters:</p>
-<p> <div class=codehilite><pre><span></span>create user &lt;firstName&gt; &lt;lastName&gt; &lt;email&gt; &lt;position&gt;
-</pre></div></p>
+<pre class=codehilite><code class=language-text>create user &lt;firstName&gt; &lt;lastName&gt; &lt;email&gt; &lt;position&gt;</code></pre>
 <p>This allows us to capture commands such as the following:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas create user Johnny Bravo john@acme.org Entertainer
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ laminas create user Johnny Bravo john@acme.org Entertainer</code></pre>
 <blockquote>
 <h3>Escaping</h3>
 <p>Command line arguments on all systems must be properly escaped; otherwise they
 will not be passed to our application correctly. For example, to create a user
 with two names and a complex position description, we would issue the command
 like this:</p>
-<pre class=codehilite><code class=language-bash>
+<pre class="codehilite"><code class="language-bash">
 $ laminas create user &quot;Johnan Tom&quot; Bravo john@acme.org &quot;Head of the Entertainment Department&quot;
 </code></pre>
 </blockquote>
@@ -525,18 +508,16 @@ $ laminas create user &quot;Johnan Tom&quot; Bravo john@acme.org &quot;Head of t
 route. If we do not want to enforce the order of parameters, we can define <strong>value flags</strong>.</p>
 <p><strong>Value flags</strong> can be defined and matched in <em>any</em> order, and can receive any
 text-based value.</p>
-<p> <div class=codehilite><pre><span></span>find user [--id=] [--firstName=] [--lastName=] [--email=] [--position=]
-</pre></div></p>
+<pre class=codehilite><code class=language-text>find user [--id=] [--firstName=] [--lastName=] [--email=] [--position=]</code></pre>
 <p>The above route will match for any of the following routes:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas find user
-$ laminas find user --id <span class=m>29110</span>
-$ laminas find user --id<span class=o>=</span><span class=m>29110</span>
-$ laminas find user --firstName<span class=o>=</span>Johny --lastName<span class=o>=</span>Bravo
+<pre class=codehilite><code class=language-bash>$ laminas find user
+$ laminas find user --id 29110
+$ laminas find user --id=29110
+$ laminas find user --firstName=Johny --lastName=Bravo
 $ laminas find user --lastName Bravo --firstName Johny
-$ laminas find user --position<span class=o>=</span>Executive --firstName<span class=o>=</span>Bob
-$ laminas find user --position <span class=s2>&quot;Head of the Entertainment Department&quot;</span>
-<span class=c1># etc.</span>
-</pre></div></p>
+$ laminas find user --position=Executive --firstName=Bob
+$ laminas find user --position &quot;Head of the Entertainment Department&quot;
+# etc.</code></pre>
 <p>As noted, the order of flags is irrelevant for the parser.</p>
 <blockquote>
 <h3>Providing Values</h3>
@@ -548,50 +529,43 @@ values.</p>
 </blockquote>
 <p>In the previous example, all value flags are optional. You may also define
 <strong>mandatory value flags</strong> by omitting the square brackets:</p>
-<p> <div class=codehilite><pre><span></span>rename user --id= [--firstName=] [--lastName=]
-</pre></div></p>
+<pre class=codehilite><code class=language-text>rename user --id= [--firstName=] [--lastName=]</code></pre>
 <p>In the above example, the <code>--id</code> parameter <strong>is required</strong> for the route to
 match. The following commands will work with this route:</p>
-<p> <div class=codehilite><pre><span></span>$ laminas rename user --id <span class=m>123</span>
-$ laminas rename user --id <span class=m>123</span> --firstName Jonathan
-$ laminas rename user --id<span class=o>=</span><span class=m>123</span> --lastName<span class=o>=</span>Bravo
-<span class=c1># etc.</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ laminas rename user --id 123
+$ laminas rename user --id 123 --firstName Jonathan
+$ laminas rename user --id=123 --lastName=Bravo
+# etc.</code></pre>
 <h3>Grouping Literal Alternatives</h3>
 <p>In the flags section, we demonstrated grouping alternative flags:</p>
-<p> <div class=codehilite><pre><span></span>check users (--suspicious|--expired) [--verbose] [--fast] [--thorough]
-</pre></div></p>
+<pre class=codehilite><code class=language-text>check users (--suspicious|--expired) [--verbose] [--fast] [--thorough]</code></pre>
 <p>This can also be done with literals:</p>
-<p> <div class=codehilite><pre><span></span>show (all|deleted|locked|admin) &lt;group&gt;
-</pre></div></p>
+<pre class=codehilite><code class=language-text>show (all|deleted|locked|admin) &lt;group&gt;</code></pre>
 <p>However, this makes checking for which alternative was used quite difficult:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>switch (true) {</span>
-<span class=x>    case (isset($params[&#39;all&#39;])):</span>
-<span class=x>        // all members</span>
-<span class=x>        break;</span>
-<span class=x>    case (isset($params[&#39;deleted&#39;])):</span>
-<span class=x>        // deleted members</span>
-<span class=x>        break;</span>
-<span class=x>    /* etc. */</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>switch (true) {
+    case (isset($params['all'])):
+        // all members
+        break;
+    case (isset($params['deleted'])):
+        // deleted members
+        break;
+    /* etc. */
+}</code></pre>
 <p>To simplify this, you can <em>assign a name to the grouped alternatives</em>. Do this
 with the verbiage <code>:groupname</code> following the group:</p>
-<p> <div class=codehilite><pre><span></span>show (all|deleted|locked|admin):filter &lt;group&gt;
-</pre></div></p>
+<pre class=codehilite><code class=language-text>show (all|deleted|locked|admin):filter &lt;group&gt;</code></pre>
 <p>The above names the group "filter". When a group is provided a name, you can
 then retrieve the group name parameter, which will be set to the alternative
 used:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>switch ($params[&#39;filter&#39;]) {</span>
-<span class=x>    case &#39;all&#39;:</span>
-<span class=x>        // all members</span>
-<span class=x>        break;</span>
-<span class=x>    case &#39;deleted&#39;:</span>
-<span class=x>        // deleted members</span>
-<span class=x>        break;</span>
-<span class=x>    /* etc. */</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>switch ($params['filter']) {
+    case 'all':
+        // all members
+        break;
+    case 'deleted':
+        // deleted members
+        break;
+    /* etc. */
+}</code></pre>
 <h3>Catch-all Parameters</h3>
 <ul>
 <li>Since 2.7.0</li>
@@ -604,8 +578,7 @@ as a single parameter (whose name is defined in the route) containing an array.<
 <p>When used, the catch-all parameter must come after all positional value
 parameters. You can only use one catch-all parameter per route.</p>
 <p>Example:</p>
-<p> <div class=codehilite><pre><span></span>say [loudly|softly]:volume [...words]
-</pre></div></p>
+<pre class=codehilite><code class=language-text>say [loudly|softly]:volume [...words]</code></pre>
 <p>If the user entered the command line <code>say loudly I am here</code>, the 'volume'
 parameter would contain <code>'loudly'</code> and the 'words' parameter would contain
 <code>['I', 'am', 'here']</code>.</p>
@@ -975,9 +948,10 @@ parameter would contain <code>'loudly'</code> and the 'words' parameter would co
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1014,7 +988,7 @@ parameter would contain <code>'loudly'</code> and the 'words' parameter would co
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-console//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-console/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1023,8 +997,8 @@ parameter would contain <code>'loudly'</code> and the 'words' parameter would co
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-console//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

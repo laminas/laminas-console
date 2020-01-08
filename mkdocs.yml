@@ -21,5 +21,4 @@ site_description: 'Build console applications using getopt syntax or routing, co
 repo_url: 'https://github.com/laminas/laminas-console'
 extra:
     project: Components
-    project_url: 'https://docs.laminas.dev'
     show_special_homepage: true

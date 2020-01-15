@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://docs.laminas.dev/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/intro/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/intro/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/adapter/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/adapter/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/prompts/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/prompts/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/routes/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/routes/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/mvc/routing/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/mvc/routing/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/mvc/modules/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/mvc/modules/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/mvc/controllers/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/mvc/controllers/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/getopt/intro/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/getopt/intro/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/getopt/rules/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/getopt/rules/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/getopt/fetching/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/getopt/fetching/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/getopt/configuration/</loc>
-     <lastmod>2020-01-08</lastmod>
+     <loc>https://docs.laminas.dev/laminas-console/getopt/configuration/</loc>
+     <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

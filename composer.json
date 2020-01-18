@@ -34,7 +34,7 @@
         "laminas/laminas-filter": "^2.7.2",
         "laminas/laminas-json": "^2.6 || ^3.0",
         "laminas/laminas-validator": "^2.10.1",
-        "phpunit/phpunit": "^5.7.23 || ^6.4.3"
+        "phpunit/phpunit": "^5.7.23 || ^6.4.3 || ^7.5.18"
     },
     "suggest": {
         "laminas/laminas-filter": "To support DefaultRouteMatcher usage",

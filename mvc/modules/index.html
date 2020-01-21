@@ -330,7 +330,7 @@ banners</a> and <a href="#usage-information">usage information</a>.</p>
 the application bootstrap:</p>
 <pre class=codehilite><code class=language-bash>$ php public/index.php</code></pre>
 <p>By default, it will simply output the current Laminas 2 version, like this:</p>
-<p><img alt="Basic console invocation" src="../images/laminas.console.empty.png" class="img-responsive"/></p>
+<p><img alt="Basic console invocation" src="../../images/laminas.console.empty.png" class="img-responsive"/></p>
 <p>Our <code>Application</code> module (and any other module) can provide an <strong>application
 banner</strong>. In order to do so, our <code>Module</code> class has to implement
 <code>Laminas\ModuleManager\Feature\ConsoleBannerProviderInterface</code>. As an example:</p>
@@ -357,7 +357,7 @@ returns the module's name and (if available) its current version.</p>
 other in the order in which the modules are loaded. This allows you to see at a
 glance which modules expose console commands.</p>
 <p>If we execute our console application now, we'll see the newly created banner:</p>
-<p><img alt="Application banner" src="../images/laminas.console.banner.png" class="img-responsive"/></p>
+<p><img alt="Application banner" src="../../images/laminas.console.banner.png" class="img-responsive"/></p>
 <p>Let's create and load a second module that provides a banner:</p>
 <pre class=codehilite><code class=language-php>&lt;?php
 // config/application.config.php
@@ -386,7 +386,7 @@ class Module implements ConsoleBannerProviderInterface
 }</code></pre>
 <p>Because the <code>User</code> module is loaded after the <code>Application</code> module, the result
 will look like this:</p>
-<p><img alt="Two modules" src="../images/laminas.console.banner2.png" class="img-responsive"/></p>
+<p><img alt="Two modules" src="../../images/laminas.console.banner2.png" class="img-responsive"/></p>
 <blockquote>
 <h3>Application banner display</h3>
 <p>Application banners provided by modules are displayed as-is &mdash; no
@@ -427,7 +427,7 @@ class Module implements
     }
 }</code></pre>
 <p>This will display the following information:</p>
-<p><img alt="Console usage" src="../images/laminas.console.usage.png" class="img-responsive"/></p>
+<p><img alt="Console usage" src="../../images/laminas.console.usage.png" class="img-responsive"/></p>
 <p>Similar to <a href="#application-banner">application banners</a>, multiple modules can
 provide usage information, which will be joined together and displayed to the
 user. The order in which usage information is displayed is the order in which
@@ -452,7 +452,7 @@ single, free-form usage text:</p>
     return 'User module expects exactly one argument - user name. '
         . 'It will display information for the provided user.';
 }</code></pre>
-<p><img alt="Free-form usage text" src="../images/laminas.console.usage2.png" class="img-responsive"/></p>
+<p><img alt="Free-form usage text" src="../../images/laminas.console.usage2.png" class="img-responsive"/></p>
 <blockquote>
 <h4>Usage text is provided as-is</h4>
 <p>The text provided is displayed as-is; no trimming or other adjustments will
@@ -473,7 +473,7 @@ commands exposed.</p>
         'find user [--email=] [--name=]' =&gt; 'Attempt to find a user by email or name',
      ];
 }</code></pre>
-<p><img alt="Listing multiple commands" src="../images/laminas.console.usage3.png" class="img-responsive"/></p>
+<p><img alt="Listing multiple commands" src="../../images/laminas.console.usage3.png" class="img-responsive"/></p>
 <blockquote>
 <h4>Command list alignment</h4>
 <p>Commands and their descriptions will be aligned in two columns that fit
@@ -498,7 +498,7 @@ readability.</p>
         [ '-w',          'Wide output'],
     );
 }</code></pre>
-<p><img alt="Parameter lists" src="../images/laminas.console.usage4.png" class="img-responsive"/></p>
+<p><img alt="Parameter lists" src="../../images/laminas.console.usage4.png" class="img-responsive"/></p>
 <p>This method can be used to display more than 2 columns of information:</p>
 <pre class=codehilite><code class=language-php>public function getConsoleUsage(Console $console)
 {
@@ -510,7 +510,7 @@ readability.</p>
         [ '-w',          'wide output',       'When listing users, use the whole available screen width' ],
     ];
 }</code></pre>
-<p><img alt="Multiple columns" src="../images/laminas.console.usage5.png" class="img-responsive"/></p>
+<p><img alt="Multiple columns" src="../../images/laminas.console.usage5.png" class="img-responsive"/></p>
 <blockquote>
 <h4>Alignment</h4>
 <p>All information will be aligned in one or more columns that fit inside the
@@ -545,7 +545,7 @@ with its own alignment and column widths.</p>
 
     );
 }</code></pre>
-<p><img alt="Mixed styles" src="../images/laminas.console.usage6.png" class="img-responsive"/></p>
+<p><img alt="Mixed styles" src="../../images/laminas.console.usage6.png" class="img-responsive"/></p>
 <h2 id="best-practices">Best practices</h2>
 <p>Here are the best practices when providing usage for your commands:</p>
 <ol>

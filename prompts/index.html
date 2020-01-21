@@ -342,7 +342,7 @@ if ($result) {
     // the user chose to continue
 }</code></pre>
 <p>Both of above examples will display something like this:</p>
-<p><img alt="Basic prompt" src="images/laminas.console.prompt.png" class="img-responsive"/></p>
+<p><img alt="Basic prompt" src="../images/laminas.console.prompt.png" class="img-responsive"/></p>
 <h2 id="confirm">Confirm</h2>
 <p>This prompt is best used for <strong>yes</strong> / <strong>no</strong> prompts.</p>
 <pre class=codehilite><code class=language-php>Confirm(string $text, string $yesChar = 'y', string $noChar = 'n') : bool</code></pre>
@@ -376,7 +376,7 @@ if ( Confirm::prompt('Is this the correct answer? [y/n]', 'y', 'n')) {
 } else {
     $console-&gt;write(&quot;You chose NO&quot;);
 }</code></pre>
-<p><img alt="Confirm Prompt" src="images/laminas.console.prompt2.png" class="img-responsive"/></p>
+<p><img alt="Confirm Prompt" src="../images/laminas.console.prompt2.png" class="img-responsive"/></p>
 <h2 id="line">Line</h2>
 <p>This prompt asks for a line of text input.</p>
 <pre class=codehilite><code class=language-php>Line(
@@ -416,7 +416,7 @@ $name = Line::prompt(
 );
 
 $console-&gt;write(&quot;Good day to you $name!&quot;);</code></pre>
-<p><img alt="Line Prompt" src="images/laminas.console.prompt3.png" class="img-responsive"/></p>
+<p><img alt="Line Prompt" src="../images/laminas.console.prompt3.png" class="img-responsive"/></p>
 <h2 id="char">Char</h2>
 <p>This prompt reads a single keystroke, and optionally validates it against a list
 of allowed characters.</p>
@@ -473,7 +473,7 @@ if ($answer == 'b') {
 } else {
     $console-&gt;write('Wrong! Try again.');
 }</code></pre>
-<p><img alt="Char Prompt" src="images/laminas.console.prompt4.png" class="img-responsive"/></p>
+<p><img alt="Char Prompt" src="../images/laminas.console.prompt4.png" class="img-responsive"/></p>
 <h2 id="select">Select</h2>
 <p>This prompt displays a number of choices, and asks the user to pick one.</p>
 <pre class=codehilite><code class=language-php>Select(
@@ -525,7 +525,7 @@ $answer = Select::prompt(
 );
 
 $console-&gt;write(&quot;You told me that you like &quot; . $options[$answer]);</code></pre>
-<p><img alt="Select Prompt" src="images/laminas.console.prompt5.png" class="img-responsive"/></p>
+<p><img alt="Select Prompt" src="../images/laminas.console.prompt5.png" class="img-responsive"/></p>
 <h2 id="password">Password</h2>
 <p>This prompt reads in a string, without echoing that string back to the console;
 the most common use case is password prompts, which gives it its name.</p>
@@ -557,7 +557,7 @@ the most common use case is password prompts, which gives it its name.</p>
 $password = Password::prompt('Enter the secret', true);
 
 $console-&gt;write(&quot;Sh!, the password is $password&quot;);</code></pre>
-<p><img alt="Password Prompt" src="images/laminas.console.prompt6.png" class="img-responsive"/></p>
+<p><img alt="Password Prompt" src="../images/laminas.console.prompt6.png" class="img-responsive"/></p>
 
 
 

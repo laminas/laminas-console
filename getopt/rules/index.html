@@ -385,7 +385,8 @@ each of the letters that correspond to flags supported by your application. A
 letter followed by a colon character (<code>:</code>) indicates a flag that requires a
 parameter.</p>
 <h3>Using the Short Syntax</h3>
-<pre class=codehilite><code class=language-php>$opts = new Laminas\Console\Getopt('abp:');</code></pre>
+<pre class="highlight"><code class="language-php">$opts = new Laminas\Console\Getopt('abp:');</code></pre>
+
 <p>The example above shows using <code>Laminas\Console\Getopt</code> to declare that options may
 be given as <code>-a</code>, <code>-b</code>, or <code>-p</code>. The latter flag requires a parameter.</p>
 <p>The short syntax is limited to flags of a single character. Aliases, parameter
@@ -409,13 +410,14 @@ symbol (<code>=</code>) with a letter that stands for the <strong>type</strong> 
 <p>The value of each element in the associative array is a help string to describe
 to a user how to use your program.</p>
 <h3>Using the Long Syntax</h3>
-<pre class=codehilite><code class=language-php>$opts = new Laminas\Console\Getopt(
+<pre class="highlight"><code class="language-php">$opts = new Laminas\Console\Getopt(
   array(
     'apple|a'    =&gt; 'apple option, with no parameter',
     'banana|b=i' =&gt; 'banana option, with required integer parameter',
     'pear|p-s'   =&gt; 'pear option, with optional string parameter'
   )
 );</code></pre>
+
 <p>In the example declaration above, there are three options. <code>--apple</code> and <code>-a</code>
 are aliases for each other, and the option takes no parameter. <code>--banana</code> and
 <code>-b</code> are aliases for each other, and the option takes a mandatory integer

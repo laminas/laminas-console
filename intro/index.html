@@ -404,7 +404,8 @@ route matches, it returns an array of matched parameters &mdash; which may
 include default parameters, or even parameters not exposed via the command line
 (e.g., metadata related to the route).</p>
 <p>Let's assume that we'd like our application to handle the following command line:</p>
-<pre class=codehilite><code class=language-bash>$ laminas user resetpassword user@mail.com</code></pre>
+<pre class="highlight"><code class="language-bash">$ laminas user resetpassword user@mail.com</code></pre>
+
 <p>When a user runs our application (<code>laminas</code>) with these parameters, we'd like to call
 the action <code>resetpassword</code> of <code>Application\Controller\IndexController</code>.</p>
 <blockquote>
@@ -414,12 +415,14 @@ a shell script in the application's <code>bin/</code> directory, or simply an al
 public/index.php</code>.</p>
 </blockquote>
 <p>First we need to create a <strong>route definition</strong>:</p>
-<pre class=codehilite><code class=language-text>user resetpassword &lt;userEmail&gt;</code></pre>
+<pre class="highlight"><code class="language-text">user resetpassword &lt;userEmail&gt;</code></pre>
+
 <p>This simple route definition expects exactly three arguments: the literal
 "user", the literal "resetpassword", and the dynamic argument we're calling
 "userEmail". Let's assume we also accept one optional parameter to enable
 verbose operation:</p>
-<pre class=codehilite><code class=language-text>user resetpassword [--verbose|-v] &lt;userEmail&gt;</code></pre>
+<pre class="highlight"><code class="language-text">user resetpassword [--verbose|-v] &lt;userEmail&gt;</code></pre>
+
 <p>The modified console route above expects the same three arguments from our
 original example, but will also recognise an optional <code>--verbose</code> flag, or its
 shorthand version, <code>-v</code>.</p>
@@ -433,7 +436,7 @@ the order that flags are used on the command line.</p>
 <p>Let's use the definition above and configure our console route. When using
 laminas-mvc, console routes are defined using the following configuration
 structure:</p>
-<pre class=codehilite><code class=language-php>return [
+<pre class="highlight"><code class="language-php">return [
     'router' =&gt; [
         'routes' =&gt; [
             // HTTP routes are defined here
@@ -450,9 +453,10 @@ structure:</p>
 
     /* ... */
 ];</code></pre>
+
 <p>Let's create our console route and point it to
 <code>Application\Controller\IndexController::resetpasswordAction()</code>:</p>
-<pre class=codehilite><code class=language-php>// We could define routes for Application\Controller\IndexController in
+<pre class="highlight"><code class="language-php">// We could define routes for Application\Controller\IndexController in
 // the Application module config file, usually located at
 // modules/application/config/module.config.php, or in one of the
 // config/autoload/*.php files.
@@ -474,13 +478,14 @@ return [
     ],
     /* ... */
 ;</code></pre>
+
 <h2 id="handling-console-requests">Handling Console Requests</h2>
 <p>When a user runs our application from the command line and arguments match our
 console route, the specified controller will be instantiated, and the specified
 action method will be called, just as happens with laminas-mvc HTTP requests.</p>
 <p>As such, let's add the <code>resetpassword</code> action to our
 <code>Application\Controller\IndexController</code>:</p>
-<pre class=codehilite><code class=language-php>namespace Application\Controller;
+<pre class="highlight"><code class="language-php">namespace Application\Controller;
 
 use RuntimeException;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -515,14 +520,15 @@ class IndexController extends AbstractActionController
         /* ... */
 
         if ($verbose) {
-            return &quot;Done! New password for user $userEmail is '$newPassword'. &quot;
-                . &quot;It has also been emailed to him.\n&quot;;
+            return "Done! New password for user $userEmail is '$newPassword'. "
+                . "It has also been emailed to him.\n";
         }
 
-        return &quot;Done! $userEmail has received an email with his new password.\n&quot;;
+        return "Done! $userEmail has received an email with his new password.\n";
 
     }
 }</code></pre>
+
 <p>The above creates <code>resetpasswordAction()</code>, which:</p>
 <ul>
 <li>retrieves the current request;</li>
@@ -540,7 +546,7 @@ arguments. The combination of laminas-console and laminas-mvc enables this out o
 box. Modules can provide usage information, and laminas-console will query all loaded
 modules for console usage information they expose.</p>
 <p>Let's modify our <code>Application\Module</code> to provide usage info:</p>
-<pre class=codehilite><code class=language-php>namespace Application;
+<pre class="highlight"><code class="language-php">namespace Application;
 
 use Laminas\ModuleManager\Feature\AutoloaderProviderInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
@@ -578,6 +584,7 @@ class Module implements
         ];
     }
 }</code></pre>
+
 <p>Each module that implements <code>ConsoleUsageProviderInterface</code> will be queried for
 console usage info.  On route mismatch, all info from all modules will be
 concatenated, formatted to console width, and shown to the user.</p>

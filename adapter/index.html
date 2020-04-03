@@ -391,7 +391,7 @@ appropriate adapter for the current environment in a generic way.</p>
 <h3>Standalone</h3>
 <p>laminas-console provides a factory for creating and returning the console adapter
 specific to your environment:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Console\Console;
+<pre class="highlight"><code class="language-php">use Laminas\Console\Console;
 use Laminas\Console\Exception\ExceptionInterface as ConsoleException;
 
 try {
@@ -400,6 +400,7 @@ try {
     // Could not get console adapter; most likely we are not running inside a
     // console window.
 }</code></pre>
+
 <p>This returns a <code>Laminas\Console\Adapter\AdapterInterface</code> implementation suitable
 for your current environment.</p>
 <blockquote>
@@ -413,7 +414,7 @@ classes; you should do this only as a last resort, however!</p>
 <h3>laminas-mvc</h3>
 <p>If you are using MVC controllers you can obtain Console adapter instance using
 the <code>ServiceManager</code>.</p>
-<pre class=codehilite><code class=language-php>namespace Application;
+<pre class="highlight"><code class="language-php">namespace Application;
 
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Console\Adapter\AdapterInterface as Console;
@@ -430,9 +431,10 @@ console?');
         }
     }
 }</code></pre>
+
 <p>If you extend <code>AbstractConsoleController</code>, you can use the <code>getConsole()</code> method
 instead:</p>
-<pre class=codehilite><code class=language-php>namespace Application;
+<pre class="highlight"><code class="language-php">namespace Application;
 
 use Laminas\Mvc\Controller\AbstractConsoleController;
 use Laminas\Console\Exception\RuntimeException;
@@ -444,6 +446,7 @@ class ConsoleController extends AbstractConsoleController
         $console = $this-&gt;getConsole();
     }
 }</code></pre>
+
 <blockquote>
 <h4>Use dependency injection</h4>
 <p>We recommend using dependency injection. Instead of pulling the console

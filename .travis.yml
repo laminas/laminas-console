@@ -18,6 +18,8 @@ matrix:
     - php: 7.3
       env:
         - DEPS=latest
+        - TEST_COVERAGE=true
+        - CS_CHECK=true
     - php: 7.4
       env:
         - DEPS=latest

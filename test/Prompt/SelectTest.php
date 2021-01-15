@@ -22,13 +22,13 @@ class SelectTest extends TestCase
      */
     protected $adapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter = new ConsoleAdapter();
         $this->adapter->stream = fopen('php://memory', 'w+');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         fclose($this->adapter->stream);
     }
@@ -42,8 +42,8 @@ class SelectTest extends TestCase
         ob_start();
         $response = $select->show();
         $text = ob_get_clean();
-        $this->assertContains('0) foo', $text);
-        $this->assertContains('1) bar', $text);
+        $this->assertStringContainsString('0) foo', $text);
+        $this->assertStringContainsString('1) bar', $text);
         $this->assertEquals('0', $response);
     }
 
@@ -56,8 +56,8 @@ class SelectTest extends TestCase
         ob_start();
         $response = $select->show();
         $text = ob_get_clean();
-        $this->assertContains('2) foo', $text);
-        $this->assertContains('6) bar', $text);
+        $this->assertStringContainsString('2) foo', $text);
+        $this->assertStringContainsString('6) bar', $text);
         $this->assertEquals('2', $response);
     }
 }

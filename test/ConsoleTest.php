@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConsoleTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         Console::overrideIsConsole(null);
         Console::resetInstance();

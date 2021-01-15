@@ -10,13 +10,14 @@ namespace LaminasTest\Console;
 
 use Laminas\Console\Getopt;
 use PHPUnit\Framework\TestCase;
+use Laminas\Console\Exception\RuntimeException;
 
 /**
  * @group      Laminas_Console
  */
 class GetoptTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (ini_get('register_argc_argv') == false) {
             $this->markTestSkipped(
@@ -481,7 +482,7 @@ class GetoptTest extends TestCase
             $opts = new GetOpt('abp:');
             $this->fail();
         } catch (\Laminas\Console\Exception\InvalidArgumentException $e) {
-            $this->assertContains('$_SERVER["argv"]', $e->getMessage());
+            $this->assertStringContainsString('$_SERVER["argv"]', $e->getMessage());
         }
 
         $_SERVER['argv'] = $argv;
@@ -569,7 +570,7 @@ class GetoptTest extends TestCase
             ['--colors=red', '--colors=green', '--colors=blue']
         );
 
-        $this->assertInternalType('string', $opts->colors);
+        $this->assertIsString($opts->colors);
         $this->assertEquals('blue', $opts->colors, 'Should be equal to last variable');
     }
 
@@ -581,7 +582,7 @@ class GetoptTest extends TestCase
             [Getopt::CONFIG_CUMULATIVE_PARAMETERS => true]
         );
 
-        $this->assertInternalType('array', $opts->colors, 'Colors value should be an array');
+        $this->assertIsArray($opts->colors, 'Colors value should be an array');
         $this->assertEquals('red,green,blue', implode(',', $opts->colors));
     }
 
@@ -770,12 +771,11 @@ class GetoptTest extends TestCase
         $this->assertNull($bearCallbackCalled);
     }
 
-    /**
-     * @expectedException \Laminas\Console\Exception\RuntimeException
-     * @expectedExceptionMessage The option x is invalid. See usage.
-     */
     public function testOptionCallbackReturnsFallsAndThrowException()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('The option x is invalid. See usage.');
+
         $opts = new Getopt('x', ['-x']);
         $opts->setOptionCallback('x', function () {
             return false;

@@ -975,7 +975,7 @@ class DefaultRouteMatcherTest extends TestCase
         if ($params === null) {
             $this->assertNull($match, "The route must not match");
         } else {
-            $this->assertInternalType('array', $match);
+            $this->assertIsArray($match);
 
             foreach ($params as $key => $value) {
                 if ($value === null) {
@@ -1093,7 +1093,7 @@ class DefaultRouteMatcherTest extends TestCase
         if ($params === null) {
             $this->assertNull($match, "The route must not match");
         } else {
-            $this->assertInternalType('array', $match);
+            $this->assertIsArray($match);
 
             foreach ($params as $key => $value) {
                 $this->assertSame(
@@ -1192,7 +1192,7 @@ class DefaultRouteMatcherTest extends TestCase
         if ($shouldMatch === false) {
             $this->assertNull($match, "The route must not match");
         } else {
-            $this->assertInternalType('array', $match);
+            $this->assertIsArray($match);
         }
     }
 
@@ -1273,7 +1273,7 @@ class DefaultRouteMatcherTest extends TestCase
         if ($params === null) {
             $this->assertNull($match, "The route must not match");
         } else {
-            $this->assertInternalType('array', $match);
+            $this->assertIsArray($match);
 
             foreach ($params as $key => $value) {
                 $this->assertEquals(
@@ -1344,7 +1344,7 @@ class DefaultRouteMatcherTest extends TestCase
         if ($shouldMatch === false) {
             $this->assertNull($match, "The route must not match");
         } else {
-            $this->assertInternalType('array', $match);
+            $this->assertIsArray($match);
         }
     }
 
@@ -1408,7 +1408,7 @@ class DefaultRouteMatcherTest extends TestCase
             $this->fail("Route '$routeDefinition' must match.'");
         }
 
-        $this->assertInternalType('array', $match);
+        $this->assertIsArray($match);
 
         foreach ($params as $key => $value) {
             $this->assertEquals(

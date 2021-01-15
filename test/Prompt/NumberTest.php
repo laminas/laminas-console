@@ -22,13 +22,13 @@ class NumberTest extends TestCase
      */
     protected $adapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter = new ConsoleAdapter();
         $this->adapter->stream = fopen('php://memory', 'w+');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         fclose($this->adapter->stream);
     }
@@ -58,7 +58,7 @@ class NumberTest extends TestCase
         ob_start();
         $response = $number->show();
         $text = ob_get_clean();
-        $this->assertContains('a is not a number', $text);
+        $this->assertStringContainsString('a is not a number', $text);
         $this->assertEquals('123', $response);
     }
 
@@ -74,7 +74,7 @@ class NumberTest extends TestCase
         ob_start();
         $response = $number->show();
         $text = ob_get_clean();
-        $this->assertContains('Please enter a non-floating number', $text);
+        $this->assertStringContainsString('Please enter a non-floating number', $text);
         $this->assertEquals('123', $response);
     }
 
@@ -108,8 +108,8 @@ class NumberTest extends TestCase
         $response = $number->show();
         $text = ob_get_clean();
 
-        $this->assertContains('Please enter a number not smaller than 5', $text);
-        $this->assertContains('Please enter a number not greater than 10', $text);
+        $this->assertStringContainsString('Please enter a number not smaller than 5', $text);
+        $this->assertStringContainsString('Please enter a number not greater than 10', $text);
         $this->assertEquals('6', $response);
     }
 }

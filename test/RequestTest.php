@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RequestTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (ini_get('register_argc_argv') == false) {
             $this->markTestSkipped(

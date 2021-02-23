@@ -285,7 +285,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -400,7 +400,6 @@ messages for all declared options.</p>
     echo $e-&gt;getUsageMessage();
     exit;
 }</code></pre>
-
 <p>Cases where parsing throws an exception include:</p>
 <ul>
 <li>Option given is not recognized.</li>
@@ -417,7 +416,6 @@ method returns <code>TRUE</code>. Otherwise the method returns <code>NULL</code>
 <pre class="highlight"><code class="language-php">$opts = new Laminas\Console\Getopt('abp:');
 $b = $opts-&gt;getOption('b');
 $p_parameter = $opts-&gt;getOption('p');</code></pre>
-
 <p>Alternatively, you can use the property overloading via the magic <code>__isset()</code> and
 <code>__get()</code> methods, allowing you to test for and retrieve values as if they were
 property names.</p>
@@ -427,7 +425,6 @@ if (isset($opts-&gt;b)) {
     echo "I got the b option.\n";
 }
 $p_parameter = $opts-&gt;p; // null if not set</code></pre>
-
 <blockquote>
 <h3>Using Aliases</h3>
 <p>If your options are declared with aliases, you may use any of the aliases for
@@ -460,7 +457,6 @@ of the strings that were not part of any options.</p>
 <pre class="highlight"><code class="language-php">$opts = new Laminas\Console\Getopt('abp:');
 $opts-&gt;setArguments(['-p', 'p_parameter', 'filename']);
 $args = $opts-&gt;getRemainingArgs(); // returns ['filename']</code></pre>
-
 <p><code>Laminas\Console\Getopt</code> supports the GNU convention that an argument consisting of
 a double-dash signifies the end of options. Any arguments following this
 signifier must be treated as non-option arguments. This is useful if you might
@@ -663,6 +659,7 @@ have a non-option argument that begins with a dash. For example: <code>rm --
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -735,7 +732,7 @@ have a non-option argument that begins with a dash. For example: <code>rm --
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-console/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

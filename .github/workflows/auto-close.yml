@@ -1,0 +1,20 @@
+name: Autocloser
+on: [issues, pull_request]
+jobs:
+  autoclose:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Autoclose new issues and PRs
+      uses: roots/issue-closer@v1.1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-pattern: "^exact-string-will-never-match$"
+        pr-pattern: "^exact-string-will-never-match$"
+        issue-close-message: |
+          This package is **abandoned** and will receive no further development!
+          
+          We recommend using [laminas/laminas-cli](https://docs.laminas.dev/laminas-cli/).
+        pr-close-message: |
+          This package is **abandoned** and will receive no further development!
+          
+          We recommend using [laminas/laminas-cli](https://docs.laminas.dev/laminas-cli/).

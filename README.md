@@ -1,5 +1,9 @@
 # laminas-console
 
+> This package is **abandoned** and will receive no further development!
+>
+> We recommend using [laminas/laminas-cli](https://docs.laminas.dev/laminas-cli/).
+
 [![Build Status](https://travis-ci.com/laminas/laminas-console.svg?branch=master)](https://travis-ci.com/laminas/laminas-console)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-console/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-console?branch=master)
 
